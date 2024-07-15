@@ -1,4 +1,4 @@
-import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
+import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 const img =

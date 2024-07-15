@@ -1,23 +1,22 @@
-import AdminSidebar from "../components/AdminSidebar/AdminSidebar";
-import { BarChart, DoughnutChart } from "../components/Charts/Charts";
+import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
+import { BarChart, DoughnutChart } from "../../components/admin/Charts/Charts";
 
 import userImg from "../assets/images/userPic.png";
 import {
   categories as categoryItems,
   transactions as transactionItems,
   widgets as widgetItems,
-} from "../assets/data.json";
+} from "../../assets/data.json";
 
-import WidgetItem from "../components/DashboardItems/WidgetItem";
-import CategoryItem from "../components/DashboardItems/CategoryItem";
-import Table from "../components/Tables/DashboardTable";
+import WidgetItem from "../../components/admin/DashboardItems/WidgetItem";
+import CategoryItem from "../../components/admin/DashboardItems/CategoryItem";
+import Table from "../../components/admin/Tables/DashboardTable";
 
 import { BsSearch } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa";
 import { BiMaleFemale } from "react-icons/bi";
 
 const Dashboard = () => {
-
   return (
     <div className="adminContainer">
       <AdminSidebar />

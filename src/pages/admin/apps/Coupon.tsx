@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
+import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
 
 const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 const allNumbers = "0123456789";
@@ -33,8 +33,8 @@ const Coupon = () => {
     let result: string = prefix;
     const loopLength: number = size - prefix.length;
     for (let i = 0; i < loopLength; i++) {
-      const randumNum: number = ~~(Math.random() * entireString.length);
-      result += entireString[randumNum];
+      const randomNum: number = ~~(Math.random() * entireString.length);
+      result += entireString[randomNum];
     }
     setCoupon(result);
   };

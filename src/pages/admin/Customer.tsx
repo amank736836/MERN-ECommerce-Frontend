@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import AdminSidebar from "../components/AdminSidebar/AdminSidebar";
+import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
 import CustomerTable, {
   CustomerDataType,
-} from "../components/Tables/CustomerTable";
+} from "../../components/admin/Tables/CustomerTable";
 import { FaTrash } from "react-icons/fa";
 
 const arr: CustomerDataType[] = [

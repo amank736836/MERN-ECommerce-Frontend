@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import AdminSidebar from "../components/AdminSidebar/AdminSidebar";
+import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
 import TransactionTable, {
   TransactionDataType,
-} from "../components/Tables/TransactionTable";
+} from "../../components/admin/Tables/TransactionTable";
 import { Link } from "react-router-dom";
 
 const arr: TransactionDataType[] = [

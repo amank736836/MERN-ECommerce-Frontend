@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
-import AdminSidebar from "../components/AdminSidebar/AdminSidebar";
+import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
 import ProductTable, {
   ProductDataType,
-} from "../components/Tables/ProductTable";
+} from "../../components/admin/Tables/ProductTable";
 
 const arr: ProductDataType[] = [
   {
