@@ -9,6 +9,7 @@ const Cart = lazy(() => import("./pages/Cart"));
 import NewProduct from "./pages/admin/management/NewProduct";
 import ProductManagement from "./pages/admin/management/ProductManagement";
 import TransactionManagement from "./pages/admin/management/TransactionManagement";
+import Header from "./components/Header";
 
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
 const Product = lazy(() => import("./pages/admin/Product"));
@@ -26,7 +27,7 @@ const Toss = lazy(() => import("./pages/admin/apps/Toss"));
 const App = () => {
   return (
     <Router>
-      {/* <Header/> */}
+      <Header />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
