@@ -1,0 +1,159 @@
+
+//   Code that are not required but can be used for understanding or learning purposes.
+
+//   // Direct Li tag Used
+//      <li>
+//             <Link to={"/admin/dashboard"}>
+//               <RiDatabaseFill />
+//               {"Dashboard"}
+//             </Link>
+//           </li>
+//           <li>
+//             <Link to={"/admin/product"}>
+//               <RiShoppingBag3Fill />
+//               {"Product"}
+//             </Link>
+//           </li>
+//           <li>
+//             <Link to={"/admin/customer"}>
+//               <IoIosPeople />
+//               {"Customer"}
+//             </Link>
+//           </li>
+//           <li>
+//             <Link to={"/admin/transaction"}>
+//               <AiFillFileText />
+//               {"Transaction"}
+//             </Link>
+//           </li>
+
+//           // Array used for Li tag
+//            {sidebar1.map((item, index) => (
+//             <li
+//               key={index}
+//               style={{
+//                 backgroundColor: location.pathname.includes(item.url)
+//                   ? "rgba(0,115,255,0.1)"
+//                   : "white",
+//               }}
+//             >
+//               <Link
+//                 to={item.url}
+//                 style={{
+//                   color: location.pathname.includes(item.url)
+//                     ? "rgba(0,115,255,1)"
+//                     : "black",
+//                 }}
+//               >
+//                 <item.icon />
+//                 {item.name}
+//               </Link>
+//             </li>
+//           ))}
+
+//             // Li tag used as a component
+//          <Li
+//             url={"/admin/dashboard"}
+//             text={"Dashboard"}
+//             location={location}
+//             Icon={RiDatabaseFill}
+//           />
+//           <Li
+//             url={"/admin/product"}
+//             text={"Product"}
+//             location={location}
+//             Icon={RiShoppingBag3Fill}
+//           />
+//           <Li
+//             url={"/admin/customer"}
+//             text={"Customer"}
+//             location={location}
+//             Icon={IoIosPeople}
+//           />
+//           <Li
+//             url={"/admin/transaction"}
+//             text={"Transaction"}
+//             location={location}
+//             Icon={AiFillFileText}
+//           />
+
+// const DivOne = ({ location }: { location: Location }) => {
+//   return (
+//     <div>
+//       <Li
+//         url={"/admin/dashboard"}
+//         text={"Dashboard"}
+//         location={location}
+//         Icon={RiDatabaseFill}
+//       />
+//       <Li
+//         url={"/admin/product"}
+//         text={"Product"}
+//         location={location}
+//         Icon={RiShoppingBag3Fill}
+//       />
+//       <Li
+//         url={"/admin/customer"}
+//         text={"Customer"}
+//         location={location}
+//         Icon={IoIosPeople}
+//       />
+//       <Li
+//         url={"/admin/transaction"}
+//         text={"Transaction"}
+//         location={location}
+//         Icon={AiFillFileText}
+//       />
+//     </div>
+//   );
+// };
+
+// const DivTwo = ({ location }: { location: Location }) => {
+//   return (
+//     <div>
+//       <Li
+//         url={"/admin/chart/bar"}
+//         text={"Bar Chart"}
+//         location={location}
+//         Icon={FaChartBar}
+//       />
+//       <Li
+//         url={"/admin/chart/pie"}
+//         text={"Pie Chart"}
+//         location={location}
+//         Icon={FaChartPie}
+//       />
+//       <Li
+//         url={"/admin/chart/line"}
+//         text={"Line Chart"}
+//         location={location}
+//         Icon={FaChartLine}
+//       />
+//     </div>
+//   );
+// };
+
+// const DivThree = ({ location }: { location: Location }) => {
+//   return (
+//     <div>
+//       <Li
+//         url={"/admin/app/stopwatch"}
+//         text={"Stopwatch"}
+//         location={location}
+//         Icon={FaStopwatch}
+//       />
+//       <Li
+//         url={"/admin/app/coupon"}
+//         text={"Coupon"}
+//         location={location}
+//         Icon={RiCoupon3Fill}
+//       />
+//       <Li
+//         url={"/admin/app/gamepad"}
+//         text={"Gamepad"}
+//         location={location}
+//         Icon={FaGamepad}
+//       />
+//     </div>
+//   );
+// };

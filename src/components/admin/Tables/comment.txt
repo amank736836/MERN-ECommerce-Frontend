@@ -1,0 +1,5 @@
+// ProductTable.tsx
+
+``` tsx
+
+```
