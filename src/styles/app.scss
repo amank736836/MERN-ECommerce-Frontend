@@ -1,7 +1,3 @@
-@import "mixin";
-@import "mediaquery";
-@import "admin/admin.scss";
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -38,6 +34,12 @@ body {
 .green {
   color: rgb(0, 195, 0);
 }
+
+@import "mixin.scss";
+@import "mediaquery.scss";
+@import "admin/admin.scss";
+@import "home.scss";
+@import "cart.scss";
 
 .header {
   @include flex(row, flex-end, stretch, 1.2rem);
