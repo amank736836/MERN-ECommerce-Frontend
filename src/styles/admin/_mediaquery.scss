@@ -30,6 +30,49 @@
   }
 }
 
+@media screen and (width <= 768px) {
+  .cart {
+    display: block;
+    padding: 2rem;
+    > main {
+      width: 100%;
+    }
+    > aside {
+      width: 100%;
+    }
+  }
+
+  .cartItem {
+    width: 100%;
+    > img {
+      width: 3rem;
+      height: 3rem;
+    }
+    > div {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  .productSearchPage{
+    display: block;
+    padding: 0;
+    > aside{
+      @include flex(row,space-between,center);
+      flex-wrap: wrap;
+      box-shadow: none;
+      > h2{
+        @include heading;
+        font-size: 1.2rem;
+      }
+    }
+    >main >input{
+      width: 100%;
+      border: 1px solid rgba(212,212,212,0.379);
+    }
+  }
+}
+
 @media screen and (width <= 600px) {
   .productManagement {
     flex-direction: column;
@@ -42,26 +85,24 @@
 
   .chartContainer {
     padding: 0;
-    > h1{
-        margin: 0;
-        text-align: center;
+    > h1 {
+      margin: 0;
+      text-align: center;
     }
-    >section{
-        margin: 8rem auto;
-
-    }
-  }
-
-  .dashboardAppContainer{
-    >section{
-        .couponForm{
-            display: flex;
-            flex-direction: column;
-        }
-        .stopwatch{
-            align-items: center;
-        }
+    > section {
+      margin: 8rem auto;
     }
   }
 
+  .dashboardAppContainer {
+    > section {
+      .couponForm {
+        display: flex;
+        flex-direction: column;
+      }
+      .stopwatch {
+        align-items: center;
+      }
+    }
+  }
 }

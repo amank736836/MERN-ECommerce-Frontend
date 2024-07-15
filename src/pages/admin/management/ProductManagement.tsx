@@ -1,3 +1,4 @@
+import { FaTrash } from "react-icons/fa";
 import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
 import { ChangeEvent, FormEvent, useState } from "react";
 
@@ -9,11 +10,13 @@ const ProductManagement = () => {
   const [price, setPrice] = useState<number>(2000);
   const [stock, setStock] = useState<number>(10);
   const [photo, setPhoto] = useState<string>(img);
- 
+  const [category, setCategory] = useState<string>("footwear");
+
   const [nameUpdate, setNameUpdate] = useState<string>(name);
   const [priceUpdate, setPriceUpdate] = useState<number>(price);
   const [stockUpdate, setStockUpdate] = useState<number>(stock);
   const [photoUpdate, setPhotoUpdate] = useState<string>(photo);
+  const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
 
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file: File | undefined = e.target.files?.[0];
@@ -34,8 +37,8 @@ const ProductManagement = () => {
     setPrice(priceUpdate);
     setStock(stockUpdate);
     setPhoto(photoUpdate);
-  }
-
+    setCategory(categoryUpdate);
+  };
 
   return (
     <div className="adminContainer">
@@ -53,47 +56,57 @@ const ProductManagement = () => {
           <h3>${price}</h3>
         </section>
         <article>
+          <button className="productDeleteBtn">
+            <FaTrash />
+          </button>
           <form onSubmit={submitHandler}>
-            <h2>Manage Product</h2>
+            <h2>Manage</h2>
             <div>
-              <label htmlFor="product-name">Product Name</label>
+              <label htmlFor="productName">Name</label>
               <input
-                required
                 type="text"
                 placeholder="Product Name"
-                id="product-name"
+                id="productName"
                 value={nameUpdate}
                 onChange={(e) => setNameUpdate(e.target.value)}
               />
             </div>
             <div>
-              <label htmlFor="product-price">Price</label>
+              <label htmlFor="productPrice">Price</label>
               <input
-                required
                 type="number"
                 placeholder="Price"
-                id="product-price"
+                id="productPrice"
                 value={priceUpdate}
                 onChange={(e) => setPriceUpdate(Number(e.target.value))}
               />
             </div>
             <div>
-              <label htmlFor="product-stock">Stock</label>
+              <label htmlFor="productStock">Stock</label>
               <input
-                required
                 type="number"
                 placeholder="Stock"
-                id="product-stock"
+                id="productStock"
                 value={stockUpdate}
                 onChange={(e) => setStockUpdate(Number(e.target.value))}
               />
             </div>
+
             <div>
-              <label htmlFor="product-photo">Photo</label>
+              <label htmlFor="productCategory">Category</label>
               <input
-                required
+                type="text"
+                placeholder="eg. laptop, camera etc."
+                id="productCategory"
+                value={categoryUpdate}
+                onChange={(e) => setCategoryUpdate(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="productPhoto">Photo</label>
+              <input
                 type="file"
-                id="product-photo"
+                id="productPhoto"
                 onChange={changeImageHandler}
               />
             </div>
