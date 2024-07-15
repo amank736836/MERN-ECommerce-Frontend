@@ -44,7 +44,7 @@ const App = () => {
           > */}
 
           <Route
-            path="/"
+            path="/admin"
             element={
               <Link
                 to="/admin/dashboard"

@@ -1,7 +1,7 @@
 import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
 import { BarChart, DoughnutChart } from "../../components/admin/Charts/Charts";
 
-import userImg from "../assets/images/userPic.png";
+import userImg from "../../assets/images/userPic.png";
 import {
   categories as categoryItems,
   transactions as transactionItems,
