@@ -2,9 +2,9 @@ import { lazy, Suspense } from "react";
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Loader from "./components/admin/Loader";
 
-const Home = lazy(() => import("./pages/home"));
-const Search = lazy(() => import("./pages/search"));
-const Cart = lazy(() => import("./pages/cart"));
+const Home = lazy(() => import("./pages/Home"));
+const Search = lazy(() => import("./pages/Search"));
+const Cart = lazy(() => import("./pages/Cart"));
 
 import NewProduct from "./pages/admin/management/NewProduct";
 import ProductManagement from "./pages/admin/management/ProductManagement";
