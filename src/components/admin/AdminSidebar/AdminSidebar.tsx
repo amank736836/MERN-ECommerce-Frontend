@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { AppItems } from "./Items/Apps";
 import { ChartItems } from "./Items/Charts";
@@ -56,7 +56,9 @@ const AdminSidebar = () => {
             : {}
         }
       >
+        <Link to="/" className="logo">
         <h2>Logo.</h2>
+        </Link>
         <DashboardSidebar dashboard={DashboardItems} location={location} />
         <ChartSidebar charts={ChartItems} location={location} />
         <AppSidebar apps={AppItems} location={location} />
