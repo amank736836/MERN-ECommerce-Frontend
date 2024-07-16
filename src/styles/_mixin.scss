@@ -39,7 +39,20 @@
   transform: translate(-50%, -50%);
 }
 
-@mixin square($size:1rem){
+@mixin square($size: 1rem) {
   width: $size;
   height: $size;
+}
+
+@mixin baseShadow {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.384);
+}
+
+@mixin btn($p: 0.5rem 1rem, $bg,$color) {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: $p;
+  background-color: $bg;
+  color: $color;
 }
