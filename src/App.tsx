@@ -7,7 +7,12 @@ const Home = lazy(() => import("./pages/Home"));
 const Search = lazy(() => import("./pages/Search"));
 const Cart = lazy(() => import("./pages/Cart"));
 
+const Login = lazy(() => import("./pages/Login"));
+
 const Shipping = lazy(() => import("./pages/Shipping"));
+const Orders = lazy(() => import("./pages/Orders"));
+const OrderDetails = lazy(() => import("./pages/OrderDetails"));
+
 const ProductManagement = lazy(
   () => import("./pages/admin/management/ProductManagement")
 );
@@ -29,7 +34,6 @@ const Stopwatch = lazy(() => import("./pages/admin/apps/Stopwatch"));
 const Coupon = lazy(() => import("./pages/admin/apps/Coupon"));
 const Toss = lazy(() => import("./pages/admin/apps/Toss"));
 
-const Login = lazy(() => import("./pages/Login"));
 
 const App = () => {
   return (
@@ -46,6 +50,8 @@ const App = () => {
           {/* Login Routes  */}
           <Route>
             <Route path="/shipping" element={<Shipping />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/order/:id" element={<OrderDetails />} />
           </Route>
 
           {/* Admin Routes  */}
