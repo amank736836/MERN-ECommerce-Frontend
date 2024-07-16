@@ -10,7 +10,7 @@ import {
 
 import WidgetItem from "../../components/admin/DashboardItems/WidgetItem";
 import CategoryItem from "../../components/admin/DashboardItems/CategoryItem";
-import Table from "../../components/admin/Tables/DashboardTable";
+import DashboardTable from "../../components/admin/Tables/DashboardTable";
 
 import { BsSearch } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa";
@@ -84,7 +84,7 @@ const Dashboard = () => {
             </p>
           </div>
 
-          <Table data={transactionItems} />
+          <DashboardTable data={transactionItems} />
         </section>
       </main>
     </div>
