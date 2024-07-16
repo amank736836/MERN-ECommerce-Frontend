@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 
-import { AppItems } from "./Items/Apps";
-import { ChartItems } from "./Items/Charts";
-import { DashboardItems } from "./Items/Dashboard";
+import { AppItems } from "./Items/AppsItems";
+import { ChartItems } from "./Items/ChartsItems";
+import { DashboardItems } from "./Items/DashboardItems";
 
 import { AppSidebar } from "./Sidebar/AppSidebar";
 import { ChartSidebar } from "./Sidebar/ChartSidebar";
