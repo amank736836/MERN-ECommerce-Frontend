@@ -35,11 +35,13 @@ body {
   color: rgb(0, 195, 0);
 }
 
-@import "mixin.scss";
-@import "mediaquery.scss";
-@import "admin/admin.scss";
-@import "home.scss";
-@import "cart.scss";
+@import "mixin";
+@import "mediaquery";
+@import "admin/admin";
+@import "home";
+@import "cart";
+@import "shipping";
+@import "login";
 
 .header {
   @include flex(row, flex-end, stretch, 1.2rem);
