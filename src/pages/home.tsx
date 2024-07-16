@@ -3,7 +3,7 @@ import ProductCard from "../components/ProductCard";
 
 const Home = () => {
 
-  const addToCartHandler = (productId: string) => {}
+  const addToCartHandler = () => {}
 
   return (
     <div className="home">
