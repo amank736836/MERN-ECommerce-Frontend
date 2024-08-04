@@ -8,7 +8,9 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const user = { _id: "aman", role: "user" };
+const user = { _id: "aman", role: "admin" };
+// const user = { _id: "aman", role: "user" };
+// const user = {};
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
