@@ -31,25 +31,25 @@ const Header = () => {
         <FaShoppingBag />{" "}
       </Link>
       {user?._id ? (
-        <>
-          <button onClick={() => setIsOpen((prev: boolean) => !prev)}>
-            <FaUser />
-          </button>
-          <dialog open={isOpen}>
-            <div>
-              {user.role === "admin" && (
-                <Link onClick={() => setIsOpen(false)} to="/admin/dashboard">
-                  Dashboard
+          <>
+            <button onClick={() => setIsOpen((prev: boolean) => !prev)}>
+              <FaUser />
+            </button>
+            <dialog open={isOpen}>
+              <div>
+                {user.role === "admin" && (
+                  <Link onClick={() => setIsOpen(false)} to="/admin/dashboard">
+                    Dashboard
+                  </Link>
+                )}
+                <Link onClick={() => setIsOpen(false)} to="/orders">
+                  Orders
                 </Link>
-              )}
-              <Link onClick={() => setIsOpen(false)} to="/orders">
-                Orders
-              </Link>
-              <button onClick={logoutHandler}>
-                <FaSignOutAlt />
-              </button>
-            </div>
-          </dialog>
+                <button onClick={logoutHandler}>
+                  <FaSignOutAlt />
+                </button>
+              </div>
+            </dialog>
         </>
       ) : (
         <Link to="/login">
