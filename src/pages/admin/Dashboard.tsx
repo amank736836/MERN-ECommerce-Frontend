@@ -1,20 +1,18 @@
 import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
 import { BarChart, DoughnutChart } from "../../components/admin/Charts/Charts";
 
-import userImg from "../../assets/images/userPic.png";
 import {
   categories as categoryItems,
   transactions as transactionItems,
   widgets as widgetItems,
 } from "../../assets/data.json";
 
-import WidgetItem from "../../components/admin/DashboardItems/WidgetItem";
 import CategoryItem from "../../components/admin/DashboardItems/CategoryItem";
+import WidgetItem from "../../components/admin/DashboardItems/WidgetItem";
 import DashboardTable from "../../components/admin/Tables/DashboardTable";
 
-import { BsSearch } from "react-icons/bs";
-import { FaRegBell } from "react-icons/fa";
 import { BiMaleFemale } from "react-icons/bi";
+import { BsSearch } from "react-icons/bs";
 
 const Dashboard = () => {
   return (
@@ -24,8 +22,8 @@ const Dashboard = () => {
         <div className="bar">
           <BsSearch />
           <input type="text" placeholder="Search for data, users, docs etc." />
-          <FaRegBell />
-          <img src={userImg} alt="User" />
+          {/* <FaRegBell /> */}
+          {/* <img src={userImg} alt="User" /> */}
         </div>
         <section className="widgetContainer">
           {widgetItems.map((item, index) => (
