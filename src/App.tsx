@@ -34,7 +34,6 @@ const Stopwatch = lazy(() => import("./pages/admin/apps/Stopwatch"));
 const Coupon = lazy(() => import("./pages/admin/apps/Coupon"));
 const Toss = lazy(() => import("./pages/admin/apps/Toss"));
 
-
 const App = () => {
   return (
     <Router>
