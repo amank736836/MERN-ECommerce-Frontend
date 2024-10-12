@@ -1,58 +1,71 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { VscError } from "react-icons/vsc";
-import CartItem from "../components/CartItem";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
-const cartItems = [
-  {
-    productId: "adasdasd",
-    photo: "https://m.media-amazon.com/images/I/618d5bS2lUL._SX679_.jpg",
-    name: "Macbook Pro",
-    price: 3000,
-    quantity: 4,
-    stock: 10,
-  },
-];
-
-const subtotal = 4000;
-const tax = Math.round(0.18 * subtotal);
-const shippingCharges = 200;
-const discount = 500;
-const total = subtotal + tax + shippingCharges;
+import CartItemCard from "../components/CartItem";
+import { calculatePrice, updateCoupon } from "../redux/reducer/cartReducer";
+import { RootState, server } from "../redux/store";
 
 const Cart = () => {
-  const [couponCode, setCouponCode] = useState<string>("");
+  const { cartItems, subtotal, tax, shippingCharges, discount, total, coupon } =
+    useSelector((state: RootState) => state.cartReducer);
+
+  const { user } = useSelector((state: RootState) => state.userReducer);
+
+  const dispatch = useDispatch();
+
+  const [couponCode, setCouponCode] = useState<string>(coupon);
   const [isValidCouponCode, setIsValidCouponCode] = useState<boolean>(false);
 
   useEffect(() => {
+    const { token: cancelToken, cancel } = axios.CancelToken.source();
     const id = setTimeout(() => {
-      if (Math.random() > 0.5) {
-        setIsValidCouponCode(true);
-      } else {
-        setIsValidCouponCode(false);
-      }
+      axios
+        .post(`${server}/api/v1/payment/discount?coupon=${couponCode}`, {
+          cancelToken,
+        })
+        .then((res) => {
+          dispatch(calculatePrice(res.data.discount));
+          dispatch(updateCoupon(couponCode));
+          setIsValidCouponCode(res.data.success);
+          toast.success(res.data.message);
+        })
+        .catch((err) => {
+          dispatch(calculatePrice(0));
+          setIsValidCouponCode(false);
+          if (
+            err.response &&
+            err.response.data &&
+            err.response.data.message === "Please enter a coupon code"
+          ) {
+            toast.error("No Discount Applied");
+          } else {
+            err.response
+              ? toast.error(err.response.data.message)
+              : toast.error("Invalid Coupon Code");
+          }
+        });
     }, 1000);
 
     return () => {
       clearTimeout(id);
+      cancel();
       setIsValidCouponCode(false);
     };
   }, [couponCode]);
+
+  useEffect(() => {
+    dispatch(calculatePrice(discount));
+  }, [cartItems]);
 
   return (
     <div className="cart">
       <main>
         {cartItems.length > 0 ? (
           cartItems.map((item, index) => (
-            <CartItem
-              key={index}
-              productId={item.productId}
-              photo={item.photo}
-              name={item.name}
-              price={item.price}
-              quantity={item.quantity}
-              stock={item.stock}
-            />
+            <CartItemCard key={index} cartItem={item} />
           ))
         ) : (
           <h1>No Items Added</h1>
@@ -68,12 +81,14 @@ const Cart = () => {
         <p>
           <b>Total: ₹{total}</b>
         </p>
-        <input
-          type="text"
-          value={couponCode}
-          placeholder="Coupon Code"
-          onChange={(e) => setCouponCode(e.target.value)}
-        />
+        {cartItems.length > 0 && user?.role === "user" && (
+          <input
+            type="text"
+            value={couponCode}
+            placeholder="Coupon Code"
+            onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+          />
+        )}
 
         {couponCode &&
           (isValidCouponCode ? (
@@ -86,7 +101,9 @@ const Cart = () => {
             </span>
           ))}
 
-        {cartItems.length > 0 && <Link to="/shipping">Checkout</Link>}
+        {cartItems.length > 0 && user?.role === "user" && (
+          <Link to="/shipping">Checkout</Link>
+        )}
       </aside>
     </div>
   );
