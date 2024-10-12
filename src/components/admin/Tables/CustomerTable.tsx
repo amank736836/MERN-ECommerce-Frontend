@@ -44,7 +44,7 @@ const CustomerTable = ({ data = [] }: { data: CustomerDataType[] }) => {
     data,
     "dashboardProductBox",
     "Customers",
-    true
+    data.length > 5
   )();
 };
 
