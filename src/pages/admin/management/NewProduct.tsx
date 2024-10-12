@@ -1,12 +1,23 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
+import { useNewProductMutation } from "../../../redux/api/productAPI";
+import { RootState } from "../../../redux/store";
+import { responseToast } from "../../../utils/features";
 
 const NewProduct = () => {
+  const { user } = useSelector((state: RootState) => state.userReducer);
+
   const [name, setName] = useState<string>("");
-  const [price, setPrice] = useState<number>();
-  const [stock, setStock] = useState<number>();
-  const [photo, setPhoto] = useState<string>("");
+  const [price, setPrice] = useState<number>(Number(""));
+  const [stock, setStock] = useState<number>(Number(""));
+  const [photo, setPhoto] = useState<File>();
+  const [photoPreview, setPhotoPreview] = useState<string>("");
   const [category, setCategory] = useState<string>("");
+
+  const [newProduct] = useNewProductMutation();
+  const navigate = useNavigate();
 
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file: File | undefined = e.target.files?.[0];
@@ -15,10 +26,28 @@ const NewProduct = () => {
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         if (typeof reader.result === "string") {
-          setPhoto(reader.result);
+          setPhotoPreview(reader.result);
+          setPhoto(file);
         }
       };
     }
+  };
+
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!name || !category || !photo || stock < 0 || !price || price < 0) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", String(price));
+    formData.append("stock", String(stock));
+    formData.append("category", category);
+    formData.append("photo", photo);
+
+    const res = await newProduct({ formData, id: user?._id! });
+    responseToast(res, navigate, "/admin/products");
   };
 
   return (
@@ -26,7 +55,7 @@ const NewProduct = () => {
       <AdminSidebar />
       <main className="productManagement">
         <article>
-          <form>
+          <form onSubmit={submitHandler}>
             <h2>New Product</h2>
             <div>
               <label htmlFor="productName">Name</label>
@@ -83,7 +112,7 @@ const NewProduct = () => {
                 onChange={changeImageHandler}
               />
             </div>
-            {photo && <img src={photo} alt="product-photo" />}
+            {photo && <img src={photoPreview} alt="product-photo" />}
             <button type="submit">Create</button>
           </form>
         </article>
