@@ -34,9 +34,14 @@ const columns: Column<ProductDataType>[] = [
 ];
 
 const ProductTable = ({ data = [] }: { data: ProductDataType[] }) => {
-  return (
-    TableHOC<ProductDataType>(columns, data, "dashboardProductBox", "Products" , true)()
-  );
+  return TableHOC<ProductDataType>(
+    columns,
+    data,
+    "dashboardProductBox",
+    "Products",
+    data.length > 6,
+    5
+  )();
 };
 
 export default ProductTable;
