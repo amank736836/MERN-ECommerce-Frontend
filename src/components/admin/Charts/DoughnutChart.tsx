@@ -11,9 +11,9 @@ interface DoughnutChartProps {
 }
 
 export const DoughnutChart = ({
-  data,
-  labels,
-  backgroundColor,
+  data = [],
+  labels = [],
+  backgroundColor = [],
   cutout,
   legends = true,
   offset,
