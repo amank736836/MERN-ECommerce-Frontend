@@ -9,14 +9,12 @@ interface LineChartProps {
   labels?: string[];
 }
 
-const months = ["January", "February", "March", "April", "May", "June", "July"];
-
 export const LineChart = ({
-  data,
+  data = [],
   label,
   backgroundColor,
   borderColor,
-  labels = months,
+  labels = [],
 }: LineChartProps) => {
   const LineChartOptions: ChartOptions<"line"> = {
     responsive: true,
