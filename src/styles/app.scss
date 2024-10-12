@@ -35,21 +35,27 @@ body {
   color: rgb(0, 195, 0);
 }
 
+.yellow {
+  color: rgb(255, 255, 0);
+}
+
+
+
 @import "mixin";
 @import "home";
 @import "cart";
 @import "shipping";
 @import "login";
 @import "search";
-@import "admin/admin";
+@import "admin-styles/admin.scss";
 @import "mediaquery";
 
-.container{
+.container {
   max-width: 1367px;
   width: 100%;
   margin: auto;
   overflow: auto;
-  > h1{
+  > h1 {
     @include heading;
     margin: 1rem 0;
     text-align: left;
@@ -89,10 +95,10 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    width: 130px;
+    width: 150px;
     position: absolute;
     left: calc(100% - 150px);
-    top: 8%;
+    top: 6%;
     > div {
       @include flex(column, flex-start, center, 0.25rem);
     }
