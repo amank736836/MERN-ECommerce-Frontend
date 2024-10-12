@@ -1,6 +1,6 @@
+import { ReactElement } from "react";
 import { Column } from "react-table";
 import TableHOC from "./TableHOC";
-import { ReactElement } from "react";
 
 export interface OrderDataType {
   _id: string;
@@ -38,13 +38,20 @@ const columns: Column<OrderDataType>[] = [
   },
 ];
 
-const OrderTable = ({ data = [] }: { data: OrderDataType[] }) => {
+const OrderTable = ({
+  data = [],
+  title,
+}: {
+  data: OrderDataType[];
+  title: string;
+}) => {
   return TableHOC<OrderDataType>(
     columns,
     data,
     "dashboardProductBox",
-    "Orders",
-    data.length > 6
+    title,
+    data.length > 10,
+    10
   )();
 };
 
