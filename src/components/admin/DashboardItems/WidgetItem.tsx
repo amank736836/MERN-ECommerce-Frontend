@@ -15,18 +15,21 @@ const WidgetItem = ({
   amount = false,
   color,
 }: WidgetItemProps) => {
+  percent = percent > 0 && percent > 10000 ? 9999 : percent;
+  percent = percent < 0 && percent < -10000 ? -9999 : percent;
+
   return (
     <article className="widget">
       <div className="widgetInfo">
         <p>{heading}</p>
-        <h4>{amount ? `$${value}` : value}</h4>
+        <h4>{amount ? `₹${value}` : value}</h4>
         {percent > 0 ? (
           <span className="green">
             <HiTrendingUp /> +{percent}%{" "}
           </span>
         ) : (
           <span className="red">
-            <HiTrendingDown /> +{percent}%{" "}
+            <HiTrendingDown /> {percent}%{" "}
           </span>
         )}
       </div>
@@ -46,7 +49,7 @@ const WidgetItem = ({
             color: color,
           }}
         >
-          {percent}%
+          {percent}
         </span>
       </div>
     </article>
