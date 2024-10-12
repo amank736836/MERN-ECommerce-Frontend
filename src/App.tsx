@@ -1,7 +1,21 @@
-import { lazy, Suspense } from "react";
-import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { lazy, Suspense, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Link,
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 import Loader from "./components/admin/Loader";
 import Header from "./components/Header";
+import ProtectedRoute from "./components/protected-route";
+import { auth } from "./firebase";
+import { getUser } from "./redux/api/userAPI";
+import { userExist, userNotExist } from "./redux/reducer/userReducer";
+import { RootState } from "./redux/store";
 
 const Home = lazy(() => import("./pages/Home"));
 const Search = lazy(() => import("./pages/Search"));
@@ -11,20 +25,18 @@ const Login = lazy(() => import("./pages/Login"));
 
 const Shipping = lazy(() => import("./pages/Shipping"));
 const Orders = lazy(() => import("./pages/Orders"));
-const OrderDetails = lazy(() => import("./pages/OrderDetails"));
 
 const ProductManagement = lazy(
   () => import("./pages/admin/management/ProductManagement")
 );
 const NewProduct = lazy(() => import("./pages/admin/management/NewProduct"));
-const TransactionManagement = lazy(
-  () => import("./pages/admin/management/TransactionManagement")
+const OrderManagement = lazy(
+  () => import("./pages/admin/management/OrderManagement")
 );
 
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
-const Product = lazy(() => import("./pages/admin/Product"));
-const Transaction = lazy(() => import("./pages/admin/Transaction"));
-const Customer = lazy(() => import("./pages/admin/Customer"));
+const Product = lazy(() => import("./pages/admin/Products"));
+const Customer = lazy(() => import("./pages/admin/Customers"));
 
 const BarCharts = lazy(() => import("./pages/admin/charts/BarCharts"));
 const PieCharts = lazy(() => import("./pages/admin/charts/PieCharts"));
@@ -35,7 +47,32 @@ const Coupon = lazy(() => import("./pages/admin/apps/Coupon"));
 const Toss = lazy(() => import("./pages/admin/apps/Toss"));
 
 const App = () => {
-  return (
+  const { user, loading } = useSelector(
+    (state: RootState) => state.userReducer
+  );
+
+  const { cartItems } = useSelector((state: RootState) => state.cartReducer);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const data = await getUser(user.uid);
+          dispatch(userExist(data.user));
+        } catch (error) {
+          dispatch(userNotExist());
+        }
+      } else {
+        dispatch(userNotExist());
+      }
+    });
+  }, []);
+
+  return loading ? (
+    <Loader />
+  ) : (
     <Router>
       <Header />
       <Suspense fallback={<Loader />}>
@@ -45,23 +82,49 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
 
           {/* Not Logged In Route */}
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={
+              <ProtectedRoute isAuthenticated={user ? false : true}>
+                <Login />
+              </ProtectedRoute>
+            }
+          />
           {/* Login Routes  */}
-          <Route>
-            <Route path="/shipping" element={<Shipping />} />
+          <Route
+            element={
+              <ProtectedRoute
+                isAuthenticated={user ? true : false}
+                redirect={user ? "/" : "/login"}
+              />
+            }
+          >
+            <Route
+              element={
+                <ProtectedRoute
+                  isAuthenticated={user && cartItems.length > 0 ? true : false}
+                  redirect={user ? "/cart" : "/login"}
+                  adminOnly={true}
+                  admin={user?.role === "user" ? true : false}
+                />
+              }
+            >
+              <Route path="/shipping" element={<Shipping />} />
+            </Route>
             <Route path="/orders" element={<Orders />} />
-            <Route path="/order/:id" element={<OrderDetails />} />
+            <Route path="/order/:id" element={<OrderManagement />} />
           </Route>
 
           {/* Admin Routes  */}
           <Route
-          // element={
-          //   <ProtectedRoute
-          //     isAuthenticated={true}
-          //     adminRoute={true}
-          //     isAdmin={true}
-          //   />
-          // }
+            element={
+              <ProtectedRoute
+                isAuthenticated={user ? true : false}
+                adminOnly={true}
+                admin={user?.role === "admin" ? true : false}
+                redirect={user ? "/" : "/login"}
+              />
+            }
           >
             <Route
               path="/admin"
@@ -81,9 +144,8 @@ const App = () => {
             />
 
             <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/admin/product" element={<Product />} />
-            <Route path="/admin/transaction" element={<Transaction />} />
-            <Route path="/admin/customer" element={<Customer />} />
+            <Route path="/admin/products" element={<Product />} />
+            <Route path="/admin/customers" element={<Customer />} />
 
             <Route path="/admin/chart/bar" element={<BarCharts />} />
             <Route path="/admin/chart/pie" element={<PieCharts />} />
@@ -95,13 +157,11 @@ const App = () => {
 
             <Route path="/admin/product/:id" element={<ProductManagement />} />
             <Route path="/admin/product/add" element={<NewProduct />} />
-            <Route
-              path="/admin/transaction/:id"
-              element={<TransactionManagement />}
-            />
           </Route>
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>
+      <Toaster position="bottom-center" />
     </Router>
   );
 };
