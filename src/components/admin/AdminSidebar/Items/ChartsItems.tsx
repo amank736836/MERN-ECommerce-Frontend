@@ -2,18 +2,18 @@ import { FaChartBar, FaChartLine, FaChartPie } from "react-icons/fa";
 
 export const ChartItems = [
   {
-    name: "Bar Chart",
+    name: "Bar Charts",
     icon: FaChartBar,
     url: "/admin/chart/bar",
   },
   {
-    name: "Pie Chart",
-    icon: FaChartPie,
-    url: "/admin/chart/pie",
-  },
-  {
-    name: "Line Chart",
+    name: "Line Charts",
     icon: FaChartLine,
     url: "/admin/chart/line",
+  },
+  {
+    name: "Pie Charts",
+    icon: FaChartPie,
+    url: "/admin/chart/pie",
   },
 ];
