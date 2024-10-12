@@ -1,0 +1,73 @@
+{
+  "widgets": [
+    {
+      "amount": true,
+      "heading": "Revenue",
+      "color": "rgb(0,115,255)"
+    },
+    {
+      "heading": "Users",
+      "color": "rgb(0,198,202)"
+    },
+    {
+      "heading": "Orders",
+      "color": "rgb(255,196,0)"
+    },
+    {
+      "heading": "Products",
+      "color": "rgb(76,0,255)"
+    }
+  ],
+  "pieChart": {
+    "orderFullfiillment": {
+      "processing": 0,
+      "shipped": 0,
+      "delivered": 0
+    },
+    "productCategories": [],
+    "stockAvailability": {
+      "inStock": 0,
+      "outOfStock": 0
+    },
+    "revenueDistribution": {
+      "netMargin": 0,
+      "discount": 0,
+      "productionCost": 0,
+      "burnt": 0,
+      "marketingCost": 0
+    },
+    "userAgeGroup": {
+      "teen": 0,
+      "adult": 0,
+      "senior": 0
+    },
+    "adminCustomer": {
+      "admin": 0,
+      "user": 0
+    }
+  },
+  "stats": {
+    "categoryCount": [],
+    "ChangePercent": {
+      "revenue": 0,
+      "products": 0,
+      "users": 0,
+      "orders": 0
+    },
+    "count": {
+      "revenue": 0,
+      "products": 0,
+      "users": 0,
+      "orders": 0
+    },
+    "chart": {
+      "order": [0, 0, 0, 0, 0, 0],
+      "revenue": [0, 0, 0, 0, 0, 0]
+    },
+    "userRatio": {
+      "male": 0,
+      "female": 0
+    },
+    "latestOrders": []
+  }
+}
