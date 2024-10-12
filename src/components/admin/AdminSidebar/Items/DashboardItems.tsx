@@ -1,4 +1,3 @@
-import { AiFillFileText } from "react-icons/ai";
 import { IoIosPeople } from "react-icons/io";
 import { RiDatabaseFill, RiShoppingBag3Fill } from "react-icons/ri";
 
@@ -9,18 +8,13 @@ export const DashboardItems = [
     url: "/admin/dashboard",
   },
   {
-    name: "Product",
-    icon: RiShoppingBag3Fill,
-    url: "/admin/product",
-  },
-  {
-    name: "Customer",
+    name: "Customers",
     icon: IoIosPeople,
-    url: "/admin/customer",
+    url: "/admin/customers",
   },
   {
-    name: "Transaction",
-    icon: AiFillFileText,
-    url: "/admin/transaction",
+    name: "Products",
+    icon: RiShoppingBag3Fill,
+    url: "/admin/products",
   },
 ];
