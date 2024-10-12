@@ -17,9 +17,9 @@ import { getUser } from "./redux/api/userAPI";
 import { userExist, userNotExist } from "./redux/reducer/userReducer";
 import { RootState } from "./redux/store";
 
-const Home = lazy(() => import("./pages/Home"));
-const Search = lazy(() => import("./pages/Search"));
-const Cart = lazy(() => import("./pages/Cart"));
+const Home = lazy(() => import("./pages/home"));
+const Search = lazy(() => import("./pages/search"));
+const Cart = lazy(() => import("./pages/cart"));
 
 const Login = lazy(() => import("./pages/Login"));
 
