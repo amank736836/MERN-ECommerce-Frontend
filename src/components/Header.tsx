@@ -1,56 +1,49 @@
-import { useState } from "react";
+import { signOut } from "firebase/auth";
+import toast from "react-hot-toast";
 import {
+  FaHome,
   FaSearch,
   FaShoppingBag,
   FaSignInAlt,
   FaSignOutAlt,
-  FaUser,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
-const user = { _id: "aman", role: "admin" };
-// const user = { _id: "aman", role: "user" };
-// const user = {};
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { RootState } from "../redux/store";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const logoutHandler = () => {
-    setIsOpen(false);
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    try {
+      await signOut(auth);
+      toast.success("Signed Out Successfully");
+      navigate("/login");
+    } catch (error) {
+      toast.error("Sign Out Failed");
+    }
   };
 
   return (
     <nav className="header">
-      <Link onClick={() => setIsOpen(false)} to="/">
-        Home
+      <Link to="/">
+        <FaHome />
       </Link>
-      <Link onClick={() => setIsOpen(false)} to="/search">
-        <FaSearch />{" "}
+      <Link to="/search">
+        <FaSearch />
       </Link>
-      <Link onClick={() => setIsOpen(false)} to="/cart">
-        <FaShoppingBag />{" "}
+      <Link to="/cart">
+        <FaShoppingBag />
       </Link>
-      {user?._id ? (
-          <>
-            <button onClick={() => setIsOpen((prev: boolean) => !prev)}>
-              <FaUser />
-            </button>
-            <dialog open={isOpen}>
-              <div>
-                {user.role === "admin" && (
-                  <Link onClick={() => setIsOpen(false)} to="/admin/dashboard">
-                    Dashboard
-                  </Link>
-                )}
-                <Link onClick={() => setIsOpen(false)} to="/orders">
-                  Orders
-                </Link>
-                <button onClick={logoutHandler}>
-                  <FaSignOutAlt />
-                </button>
-              </div>
-            </dialog>
-        </>
+      <Link to="/orders">Orders</Link>
+      {user?.role === "admin" && <Link to="/admin/dashboard">Dashboard</Link>}
+      {user ? (
+        <button onClick={logoutHandler}>
+          <FaSignOutAlt />
+        </button>
       ) : (
         <Link to="/login">
           <FaSignInAlt />
