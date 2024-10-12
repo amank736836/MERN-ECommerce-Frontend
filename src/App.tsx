@@ -9,13 +9,13 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
-import Loader from "./components/admin/Loader";
-import Header from "./components/Header";
-import ProtectedRoute from "./components/protected-route";
-import { auth } from "./firebase";
-import { getUser } from "./redux/api/userAPI";
-import { userExist, userNotExist } from "./redux/reducer/userReducer";
-import { RootState } from "./redux/store";
+import Loader from "./components/admin/Loader.tsx";
+import Header from "./components/Header.tsx";
+import ProtectedRoute from "./components/protected-route.tsx";
+import { auth } from "./firebase.ts";
+import { getUser } from "./redux/api/userAPI.ts";
+import { userExist, userNotExist } from "./redux/reducer/userReducer.ts";
+import { RootState } from "./redux/store.ts";
 
 const Home = lazy(() => import("./pages/home.tsx"));
 const Search = lazy(() => import("./pages/search.tsx"));
