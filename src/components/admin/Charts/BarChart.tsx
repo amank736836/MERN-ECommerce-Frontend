@@ -20,7 +20,7 @@ export const BarChart = ({
   title_2,
   bgColor_1,
   bgColor_2,
-  labels,
+  labels = [],
 }: BarChartProps) => {
   const BarChartOptions: ChartOptions<"bar"> = {
     responsive: true,
