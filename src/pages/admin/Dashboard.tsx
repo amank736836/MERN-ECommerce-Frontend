@@ -1,8 +1,9 @@
 import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
 import { BarChart, DoughnutChart } from "../../components/admin/Charts/Charts";
 
-import { widgets as widgetItems 
-  , stats as statsData
+import {
+  widgets as widgetItems,
+  stats as statsData,
 } from "../../assets/defaultData.json";
 
 import CategoryItem from "../../components/admin/DashboardItems/CategoryItem";
@@ -20,13 +21,16 @@ import { CustomError } from "../../types/api-types";
 import { Stats } from "../../types/types";
 import { Navigate } from "react-router-dom";
 import { useEffect } from "react";
+import { getLastMonths } from "../../utils/features";
+
+const { last6Months } = getLastMonths();
 
 const Dashboard = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
   const { data, isLoading, isError, error } = useStatsQuery(user?._id!);
 
-  const stats = data?.stats as Stats || statsData;
+  const stats = (data?.stats as Stats) || statsData;
 
   useEffect(() => {
     if (isError) {
@@ -89,6 +93,7 @@ const Dashboard = () => {
                   title_2="Orders"
                   bgColor_1="rgb(0,115,255)"
                   bgColor_2="rgba(53,162,235,0.8)"
+                  labels={last6Months}
                 />
               </div>
               <div className="dashboardCategories">
