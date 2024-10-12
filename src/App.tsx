@@ -21,10 +21,10 @@ const Home = lazy(() => import("./pages/home"));
 const Search = lazy(() => import("./pages/search"));
 const Cart = lazy(() => import("./pages/cart"));
 
-const Login = lazy(() => import("./pages/Login"));
+const Login = lazy(() => import("./pages/login"));
 
-const Shipping = lazy(() => import("./pages/Shipping"));
-const Orders = lazy(() => import("./pages/Orders"));
+const Shipping = lazy(() => import("./pages/shipping"));
+const Orders = lazy(() => import("./pages/orders"));
 
 const ProductManagement = lazy(
   () => import("./pages/admin/management/ProductManagement")
