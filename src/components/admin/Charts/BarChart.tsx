@@ -12,8 +12,6 @@ interface BarChartProps {
   labels?: string[];
 }
 
-const months = ["January", "February", "March", "April", "May", "June", "July"];
-
 export const BarChart = ({
   horizontal = false,
   data_1 = [],
@@ -22,7 +20,7 @@ export const BarChart = ({
   title_2,
   bgColor_1,
   bgColor_2,
-  labels = months,
+  labels,
 }: BarChartProps) => {
   const BarChartOptions: ChartOptions<"bar"> = {
     responsive: true,
