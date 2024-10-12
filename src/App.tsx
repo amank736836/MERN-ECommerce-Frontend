@@ -17,14 +17,14 @@ import { getUser } from "./redux/api/userAPI";
 import { userExist, userNotExist } from "./redux/reducer/userReducer";
 import { RootState } from "./redux/store";
 
-const Home = lazy(() => import("./pages/Home.tsx"));
-const Search = lazy(() => import("./pages/Search.tsx"));
-const Cart = lazy(() => import("./pages/Cart.tsx"));
+const Home = lazy(() => import("./pages/home.tsx"));
+const Search = lazy(() => import("./pages/search.tsx"));
+const Cart = lazy(() => import("./pages/cart.tsx"));
 
-const Login = lazy(() => import("./pages/Login.tsx"));
+const Login = lazy(() => import("./pages/login.tsx"));
 
-const Shipping = lazy(() => import("./pages/Shipping.tsx"));
-const Orders = lazy(() => import("./pages/Orders.tsx"));
+const Shipping = lazy(() => import("./pages/shipping.tsx"));
+const Orders = lazy(() => import("./pages/orders.tsx"));
 
 const ProductManagement = lazy(
   () => import("./pages/admin/management/ProductManagement.tsx")
