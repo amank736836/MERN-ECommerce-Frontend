@@ -27,24 +27,26 @@ const Shipping = lazy(() => import("./pages/Shipping.tsx"));
 const Orders = lazy(() => import("./pages/Orders.tsx"));
 
 const ProductManagement = lazy(
-  () => import("./pages/admin/management/ProductManagement")
+  () => import("./pages/admin/management/ProductManagement.tsx")
 );
-const NewProduct = lazy(() => import("./pages/admin/management/NewProduct"));
+const NewProduct = lazy(
+  () => import("./pages/admin/management/NewProduct.tsx")
+);
 const OrderManagement = lazy(
-  () => import("./pages/admin/management/OrderManagement")
+  () => import("./pages/admin/management/OrderManagement.tsx")
 );
 
-const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
-const Product = lazy(() => import("./pages/admin/Products"));
-const Customer = lazy(() => import("./pages/admin/Customers"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard.tsx"));
+const Product = lazy(() => import("./pages/admin/Products.tsx"));
+const Customer = lazy(() => import("./pages/admin/Customers.tsx"));
 
-const BarCharts = lazy(() => import("./pages/admin/charts/BarCharts"));
-const PieCharts = lazy(() => import("./pages/admin/charts/PieCharts"));
-const LineCharts = lazy(() => import("./pages/admin/charts/LineCharts"));
+const BarCharts = lazy(() => import("./pages/admin/charts/BarCharts.tsx"));
+const PieCharts = lazy(() => import("./pages/admin/charts/PieCharts.tsx"));
+const LineCharts = lazy(() => import("./pages/admin/charts/LineCharts.tsx"));
 
-const Stopwatch = lazy(() => import("./pages/admin/apps/Stopwatch"));
-const Coupon = lazy(() => import("./pages/admin/apps/Coupon"));
-const Toss = lazy(() => import("./pages/admin/apps/Toss"));
+const Stopwatch = lazy(() => import("./pages/admin/apps/Stopwatch.tsx"));
+const Coupon = lazy(() => import("./pages/admin/apps/Coupon.tsx"));
+const Toss = lazy(() => import("./pages/admin/apps/Toss.tsx"));
 
 const App = () => {
   const { user, loading } = useSelector(
