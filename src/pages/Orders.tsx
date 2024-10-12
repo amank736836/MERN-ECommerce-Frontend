@@ -1,10 +1,83 @@
-import OrderTable from "../components/admin/Tables/OrderTable";
-import { OrderItems } from "../components/admin/Tables/Items/OrderItems";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import OrderTable, {
+  OrderDataType,
+} from "../components/admin/Tables/OrderTable";
+import { SkeletonLoader } from "../components/loader";
+import { useAllOrdersQuery, useMyOrdersQuery } from "../redux/api/orderAPI";
+import { RootState } from "../redux/store";
+import { CustomError } from "../types/api-types";
+
 const Orders = () => {
+  const [orders, setOrders] = useState<OrderDataType[]>([]);
+
+  const { user } = useSelector((state: RootState) => state.userReducer);
+
+  const { data, isLoading, isError, error } =
+    user?.role === "admin"
+      ? useAllOrdersQuery(user?._id!)
+      : useMyOrdersQuery(user?._id!);
+
+  if (isError) {
+    const err = error as CustomError;
+    toast.error(err.data.message);
+  }
+
+  useEffect(() => {
+    if (data) {
+      setOrders(
+        data.orders.map((order) => ({
+          _id: order._id,
+          quantity: order.orderItems.length,
+          discount: order.discount,
+          amount: order.total,
+          status: (
+            <span
+              className={
+                order.status === "Delivered"
+                  ? "green"
+                  : order.status === "Cancelled"
+                  ? "red"
+                  : order.status === "Shipped"
+                  ? "purple"
+                  : ""
+              }
+            >
+              {order.status}
+            </span>
+          ),
+          action: (
+            <Link to={`/order/${order._id}`}>
+              {user?.role === "admin" ? "Manage" : "View"}
+            </Link>
+          ),
+        }))
+      );
+    }
+  }, [data]);
+
   return (
     <div className="container">
-      <h1>My Orders</h1>
-      <OrderTable data={OrderItems} />
+      <main>
+        {isLoading ? (
+          <SkeletonLoader
+            height="4rem"
+            width="100%"
+            flexDir="column"
+            padding="1rem"
+            margin="4rem 0"
+            length={12}
+          />
+        ) : orders.length === 0 ? (
+          <center>
+            <h2 className="noData">No Order Done Yet</h2>
+          </center>
+        ) : (
+          <OrderTable data={orders} title="Orders" />
+        )}
+      </main>
     </div>
   );
 };
