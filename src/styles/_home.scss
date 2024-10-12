@@ -49,7 +49,7 @@
     }
 
     img {
-        @include square(calc(18.75rem - 3rem));
+        @include square(14.75rem);
         object-fit: cover;
         margin: 1rem;
     }

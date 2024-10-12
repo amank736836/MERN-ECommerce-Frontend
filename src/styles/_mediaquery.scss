@@ -6,7 +6,7 @@
   .dashboard {
     .widgetContainer,
     .graphContainer,
-    .transactionContainer {
+    .orderContainer {
       justify-content: center;
       // padding: 2rem;
       flex-wrap: wrap;
@@ -14,7 +14,7 @@
     .graphContainer {
       padding: 2rem;
     }
-    .transactionContainer {
+    .orderContainer {
       padding: 2rem;
       height: unset;
     }
