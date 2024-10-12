@@ -1,9 +1,3 @@
-const Loader = () => {
-  return <div>Loading...</div>;
-};
-
-export default Loader;
-
 interface SkeletonProps {
   width?: string;
   height?: string;
