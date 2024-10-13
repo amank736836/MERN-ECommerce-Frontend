@@ -9,9 +9,9 @@ import { saveShippingInfo } from "../redux/reducer/cartReducer";
 import { RootState, server } from "../redux/store";
 
 const Shipping = () => {
-  const {
-    user: { name, email },
-  } = useSelector((state: RootState) => state.userReducer);
+  const { user } = useSelector((state: RootState) => state.userReducer);
+
+  const { name, email } = user!;
 
   const {
     shippingInfo: { address, city, state, country, pinCode },
