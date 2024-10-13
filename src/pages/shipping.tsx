@@ -87,7 +87,7 @@ const Shipping = () => {
         toast.error(response.error.description);
       });
 
-      razor.on("payment.success", function (response: any) {
+      razor.on("payment.success", function () {
         toast.success("Payment Successful");
         navigate("/orders");
       });
