@@ -67,7 +67,7 @@ const Shipping = () => {
           "https://lh3.googleusercontent.com/a/ACg8ocJJL8GSgTuPerpQuk77Q9WAKPqB7_tsidE2f22htvwgzvCzzTCehw=s96-c",
         order_id: id,
         callback_url:
-          "https://localhost:3000/api/v1/payment/razorpayPaymentVerification",
+          "https://mern-ecommerce-backend-1-1ek8.onrender.com/api/v1/payment/razorpayPaymentVerification",
         prefill: {
           name: name || "",
           email: email || "",
