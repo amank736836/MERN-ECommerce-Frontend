@@ -28,7 +28,7 @@ const Customer = () => {
   const deleteHandler = (userId: string) => async () => {
     const res = await deleteUser({
       userId,
-      id: user._id,
+      id: user?._id!,
     });
     responseToast(res, null, "");
   };
