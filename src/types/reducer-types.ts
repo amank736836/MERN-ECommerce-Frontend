@@ -1,7 +1,7 @@
 import { CartItem, ShippingInfo, User } from "./types";
 
 export interface UserReducerInitialState {
-  user: User;
+  user: User | null;
   loading: boolean;
 }
 
