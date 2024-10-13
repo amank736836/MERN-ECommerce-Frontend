@@ -3,15 +3,7 @@ import { UserReducerInitialState } from "../../types/reducer-types";
 import { User } from "../../types/types";
 
 const initialState: UserReducerInitialState = {
-  user: {
-    _id: "",
-    name: "",
-    email: "",
-    photo: "",
-    role: "",
-    gender: "",
-    dob: "",
-  },
+  user: null,
   loading: true,
 };
 
