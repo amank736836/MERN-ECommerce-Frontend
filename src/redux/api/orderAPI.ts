@@ -3,6 +3,7 @@ import {
   AllOrdersResponse,
   MessageResponse,
   NewOrderRequest,
+  NewOrderResponse,
   OrderDetailsResponse,
   UpdateOrderRequest,
 } from "../../types/api-types";
@@ -32,7 +33,7 @@ export const orderAPI = createApi({
       query: (id) => id,
       providesTags: ["orders"],
     }),
-    newOrder: builder.mutation<MessageResponse, NewOrderRequest>({
+    newOrder: builder.mutation<NewOrderResponse, NewOrderRequest>({
       query: (order) => ({
         url: "new",
         method: "POST",
