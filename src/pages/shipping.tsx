@@ -1,5 +1,5 @@
 // import Razorpay from "razorpay";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BiArrowBack } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
@@ -65,7 +65,6 @@ const Shipping = () => {
         description: "Test Transaction",
         handler: async (response: RazorpayResponse) => {
           try {
-
             const { data: verification } = await verifyPayment(response);
 
             if (!verification?.success) {
@@ -133,6 +132,24 @@ const Shipping = () => {
       toast.error("Payment failed");
     }
   };
+
+  const loadScript = (src: string) => {
+    return new Promise<void>((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve();
+      };
+      script.onerror = (error) => {
+        reject(error);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  useEffect(() => {
+    loadScript("https://checkout.razorpay.com/v1/checkout.js");
+  }, []);
 
   return (
     <div className="shipping">
