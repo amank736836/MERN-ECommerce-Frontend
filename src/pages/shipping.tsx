@@ -58,7 +58,7 @@ const Shipping = () => {
       const { data: razorpay } = await createRazorpay(total);
 
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        key: import.meta.env.VITE_RAZORPAY_ID,
         amount: razorpay?.amount,
         currency: razorpay?.currency,
         name: "Ecommerce Platform",
