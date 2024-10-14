@@ -136,3 +136,32 @@ export type LineResponse = {
   message: string;
   charts: Line;
 };
+
+export type CreateRazorpayResponse = {
+  success: boolean;
+  id: string;
+  currency: string;
+  amount: number;
+};
+
+export type RazorpayResponse = {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+};
+
+export type VerificationResponse = {
+  success: boolean;
+  message: string;
+  signatureIsValid: boolean;
+};
+
+export type CreatePaymentRequest = RazorpayResponse & {
+  order: String;
+  user: String;
+  paymentStatus: "Pending" | "Failed" | "Success";
+};
+
+export type NewOrderResponse = MessageResponse & {
+  orderId: string;
+};
