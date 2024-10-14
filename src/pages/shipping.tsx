@@ -1,21 +1,38 @@
-import axios from "axios";
 // import Razorpay from "razorpay";
 import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { BiArrowBack } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useNewOrderMutation } from "../redux/api/orderAPI";
+import {
+  useCreatePaymentMutation,
+  useCreateRazorpayMutation,
+  useVerifyPaymentMutation,
+} from "../redux/api/paymentAPI";
 import { saveShippingInfo } from "../redux/reducer/cartReducer";
-import { RootState, server } from "../redux/store";
+import { RootState } from "../redux/store";
+import { RazorpayResponse } from "../types/api-types";
 
 const Shipping = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
-
-  const { name, email } = user!;
-
   const {
+    cartItems,
+    total,
     shippingInfo: { address, city, state, country, pinCode },
+    subtotal,
+    shippingCharges,
+    tax,
+    discount,
   } = useSelector((state: RootState) => state.cartReducer);
+
+  const [createRazorpay] = useCreateRazorpayMutation();
+  const [verifyPayment] = useVerifyPaymentMutation();
+  const [createPayment] = useCreatePaymentMutation();
+  const [newOrder] = useNewOrderMutation();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [shippingInfo, setShippingInfo] = useState({
     address: address || "",
@@ -34,46 +51,76 @@ const Shipping = () => {
     }));
   };
 
-  const { total } = useSelector((state: RootState) => state.cartReducer);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(saveShippingInfo(shippingInfo));
     try {
-      const {
-        data: { id, currency, amount },
-      } = await axios.post(
-        `${server}/api/v1/payment/createRazorpay`,
-        {
-          amount: total,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const { data: razorpay } = await createRazorpay(total);
 
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: amount,
-        currency: currency,
+        amount: razorpay?.amount,
+        currency: razorpay?.currency,
         name: "Ecommerce Platform",
         description: "Test Transaction",
-        image:
-          "https://lh3.googleusercontent.com/a/ACg8ocJJL8GSgTuPerpQuk77Q9WAKPqB7_tsidE2f22htvwgzvCzzTCehw=s96-c",
-        order_id: id,
-        callback_url:
-          "https://mern-ecommerce-backend-1-1ek8.onrender.com/api/v1/payment/razorpayPaymentVerification",
+        handler: async (response: RazorpayResponse) => {
+          try {
+
+            const { data: verification } = await verifyPayment(response);
+
+            if (!verification?.success) {
+              throw new Error("Payment failed 1");
+            }
+
+            const { data: order } = await newOrder({
+              orderItems: cartItems,
+              subtotal,
+              shippingCharges,
+              tax,
+              discount,
+              total,
+              shippingInfo,
+              user: user?._id!,
+            });
+
+            if (!order?.success) {
+              throw new Error("Payment failed 2");
+            }
+
+            const { data: payment } = await createPayment({
+              order: order?.orderId,
+              user: user?._id!,
+              paymentStatus: verification?.success ? "Success" : "Failed",
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+
+            if (!payment?.success) {
+              throw new Error("Payment failed 3");
+            }
+
+            toast.success("Payment successful");
+            navigate("/orders");
+          } catch (error: any) {
+            toast.error(error.message);
+          }
+        },
+        modal: {
+          ondismiss: function (response: any) {
+            console.log(response);
+          },
+        },
+        image: user?.photo,
+        order_id: razorpay?.id,
         prefill: {
-          name: name || "",
-          email: email || "",
+          name: user?.name,
+          email: user?.email,
         },
         notes: {
-          address: "Chitkara University",
+          name: user?.name,
+          email: user?.email,
+          gender: user?.gender,
         },
         theme: {
           color: "#001d75",
@@ -82,19 +129,8 @@ const Shipping = () => {
 
       const razor = new (window as any).Razorpay(options);
       razor.open();
-
-      razor.on("payment.failed", function (response: any) {
-        toast.error(response.error.description);
-      });
-
-      razor.on("payment.success", function (response: any) {
-        console.log(response);
-        toast.success("Payment Successful");
-        navigate("/orders");
-      });
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+      toast.error("Payment failed");
     }
   };
 
