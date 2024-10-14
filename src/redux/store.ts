@@ -5,6 +5,7 @@ import { userAPI } from "./api/userAPI";
 import { cartReducer } from "./reducer/cartReducer";
 import { userReducer } from "./reducer/userReducer";
 import { dashboardAPI } from "./api/dashboardAPI";
+import { paymentAPI } from "./api/paymentAPI";
 
 export const server = import.meta.env.VITE_SERVER_URL;
 
@@ -14,6 +15,7 @@ export const store = configureStore({
     [productAPI.reducerPath]: productAPI.reducer,
     [orderAPI.reducerPath]: orderAPI.reducer,
     [dashboardAPI.reducerPath]: dashboardAPI.reducer,
+    [paymentAPI.reducerPath]: paymentAPI.reducer,
     [userReducer.name]: userReducer.reducer,
     [cartReducer.name]: cartReducer.reducer,
   },
@@ -22,7 +24,8 @@ export const store = configureStore({
       .concat(productAPI.middleware)
       .concat(userAPI.middleware)
       .concat(orderAPI.middleware)
-      .concat(dashboardAPI.middleware),
+      .concat(dashboardAPI.middleware)
+      .concat(paymentAPI.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
