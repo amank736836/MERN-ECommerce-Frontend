@@ -20,6 +20,9 @@ const Cart = () => {
   const [isValidCouponCode, setIsValidCouponCode] = useState<boolean>(false);
 
   useEffect(() => {
+    if (cartItems.length <= 0 || user?.role !== "user" || couponCode === "") {
+      return;
+    }
     const { token: cancelToken, cancel } = axios.CancelToken.source();
     const id = setTimeout(() => {
       axios
