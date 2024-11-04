@@ -134,7 +134,7 @@ const OrderManagement = () => {
                     <h5>{item.name}</h5>
                   )}
                   <span>
-                    ${item.price} X {item.quantity} = $
+                  ₹{item.price} X {item.quantity} = ₹
                     {item.price * item.quantity}
                   </span>
                 </div>
