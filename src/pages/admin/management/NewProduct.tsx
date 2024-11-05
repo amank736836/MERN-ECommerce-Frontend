@@ -6,9 +6,12 @@ import { useNewProductMutation } from "../../../redux/api/productAPI";
 import { RootState } from "../../../redux/store";
 import { responseToast } from "../../../utils/features";
 import toast from "react-hot-toast";
+import Loader from "../../../components/admin/Loader";
 
 const NewProduct = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>(Number(""));
@@ -28,12 +31,10 @@ const NewProduct = () => {
       if (file.size > MAX_FILE_SIZE) {
         fileInput.value = "";
         toast.error("File size should be less than 10MB");
-      } 
-      else if (!file.type.includes("image")) {
+      } else if (!file.type.includes("image")) {
         fileInput.value = "";
         toast.error("Only images are allowed");
-      }
-      else {
+      } else {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
@@ -59,10 +60,12 @@ const NewProduct = () => {
     formData.append("category", category);
     formData.append("photo", photo);
 
+    setLoading(true);
     const res = await newProduct({ formData, id: user?._id! });
     responseToast(res, navigate, "/admin/products");
   };
 
+  if (loading) return <Loader />;
   return (
     <div className="adminContainer">
       <AdminSidebar />
