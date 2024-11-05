@@ -39,7 +39,8 @@ const ProductTable = ({ data = [] }: { data: ProductDataType[] }) => {
     data,
     "dashboardProductBox",
     "Products",
-    data.length > 5
+    data.length > 6,
+    6
   )();
 };
 
