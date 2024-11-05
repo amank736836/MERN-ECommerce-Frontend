@@ -5,6 +5,7 @@ import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
 import { useNewProductMutation } from "../../../redux/api/productAPI";
 import { RootState } from "../../../redux/store";
 import { responseToast } from "../../../utils/features";
+import toast from "react-hot-toast";
 
 const NewProduct = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -20,16 +21,24 @@ const NewProduct = () => {
   const navigate = useNavigate();
 
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const fileInput = e.target as HTMLInputElement;
     const file: File | undefined = e.target.files?.[0];
-    const reader = new FileReader();
     if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setPhotoPreview(reader.result);
-          setPhoto(file);
-        }
-      };
+      const MAX_FILE_SIZE = 10 * 1024 * 1024;
+      console.log(file.size);
+      if (file.size > MAX_FILE_SIZE) {
+        fileInput.value = "";
+        toast.error("File size should be less than 10MB");
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          if (typeof reader.result === "string") {
+            setPhotoPreview(reader.result);
+            setPhoto(file);
+          }
+        };
+      }
     }
   };
 
