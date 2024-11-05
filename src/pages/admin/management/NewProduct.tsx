@@ -25,7 +25,6 @@ const NewProduct = () => {
     const file: File | undefined = e.target.files?.[0];
     if (file) {
       const MAX_FILE_SIZE = 10 * 1024 * 1024;
-      console.log(file);
       if (file.size > MAX_FILE_SIZE) {
         fileInput.value = "";
         toast.error("File size should be less than 10MB");
