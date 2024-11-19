@@ -24,6 +24,7 @@ const NewProduct = () => {
   const [price, setPrice] = useState<number>(Number(""));
   const [stock, setStock] = useState<number>(Number(""));
   const [category, setCategory] = useState<string>("");
+
   const [photos, setPhotos] = useState<File[]>([]);
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
   const [photoError, setPhotoError] = useState<string>("");
@@ -176,7 +177,7 @@ const NewProduct = () => {
                     style={{
                       width: 20 / photoPreviews.length + "rem",
                       height: 10 / photoPreviews.length + "rem",
-                      objectFit: "cover",
+                      objectFit: "scale-down",
                       margin: "0.5rem",
                     }}
                   />
