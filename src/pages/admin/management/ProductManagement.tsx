@@ -141,11 +141,13 @@ const ProductManagement = () => {
   };
 
   const deleteHandler = async () => {
+    setLoading(true);
     const res = await deleteProduct({
       id: user?._id!,
       productId: data?.product._id!,
     });
     responseToast(res, navigate, "/admin/products");
+    setLoading(false);
   };
 
   if (!isLoading && isError) {
