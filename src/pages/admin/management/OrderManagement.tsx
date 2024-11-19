@@ -75,36 +75,51 @@ const OrderManagement = () => {
   }, [data, isError]);
 
   const updateHandler = async () => {
-    setLoading(true);
-    const res = await updateOrder({
-      orderId: order._id,
-      id: user?._id!,
-    });
+    try {
+      setLoading(true);
+      const res = await updateOrder({
+        orderId: order._id,
+        id: user?._id!,
+      });
 
-    responseToast(res, navigate, "/orders");
-    setLoading(false);
+      responseToast(res, navigate, "/orders");
+      setLoading(false);
+    } catch (error) {
+      toast.error("Something went wrong");
+      setLoading(false);
+    }
   };
 
   const deleteHandler = async () => {
-    setLoading(true);
-    const res = await deleteOrder({
-      orderId: order._id,
-      id: user?._id!,
-    });
+    try {
+      setLoading(true);
+      const res = await deleteOrder({
+        orderId: order._id,
+        id: user?._id!,
+      });
 
-    responseToast(res, navigate, "/orders");
-    setLoading(false);
+      responseToast(res, navigate, "/orders");
+      setLoading(false);
+    } catch (error) {
+      toast.error("Something went wrong");
+      setLoading(false);
+    }
   };
 
   const cancelHandler = async () => {
-    setLoading(true);
-    const res = await cancelOrder({
-      orderId: order._id,
-      id: user?._id!,
-    });
+    try {
+      setLoading(true);
+      const res = await cancelOrder({
+        orderId: order._id,
+        id: user?._id!,
+      });
 
-    responseToast(res, navigate, "/orders");
-    setLoading(false);
+      responseToast(res, navigate, "/orders");
+      setLoading(false);
+    } catch (error) {
+      toast.error("Something went wrong");
+      setLoading(false);
+    }
   };
 
   if (!isLoading && isError) {
