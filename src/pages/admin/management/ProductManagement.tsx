@@ -112,7 +112,7 @@ const ProductManagement = () => {
     e.preventDefault();
     try {
       setLoading(true);
-  
+
       const formData = new FormData();
       if (nameUpdate !== name) {
         formData.append("name", nameUpdate);
@@ -131,18 +131,17 @@ const ProductManagement = () => {
           formData.append("photos", photo);
         });
       }
-  
+
       const res = await updateProduct({
         formData,
         id: user?._id!,
         productId: data?.product._id!,
       });
       responseToast(res, navigate, "/admin/products");
-      setLoading(false);
     } catch (error) {
       toast.error("Something went wrong");
+    } finally {
       setLoading(false);
-      
     }
   };
 
@@ -154,11 +153,10 @@ const ProductManagement = () => {
         productId: data?.product._id!,
       });
       responseToast(res, navigate, "/admin/products");
-      setLoading(false);
     } catch (error) {
       toast.error("Something went wrong");
+    } finally {
       setLoading(false);
-      
     }
   };
 
