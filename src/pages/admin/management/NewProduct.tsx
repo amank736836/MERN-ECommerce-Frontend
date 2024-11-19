@@ -8,6 +8,13 @@ import { responseToast } from "../../../utils/features";
 import toast from "react-hot-toast";
 import Loader from "../../../components/admin/Loader";
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+const ERROR_MESSAGES = {
+  size: "Each file should be less than 10MB",
+  type: "Only image files are allowed",
+};
+
 const NewProduct = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
@@ -16,53 +23,82 @@ const NewProduct = () => {
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>(Number(""));
   const [stock, setStock] = useState<number>(Number(""));
-  const [photo, setPhoto] = useState<File>();
-  const [photoPreview, setPhotoPreview] = useState<string>("");
   const [category, setCategory] = useState<string>("");
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
+  const [photoError, setPhotoError] = useState<string>("");
 
   const [newProduct] = useNewProductMutation();
   const navigate = useNavigate();
 
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const fileInput = e.target as HTMLInputElement;
-    const file: File | undefined = e.target.files?.[0];
-    if (file) {
-      const MAX_FILE_SIZE = 10 * 1024 * 1024;
-      if (file.size > MAX_FILE_SIZE) {
-        fileInput.value = "";
-        toast.error("File size should be less than 10MB");
-      } else if (!file.type.includes("image")) {
-        fileInput.value = "";
-        toast.error("Only images are allowed");
-      } else {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          if (typeof reader.result === "string") {
-            setPhotoPreview(reader.result);
-            setPhoto(file);
-          }
-        };
-      }
+    const files = e.target.files;
+
+    if (!files || files.length === 0)
+      return setPhotoError("Please select an image");
+
+    if (files.length > 7) {
+      toast.error("You can only upload 7 images");
+      setPhotoError("You can only upload 7 images");
+      return;
     }
+
+    const validFiles: File[] = [];
+    const previews: string[] = [];
+
+    Array.from(files).forEach((file, index) => {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error(`${file.name} - ${ERROR_MESSAGES.size}`);
+        setPhotoError(ERROR_MESSAGES.size);
+        setPhotoPreviews([]);
+        setPhotos([]);
+      } else if (!file.type.includes("image/")) {
+        toast.error(`${file.name} - ${ERROR_MESSAGES.type}`);
+        setPhotoError(ERROR_MESSAGES.type);
+        setPhotoPreviews([]);
+        setPhotos([]);
+      } else {
+        if (index < 7) {
+          validFiles.push(file);
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = () => {
+            if (typeof reader.result === "string") {
+              previews.push(reader.result);
+              setPhotoPreviews([...previews]);
+            }
+          };
+        }
+        setPhotoError("");
+      }
+    });
+
+    setPhotos(validFiles);
   };
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!name || !category || !photo || stock < 0 || !price || price < 0) {
+    if (!name || !category || !photos || stock < 0 || !price || price < 0) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
+    if (!photos || photos.length === 0) {
+      toast.error("Please upload product photos");
       return;
     }
 
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("price", String(price));
-    formData.append("stock", String(stock));
-    formData.append("category", category);
-    formData.append("photo", photo);
+    formData.set("name", name);
+    formData.set("price", String(price));
+    formData.set("stock", String(stock));
+    formData.set("category", category);
+    photos.forEach((photo) => formData.append("photos", photo));
 
     setLoading(true);
     const res = await newProduct({ formData, id: user?._id! });
     responseToast(res, navigate, "/admin/products");
+    setLoading(false);
   };
 
   if (loading) return <Loader />;
@@ -124,11 +160,28 @@ const NewProduct = () => {
               <input
                 required
                 type="file"
+                multiple
                 id="productPhoto"
                 onChange={changeImageHandler}
               />
             </div>
-            {photo && <img src={photoPreview} alt="product-photo" />}
+            <div>
+              {photoError && <span style={{ color: "red" }}>{photoError}</span>}
+              {photoPreviews &&
+                photoPreviews.map((photo, index) => (
+                  <img
+                    key={index}
+                    src={photo}
+                    alt={`${name} photo preview`}
+                    style={{
+                      width: 20 / photoPreviews.length + "rem",
+                      height: 10 / photoPreviews.length + "rem",
+                      objectFit: "cover",
+                      margin: "0.5rem",
+                    }}
+                  />
+                ))}
+            </div>
             <button type="submit">Create</button>
           </form>
         </article>
