@@ -5,14 +5,16 @@ import { IconType } from "react-icons";
 export const DashboardSidebar = ({
   dashboard,
   location,
+  setShowModal,
 }: {
   dashboard: { name: string; icon: IconType; url: string }[];
   location: Location;
+  setShowModal: (value: boolean) => void;
 }) => {
   return (
     <div>
       <h5>Dashboard</h5>
-      <ul>
+      <ul onClick={() => setShowModal(false)}>
         {dashboard.map((item, index) => (
           <Li
             key={index}
