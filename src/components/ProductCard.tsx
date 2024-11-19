@@ -50,7 +50,7 @@ const ProductCard = ({
           onClick={() =>
             addToCartHandler({
               productId,
-              photo: photos[0].url,
+              photos: photos,
               name,
               price,
               quantity: 1,
