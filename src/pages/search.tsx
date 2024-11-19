@@ -9,7 +9,7 @@ import { CustomError } from "../types/api-types";
 const Search = () => {
   const [search, setSearch] = useState<string>("");
   const [sort, setSort] = useState<string>("");
-  const [maxPrice, setMaxPrice] = useState<number>(100000);
+  const [currentPrice, setCurrentPrice] = useState<number>(100000);
   const [category, setCategory] = useState<string>("");
   const [page, setPage] = useState<number>(1);
 
@@ -23,12 +23,20 @@ const Search = () => {
     sort,
     category,
     page,
-    price: maxPrice,
+    price: currentPrice,
   });
 
   const totalPage = searchProductsResponse?.totalPage || 1;
   const categoriesResponse = searchProductsResponse?.categories || [];
   const products = searchProductsResponse?.products || [];
+  const minAmount = searchProductsResponse?.minAmount || 0;
+  const maxAmount = searchProductsResponse?.maxAmount || 100000;
+
+  if (currentPrice > maxAmount) {
+    setCurrentPrice(maxAmount);
+  } else if (currentPrice < minAmount) {
+    setCurrentPrice(minAmount);
+  }
 
   const isPrevPage = page > 1;
   const isNextPage = page < totalPage;
@@ -45,6 +53,14 @@ const Search = () => {
   if (isErrorSearchProducts) {
     return <Navigate to="/" />;
   }
+
+  const clearHandler = () => {
+    setSearch("");
+    setSort("");
+    setCurrentPrice(1000000);
+    setCategory("");
+    setPage(1);
+  };
 
   return (
     <div className="productSearchPage">
@@ -64,14 +80,14 @@ const Search = () => {
         </div>
 
         <div>
-          <h4>Max Price: {maxPrice || ""}</h4>
+          <h4>Max Price: {currentPrice || ""}</h4>
           <input
             title="range"
             type="range"
-            min={10}
-            max={250000}
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
+            min={0}
+            max={100000}
+            value={currentPrice}
+            onChange={(e) => setCurrentPrice(Number(e.target.value))}
           />
         </div>
 
@@ -90,6 +106,11 @@ const Search = () => {
                 </option>
               ))}
           </select>
+        </div>
+        <div>
+          <button onClick={clearHandler}>
+            Clear
+          </button>
         </div>
       </aside>
       <main>
