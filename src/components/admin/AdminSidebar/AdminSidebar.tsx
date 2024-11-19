@@ -57,11 +57,23 @@ const AdminSidebar = () => {
         }
       >
         <Link to="/" className="logo">
-        <h2>Logo.</h2>
+          <h2>Logo.</h2>
         </Link>
-        <DashboardSidebar dashboard={DashboardItems} location={location} />
-        <ChartSidebar charts={ChartItems} location={location} />
-        <AppSidebar apps={AppItems} location={location} />
+        <DashboardSidebar
+          dashboard={DashboardItems}
+          location={location}
+          setShowModal={setShowModal}
+        />
+        <ChartSidebar
+          charts={ChartItems}
+          location={location}
+          setShowModal={setShowModal}
+        />
+        <AppSidebar
+          apps={AppItems}
+          location={location}
+          setShowModal={setShowModal}
+        />
 
         {phoneActive && (
           <button className="closeSidebar" onClick={() => setShowModal(false)}>
