@@ -10,7 +10,7 @@ import {
   useOrderDetailsQuery,
   useUpdateOrderMutation,
 } from "../../../redux/api/orderAPI";
-import { RootState, server } from "../../../redux/store";
+import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
 import { Order, orderItem } from "../../../types/types";
 import { responseToast } from "../../../utils/features";
@@ -18,7 +18,7 @@ import { responseToast } from "../../../utils/features";
 const orderItems: orderItem[] = [
   {
     name: "",
-    photo: "",
+    photos: [],
     price: 0,
     quantity: 0,
     productId: "",
@@ -125,7 +125,7 @@ const OrderManagement = () => {
               <h2>Order Items</h2>
               {order.orderItems.map((item: orderItem) => (
                 <div className="orderProductCard" key={item.productId}>
-                  <img src={`${server}/${item.photo}`} alt={item.name} />
+                  <img src={`${item.photos[0].url}`} alt={item.name} />
                   {user?.role === "admin" ? (
                     <Link to={`/admin/product/${item.productId}`}>
                       {item.name}
@@ -134,7 +134,7 @@ const OrderManagement = () => {
                     <h5>{item.name}</h5>
                   )}
                   <span>
-                  ₹{item.price} X {item.quantity} = ₹
+                    ₹{item.price} X {item.quantity} = ₹
                     {item.price * item.quantity}
                   </span>
                 </div>
