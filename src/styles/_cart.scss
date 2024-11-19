@@ -59,7 +59,7 @@
   @include flex(row, flex-start, center, 3rem);
   > img {
     @include square(10rem);
-    object-fit: contain;
+    object-fit: scale-down;
   }
 
   > article {
