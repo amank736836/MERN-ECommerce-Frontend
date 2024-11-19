@@ -16,11 +16,11 @@ const Login = () => {
 
   const [login] = useLoginMutation();
 
-  const [Loading, setLoading] = useState<"loading" | "">();
+  const [Loading, setLoading] = useState<boolean>(false);
 
   const loginHandler = async () => {
     try {
-      setLoading("loading");
+      setLoading(true);
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
       const res = await login({
@@ -34,8 +34,9 @@ const Login = () => {
       });
 
       responseToast(res, navigate, "/");
+      setLoading(false);
     } catch (error) {
-      setLoading("");
+      setLoading(false);
       console.error(error);
       toast.error("Sign in failed");
     }
