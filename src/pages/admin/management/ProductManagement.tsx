@@ -239,7 +239,7 @@ const ProductManagement = () => {
                       style={{
                         width: 20 / photoPreviews.length + "rem",
                         height: 8 / photoPreviews.length + "rem",
-                        objectFit: "cover",
+                        objectFit: "scale-down",
                         margin: "0.5rem",
                       }}
                     />
