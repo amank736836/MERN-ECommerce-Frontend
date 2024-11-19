@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import Loader from "../../../components/admin/Loader";
 import { SkeletonLoader } from "../../../components/loader";
 import {
   useCancelOrderMutation,
@@ -53,6 +54,15 @@ const OrderManagement = () => {
   const params = useParams();
 
   const { data, isLoading, isError, error } = useOrderDetailsQuery(params.id!);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [order, setOrder] = useState<Order>(data?.order || defaultOrder);
+
+  const [updateOrder] = useUpdateOrderMutation();
+  const [deleteOrder] = useDeleteOrderMutation();
+  const [cancelOrder] = useCancelOrderMutation();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isError) {
@@ -64,44 +74,44 @@ const OrderManagement = () => {
     }
   }, [data, isError]);
 
-  const [order, setOrder] = useState<Order>(data?.order || defaultOrder);
-
-  const [updateOrder] = useUpdateOrderMutation();
-  const [deleteOrder] = useDeleteOrderMutation();
-  const [cancelOrder] = useCancelOrderMutation();
-
-  const navigate = useNavigate();
-
   const updateHandler = async () => {
+    setLoading(true);
     const res = await updateOrder({
       orderId: order._id,
       id: user?._id!,
     });
 
     responseToast(res, navigate, "/orders");
+    setLoading(false);
   };
 
   const deleteHandler = async () => {
+    setLoading(true);
     const res = await deleteOrder({
       orderId: order._id,
       id: user?._id!,
     });
 
     responseToast(res, navigate, "/orders");
+    setLoading(false);
   };
 
   const cancelHandler = async () => {
+    setLoading(true);
     const res = await cancelOrder({
       orderId: order._id,
       id: user?._id!,
     });
 
     responseToast(res, navigate, "/orders");
+    setLoading(false);
   };
 
   if (!isLoading && isError) {
     return <Navigate to="/orders" />;
   }
+
+  if (loading) return <Loader />;
 
   return (
     <div className="container">
