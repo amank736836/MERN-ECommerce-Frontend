@@ -20,17 +20,20 @@ const Customer = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
   const { data, isLoading, isError, error } = useAllUsersQuery(user?._id!);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [customers, setCustomers] = useState<CustomerDataType[]>([]);
 
   const [deleteUser] = useDeleteUserMutation();
 
   const deleteHandler = (userId: string) => async () => {
+    setLoading(true);
     const res = await deleteUser({
       userId,
       id: user?._id!,
     });
     responseToast(res, null, "");
+    setLoading(false);
   };
 
   if (isError) {
@@ -56,7 +59,9 @@ const Customer = () => {
           gender: user.gender,
           role: user.role,
           action: (
-            <button onClick={deleteHandler(user._id)}>
+            <button onClick={deleteHandler(user._id)}
+            disabled={loading}
+            >
               <FaTrash />
             </button>
           ),
