@@ -50,7 +50,7 @@
 
     img {
         @include square(14.75rem);
-        object-fit: cover;
+        object-fit: scale-down;
         margin: 1rem;
     }
 
