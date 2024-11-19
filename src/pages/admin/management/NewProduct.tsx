@@ -79,28 +79,33 @@ const NewProduct = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    if (!name || !category || !photos || stock < 0 || !price || price < 0) {
-      toast.error("Please fill all the fields");
-      return;
+      if (!name || !category || !photos || stock < 0 || !price || price < 0) {
+        toast.error("Please fill all the fields");
+        return;
+      }
+
+      if (!photos || photos.length === 0) {
+        toast.error("Please upload product photos");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.set("name", name);
+      formData.set("price", String(price));
+      formData.set("stock", String(stock));
+      formData.set("category", category);
+      photos.forEach((photo) => formData.append("photos", photo));
+
+      const res = await newProduct({ formData, id: user?._id! });
+      responseToast(res, navigate, "/admin/products");
+      setLoading(false);
+    } catch (error) {
+      toast.error("Something went wrong");
+      setLoading(false);
     }
-
-    if (!photos || photos.length === 0) {
-      toast.error("Please upload product photos");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.set("name", name);
-    formData.set("price", String(price));
-    formData.set("stock", String(stock));
-    formData.set("category", category);
-    photos.forEach((photo) => formData.append("photos", photo));
-
-    const res = await newProduct({ formData, id: user?._id! });
-    responseToast(res, navigate, "/admin/products");
-    setLoading(false);
   };
 
   if (loading) return <Loader />;
