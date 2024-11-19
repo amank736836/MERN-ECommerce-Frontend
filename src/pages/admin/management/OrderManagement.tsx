@@ -123,7 +123,11 @@ const OrderManagement = () => {
             {user?.role === "admin" &&
               (order.status === "Delivered" ||
                 order.status === "Cancelled") && (
-                <button className="productDeleteBtn" onClick={deleteHandler}>
+                <button
+                  className="productDeleteBtn"
+                  disabled={loading}
+                  onClick={deleteHandler}
+                >
                   <FaTrash />
                 </button>
               )}
@@ -190,7 +194,9 @@ const OrderManagement = () => {
               {order.status !== "Delivered" &&
                 order.status !== "Cancelled" &&
                 user?.role === "admin" && (
-                  <button onClick={updateHandler}>Process Status </button>
+                  <button onClick={updateHandler} disabled={loading}>
+                    Process Status{" "}
+                  </button>
                 )}
               {(((order.status === "Processing" ||
                 order.status === "Shipped") &&
@@ -199,6 +205,7 @@ const OrderManagement = () => {
                 <button
                   style={{ backgroundColor: "red" }}
                   onClick={cancelHandler}
+                  disabled={loading}
                 >
                   Cancel Order{" "}
                 </button>
