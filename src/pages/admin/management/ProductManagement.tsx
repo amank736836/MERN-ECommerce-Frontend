@@ -110,44 +110,56 @@ const ProductManagement = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-
-    const formData = new FormData();
-    if (nameUpdate !== name) {
-      formData.append("name", nameUpdate);
-    }
-    if (priceUpdate !== price) {
-      formData.append("price", String(priceUpdate));
-    }
-    if (stockUpdate !== stock) {
-      formData.append("stock", String(stockUpdate));
-    }
-    if (categoryUpdate !== category) {
-      formData.append("category", categoryUpdate);
-    }
-    if (photosFile != data?.product.photos) {
-      photosFile?.forEach((photo) => {
-        formData.append("photos", photo);
+    try {
+      setLoading(true);
+  
+      const formData = new FormData();
+      if (nameUpdate !== name) {
+        formData.append("name", nameUpdate);
+      }
+      if (priceUpdate !== price) {
+        formData.append("price", String(priceUpdate));
+      }
+      if (stockUpdate !== stock) {
+        formData.append("stock", String(stockUpdate));
+      }
+      if (categoryUpdate !== category) {
+        formData.append("category", categoryUpdate);
+      }
+      if (photosFile != data?.product.photos) {
+        photosFile?.forEach((photo) => {
+          formData.append("photos", photo);
+        });
+      }
+  
+      const res = await updateProduct({
+        formData,
+        id: user?._id!,
+        productId: data?.product._id!,
       });
+      responseToast(res, navigate, "/admin/products");
+      setLoading(false);
+    } catch (error) {
+      toast.error("Something went wrong");
+      setLoading(false);
+      
     }
-
-    const res = await updateProduct({
-      formData,
-      id: user?._id!,
-      productId: data?.product._id!,
-    });
-    responseToast(res, navigate, "/admin/products");
-    setLoading(false);
   };
 
   const deleteHandler = async () => {
-    setLoading(true);
-    const res = await deleteProduct({
-      id: user?._id!,
-      productId: data?.product._id!,
-    });
-    responseToast(res, navigate, "/admin/products");
-    setLoading(false);
+    try {
+      setLoading(true);
+      const res = await deleteProduct({
+        id: user?._id!,
+        productId: data?.product._id!,
+      });
+      responseToast(res, navigate, "/admin/products");
+      setLoading(false);
+    } catch (error) {
+      toast.error("Something went wrong");
+      setLoading(false);
+      
+    }
   };
 
   if (!isLoading && isError) {
