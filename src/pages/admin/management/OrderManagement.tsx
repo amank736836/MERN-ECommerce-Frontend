@@ -83,9 +83,9 @@ const OrderManagement = () => {
       });
 
       responseToast(res, navigate, "/orders");
-      setLoading(false);
     } catch (error) {
       toast.error("Something went wrong");
+    } finally {
       setLoading(false);
     }
   };
@@ -99,9 +99,9 @@ const OrderManagement = () => {
       });
 
       responseToast(res, navigate, "/orders");
-      setLoading(false);
     } catch (error) {
       toast.error("Something went wrong");
+    } finally {
       setLoading(false);
     }
   };
@@ -115,9 +115,9 @@ const OrderManagement = () => {
       });
 
       responseToast(res, navigate, "/orders");
-      setLoading(false);
     } catch (error) {
       toast.error("Something went wrong");
+    } finally {
       setLoading(false);
     }
   };
