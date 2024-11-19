@@ -1,13 +1,12 @@
-import { FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { server } from "../redux/store";
-import { useDispatch } from "react-redux";
-import { CartItem as CartItemProps } from "../types/types";
 import toast from "react-hot-toast";
+import { FaTrash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { addToCart, removeCartItem } from "../redux/reducer/cartReducer";
+import { CartItem as CartItemProps } from "../types/types";
 
 const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
-  const { productId, photo, name, price, quantity, stock } = cartItem;
+  const { productId, photos, name, price, quantity, stock } = cartItem;
 
   const dispatch = useDispatch();
 
@@ -39,7 +38,7 @@ const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
 
   return (
     <div className="cartItem">
-      <img src={`${server}/${photo}`} alt={name} />
+      <img src={`${photos[0].url}`} alt={name} />
       <article>
         <Link to={`/product${productId}`}>{name}</Link>
         <span>₹{price}</span>
