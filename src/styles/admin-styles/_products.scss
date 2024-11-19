@@ -91,11 +91,6 @@
         text-transform: uppercase;
         letter-spacing: 2px;
       }
-      > img {
-        @include square(10rem);
-        object-fit: cover;
-        border-radius: 5px;
-      }
 
       > div {
         width: 100%;
@@ -114,6 +109,11 @@
             1px solid rgba(13, 13, 13, 0.196)
           );
           border-radius: 5px;
+        }
+        > img {
+          object-fit: cover;
+          border-radius: 5px;
+          border: 1px solid rgba(0, 0, 0, 0.877);
         }
       }
 
