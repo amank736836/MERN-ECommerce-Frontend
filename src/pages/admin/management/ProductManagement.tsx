@@ -4,13 +4,14 @@ import { FaTrash } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
+import Loader from "../../../components/admin/Loader";
 import { SkeletonLoader } from "../../../components/loader";
 import {
   useDeleteProductMutation,
   useProductDetailsQuery,
   useUpdateProductMutation,
 } from "../../../redux/api/productAPI";
-import { RootState, server } from "../../../redux/store";
+import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
 import { responseToast } from "../../../utils/features";
 
@@ -18,19 +19,40 @@ const defaultProduct = {
   name: "",
   price: 0,
   stock: 0,
-  photo: "",
+  photos: [],
   category: "",
 };
 
-const ProductManagement = () => {
-  const { user } = useSelector((state: RootState) => state.userReducer);
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
+const ERROR_MESSAGES = {
+  size: "Each file should be less than 10MB",
+  type: "Only image files are allowed",
+};
+
+const ProductManagement = () => {
   const navigate = useNavigate();
   const params = useParams();
+
+  const { user } = useSelector((state: RootState) => state.userReducer);
 
   const { data, isLoading, isError, error } = useProductDetailsQuery(
     params.id!
   );
+
+  const { name, price, stock, photos, category } =
+    data?.product || defaultProduct;
+
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [nameUpdate, setNameUpdate] = useState<string>(name);
+  const [priceUpdate, setPriceUpdate] = useState<number>(price);
+  const [stockUpdate, setStockUpdate] = useState<number>(stock);
+  const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
+
+  const [photosFile] = useState<File[]>();
+  const [photoPreviews, setPhotoPreviews] = useState<String[]>([]);
+  const [photoError, setPhotoError] = useState<string>("");
 
   useEffect(() => {
     if (isError) {
@@ -41,33 +63,46 @@ const ProductManagement = () => {
       setNameUpdate(data.product.name);
       setPriceUpdate(data.product.price);
       setStockUpdate(data.product.stock);
-      setPhotoUpdate(`${server}/${data.product.photo}`);
       setCategoryUpdate(data.product.category);
+      setPhotoPreviews(data.product.photos.map((photo) => photo.url));
     }
   }, [data, isError]);
 
-  const { name, price, stock, photo, category } =
-    data?.product || defaultProduct;
-
-  const [nameUpdate, setNameUpdate] = useState<string>(name);
-  const [priceUpdate, setPriceUpdate] = useState<number>(price);
-  const [stockUpdate, setStockUpdate] = useState<number>(stock);
-  const [photoUpdate, setPhotoUpdate] = useState<string>(photo);
-  const [photoFile, setPhotoFile] = useState<File>();
-  const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
-
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const file: File | undefined = e.target.files?.[0];
-    const reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setPhotoUpdate(reader.result);
-          setPhotoFile(file);
-        }
-      };
+    const files = e.target.files;
+
+    if (!files || files.length === 0) return;
+
+    if (files.length > 7) {
+      toast.error("You can only upload 7 image");
+      return;
     }
+
+    const validFiles: File[] = [];
+    const previews: string[] = [];
+
+    Array.from(files).forEach((file, index) => {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error(`${file.name} - ${ERROR_MESSAGES.size}`);
+        setPhotoError(ERROR_MESSAGES.size);
+      } else if (!file.type.includes("image/")) {
+        toast.error(`${file.name} - ${ERROR_MESSAGES.type}`);
+        setPhotoError(ERROR_MESSAGES.type);
+      } else {
+        if (index < 7) {
+          validFiles.push(file);
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = () => {
+            if (typeof reader.result === "string") {
+              previews.push(reader.result);
+              setPhotoPreviews([...previews]);
+            }
+          };
+        }
+        setPhotoError("");
+      }
+    });
   };
 
   const [updateProduct] = useUpdateProductMutation();
@@ -88,15 +123,21 @@ const ProductManagement = () => {
     if (categoryUpdate !== category) {
       formData.append("category", categoryUpdate);
     }
-    if (photoFile) {
-      formData.append("photo", photoFile);
+    if (photosFile != data?.product.photos) {
+      photosFile?.forEach((photo) => {
+        formData.append("photos", photo);
+      });
     }
+
+    setLoading(true);
+
     const res = await updateProduct({
       formData,
       id: user?._id!,
       productId: data?.product._id!,
     });
     responseToast(res, navigate, "/admin/products");
+    setLoading(false);
   };
 
   const deleteHandler = async () => {
@@ -111,6 +152,7 @@ const ProductManagement = () => {
     return <Navigate to="/admin/products" />;
   }
 
+  if (loading) return <Loader />;
   return (
     <div className="adminContainer">
       <AdminSidebar />
@@ -121,7 +163,7 @@ const ProductManagement = () => {
           <>
             <section>
               <strong>ID - {data?.product._id}</strong>
-              <img src={`${server}/${photo}`} alt="Product" />
+              <img src={`${photos[0].url}`} alt="Product" />
               <p>{name}</p>
               {stock > 0 ? (
                 <span className="green">{stock} Available</span>
@@ -185,7 +227,23 @@ const ProductManagement = () => {
                     onChange={changeImageHandler}
                   />
                 </div>
-                {photo && <img src={photoUpdate} alt="product-photo" />}
+                {photoError && (
+                  <span style={{ color: "red" }}>{photoError}</span>
+                )}
+                {photoPreviews &&
+                  photoPreviews.map((photo, index) => (
+                    <img
+                      key={index}
+                      src={photo as string}
+                      alt={`${name} photo preview`}
+                      style={{
+                        width: 20 / photoPreviews.length + "rem",
+                        height: 8 / photoPreviews.length + "rem",
+                        objectFit: "cover",
+                        margin: "0.5rem",
+                      }}
+                    />
+                  ))}
                 <button type="submit">Update</button>
               </form>
             </article>
