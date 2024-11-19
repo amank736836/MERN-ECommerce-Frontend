@@ -101,10 +101,13 @@ const NewProduct = () => {
 
       const res = await newProduct({ formData, id: user?._id! });
       responseToast(res, navigate, "/admin/products");
-      setLoading(false);
     } catch (error) {
       toast.error("Something went wrong");
+    }
+    finally {
       setLoading(false);
+      setPhotos([]);
+      setPhotoPreviews([]);
     }
   };
 
