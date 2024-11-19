@@ -61,6 +61,8 @@ export type CategoryResponse = {
 export type searchProductsResponse = ProductResponse & {
   totalPage: number;
   categories: string[];
+  minAmount: number;
+  maxAmount: number;
 };
 
 export type searchProductsRequest = {
