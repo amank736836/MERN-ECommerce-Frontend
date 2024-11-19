@@ -110,6 +110,8 @@ const ProductManagement = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+
     const formData = new FormData();
     if (nameUpdate !== name) {
       formData.append("name", nameUpdate);
@@ -128,8 +130,6 @@ const ProductManagement = () => {
         formData.append("photos", photo);
       });
     }
-
-    setLoading(true);
 
     const res = await updateProduct({
       formData,
