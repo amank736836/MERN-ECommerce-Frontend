@@ -1,13 +1,15 @@
+import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa";
-import { server } from "../redux/store";
-import { CartItem } from "../types/types";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/reducer/cartReducer";
-import toast from "react-hot-toast";
+import { CartItem } from "../types/types";
 
 type ProductCardProps = {
   productId: string;
-  photo: string;
+  photos: {
+    url: string;
+    public_id: string;
+  }[];
   name: string;
   price: number;
   stock: number;
@@ -15,7 +17,7 @@ type ProductCardProps = {
 
 const ProductCard = ({
   productId,
-  photo,
+  photos,
   name,
   price,
   stock,
@@ -33,8 +35,8 @@ const ProductCard = ({
   return (
     <div className="productCard">
       <img
-        src={`${server}/${photo}`}
-        alt=""
+        src={photos[0].url}
+        alt={name}
         className="src"
         style={{
           margin: `${stock < 1 ? "" : "2rem"}`,
@@ -48,7 +50,7 @@ const ProductCard = ({
           onClick={() =>
             addToCartHandler({
               productId,
-              photo,
+              photo: photos[0].url,
               name,
               price,
               quantity: 1,
