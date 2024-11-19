@@ -10,7 +10,7 @@ import ProductTable, {
 } from "../../components/admin/Tables/ProductTable";
 import { SkeletonLoader } from "../../components/loader";
 import { useAllProductsQuery } from "../../redux/api/productAPI";
-import { RootState, server } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
 
 const Product = () => {
@@ -33,7 +33,7 @@ const Product = () => {
         data.products.map((product) => ({
           photo: (
             <img
-              src={`${server}/${product.photo}`}
+              src={`${product.photos[0].url}`}
               alt={`${product.category}`}
             />
           ),
