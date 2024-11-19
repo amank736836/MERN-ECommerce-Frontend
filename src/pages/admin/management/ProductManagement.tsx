@@ -185,7 +185,11 @@ const ProductManagement = () => {
               <h3>₹{price}</h3>
             </section>
             <article>
-              <button className="productDeleteBtn" onClick={deleteHandler}>
+              <button
+                className="productDeleteBtn"
+                disabled={loading}
+                onClick={deleteHandler}
+              >
                 <FaTrash />
               </button>
               <form onSubmit={submitHandler}>
@@ -256,7 +260,9 @@ const ProductManagement = () => {
                       }}
                     />
                   ))}
-                <button type="submit">Update</button>
+                <button disabled={loading} type="submit">
+                  Update
+                </button>
               </form>
             </article>
           </>
