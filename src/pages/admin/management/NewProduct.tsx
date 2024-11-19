@@ -79,6 +79,8 @@ const NewProduct = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+
     if (!name || !category || !photos || stock < 0 || !price || price < 0) {
       toast.error("Please fill all the fields");
       return;
@@ -96,7 +98,6 @@ const NewProduct = () => {
     formData.set("category", category);
     photos.forEach((photo) => formData.append("photos", photo));
 
-    setLoading(true);
     const res = await newProduct({ formData, id: user?._id! });
     responseToast(res, navigate, "/admin/products");
     setLoading(false);
@@ -183,7 +184,9 @@ const NewProduct = () => {
                   />
                 ))}
             </div>
-            <button type="submit">Create</button>
+            <button disabled={loading} type="submit">
+              Create
+            </button>
           </form>
         </article>
       </main>
