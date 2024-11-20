@@ -48,7 +48,7 @@ const Search = () => {
       const err = errorSearchProducts as CustomError;
       err.data?.message
         ? toast.error(err.data.message)
-        : toast.error("Something went wrong");
+        : toast.error("Failed to fetch filtered products");
     }
   }, [isErrorSearchProducts]);
 
