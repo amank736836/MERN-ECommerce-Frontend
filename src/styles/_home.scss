@@ -35,51 +35,52 @@
   }
 }
 
-.productCard{
-    width:18.75rem;
-    height: 25rem;
-    padding: 1rem;
-    flex: none;
-    @include flex(column, flex-start, center,4px);
-    position: relative;
-    background-color: white;
+.productCard {
+  width: 18.75rem;
+  height: 25rem;
+  padding: 1rem;
+  flex: none;
+  @include flex(column, flex-start, center, 4px);
+  position: relative;
+  background-color: white;
 
-    &:hover > div {
-        opacity: 1;
-    }
+  &:hover > div {
+    opacity: 1;
+  }
 
-    img {
-        @include square(14.75rem);
-        object-fit: scale-down;
-        margin: 1rem;
-    }
+  img {
+    @include square(14.75rem);
+    object-fit: scale-down;
+    margin: 1rem;
+  }
 
-    span{
-        font-weight: 700;
-        font-size: 1.1rem;
-    }
+  span {
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
 
-    >div{
-        opacity: 0;
-        position: absolute;
-        @include square(100%);
-        top:0;
-        left: 0;
-        background-color: #0000006b;
-        @include flex;
-        button{
-            @include flex;
-            @include square(3rem);
-            border-radius: 100%;
-            border: none;
-            background-color: $color3;
-            cursor: pointer;
-            color: $color1;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            &:hover{
-                rotate: 60deg;
-            }
-        }
+  > div {
+    opacity: 0;
+    position: absolute;
+    @include square(100%);
+    top: 0;
+    left: 0;
+    background-color: #0000006b;
+    @include flex;
+    button,
+    a {
+      @include flex;
+      @include square(3rem);
+      border-radius: 100%;
+      border: none;
+      background-color: $color3;
+      cursor: pointer;
+      color: $color1;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      &:hover {
+        rotate: 60deg;
+      }
     }
+  }
 }
