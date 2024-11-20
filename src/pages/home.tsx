@@ -32,7 +32,7 @@ const Home = () => {
             length={6}
           />
         ) : (
-          data?.products.map((product) => (
+          data && data.products.map((product) => (
             <ProductCard
               key={product._id}
               productId={product._id}
