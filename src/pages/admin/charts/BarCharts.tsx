@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -9,6 +8,7 @@ import { useBarQuery } from "../../../redux/api/dashboardAPI";
 import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
 import { getLastMonths } from "../../../utils/features";
+import { useEffect } from "react";
 
 const { last6Months, last12Months } = getLastMonths();
 
@@ -22,13 +22,15 @@ const BarCharts = () => {
   const Orders = data?.charts.orders || [];
 
   useEffect(() => {
-    if (isError) {
+    if (isError || error) {
       const err = error as CustomError;
-      err.data ? toast.error(err.data.message) : toast.error("Something went wrong");
+      err.data?.message
+        ? toast.error(err.data.message)
+        : toast.error("Failed to fetch bar charts data");
     }
-  }, [isError]);
+  }, [isError, error]);
 
-  if (isError) {
+  if (isError || error) {
     return <Navigate to="/admin/dashboard" />;
   }
 
