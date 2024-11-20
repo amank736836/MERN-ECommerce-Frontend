@@ -44,7 +44,7 @@ const Search = () => {
   const isNextPage = page < totalPage;
 
   useEffect(() => {
-    if (isErrorSearchProducts) {
+    if (isErrorSearchProducts || errorSearchProducts) {
       const err = errorSearchProducts as CustomError;
       err.data?.message
         ? toast.error(err.data.message)
@@ -52,7 +52,7 @@ const Search = () => {
     }
   }, [isErrorSearchProducts]);
 
-  if (isErrorSearchProducts) {
+  if (isErrorSearchProducts || errorSearchProducts) {
     return <Navigate to="/" />;
   }
 
