@@ -8,7 +8,7 @@ import {
   searchProductsRequest,
   searchProductsResponse,
   SingleProductResponse,
-  UpdateProductRequest
+  UpdateProductRequest,
 } from "../../types/api-types";
 
 export const productAPI = createApi({
