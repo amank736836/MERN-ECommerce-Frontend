@@ -236,7 +236,7 @@ const ProductManagement = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="productPhoto">Photo</label>
+                  <label htmlFor="productPhoto">Photos</label>
                   <input
                     type="file"
                     id="productPhoto"
