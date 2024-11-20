@@ -53,9 +53,11 @@ const ProductManagement = () => {
   const [photoError, setPhotoError] = useState<string>("");
 
   useEffect(() => {
-    if (isError) {
+    if (isError || error) {
       const err = error as CustomError;
-      toast.error(err.data.message);
+      err.data?.message
+        ? toast.error(err.data.message)
+        : toast.error("Failed to fetch product details");
     }
     if (data) {
       setNameUpdate(data.product.name);
@@ -64,7 +66,11 @@ const ProductManagement = () => {
       setCategoryUpdate(data.product.category);
       setPhotoPreviews(data.product.photos.map((photo) => photo.url));
     }
-  }, [data, isError]);
+  }, [data, isError, error]);
+
+  if (isError || error) {
+    return <Navigate to="/admin/products" />;
+  }
 
   const changeImageHandler = (
     e: ChangeEvent<HTMLInputElement>,
@@ -76,7 +82,7 @@ const ProductManagement = () => {
     if (!files || files.length === 0) return;
 
     if (files.length > limit) {
-      toast.error("You can only upload 7 image");
+      toast.error(`You can only upload ${limit} photos`);
       return;
     }
 
