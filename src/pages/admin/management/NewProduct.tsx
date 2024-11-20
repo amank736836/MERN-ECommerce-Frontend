@@ -79,6 +79,7 @@ const NewProduct = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const createToast = toast.loading("Creating product...");
     try {
       setLoading(true);
 
@@ -103,11 +104,11 @@ const NewProduct = () => {
       responseToast(res, navigate, "/admin/products");
     } catch (error) {
       toast.error("Something went wrong");
-    }
-    finally {
+    } finally {
       setLoading(false);
       setPhotos([]);
       setPhotoPreviews([]);
+      toast.dismiss(createToast);
     }
   };
 
@@ -166,10 +167,11 @@ const NewProduct = () => {
             </div>
 
             <div>
-              <label htmlFor="productPhoto">Photo</label>
+              <label htmlFor="productPhoto">Photos</label>
               <input
                 required
                 type="file"
+                accept="image/*"
                 multiple
                 id="productPhoto"
                 onChange={changeImageHandler}
