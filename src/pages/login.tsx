@@ -34,18 +34,18 @@ const Login = () => {
       });
 
       responseToast(res, navigate, "/");
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       console.error(error);
       toast.error("Sign in failed");
+    }
+    finally {
+      setLoading(false);
     }
   };
 
   return Loading ? (
     <div>
       <center>
-
       <h1>Sign in with Google in the popup window</h1>
       </center>
       <Loader />
