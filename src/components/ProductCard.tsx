@@ -1,8 +1,9 @@
 import toast from "react-hot-toast";
-import { FaPlus } from "react-icons/fa";
+import { FaExpandArrowsAlt, FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { CartItem } from "../types/types";
+import { Link } from "react-router-dom";
 
 type ProductCardProps = {
   productId: string;
@@ -60,6 +61,9 @@ const ProductCard = ({
         >
           <FaPlus />
         </button>
+        <Link to={`/product/${productId}`} className="productViewBtn">
+          <FaExpandArrowsAlt />
+        </Link>
       </div>
     </div>
   );
