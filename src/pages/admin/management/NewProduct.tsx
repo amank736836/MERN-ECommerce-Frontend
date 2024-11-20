@@ -41,8 +41,8 @@ const NewProduct = () => {
       return setPhotoError("Please select an image");
 
     if (files.length > limit) {
-      toast.error("You can only upload 7 images");
-      setPhotoError("You can only upload 7 images");
+      toast.error(`You can only upload ${limit} photos`);
+      setPhotoError(`You can only upload ${limit} photos`);
       return;
     }
 
@@ -104,7 +104,7 @@ const NewProduct = () => {
       const res = await newProduct({ formData, id: user?._id! });
       responseToast(res, navigate, "/admin/products");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Failed to create product");
     } finally {
       setLoading(false);
       setPhotos([]);
