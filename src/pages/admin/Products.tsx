@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -20,14 +20,13 @@ const Product = () => {
 
   const { data, isLoading, isError, error } = useAllProductsQuery(user?._id!);
 
-  if (isError) {
-    const err = error as CustomError;
-    err.data
-      ? toast.error(err.data.message)
-      : toast.error("Something went wrong");
-  }
-
   useEffect(() => {
+    if (isError || error) {
+      const err = error as CustomError;
+      err.data?.message
+        ? toast.error(err.data.message)
+        : toast.error("Failed to fetch products");
+    }
     if (data) {
       setProducts(
         data.products.map((product) => ({
@@ -41,7 +40,11 @@ const Product = () => {
         }))
       );
     }
-  }, [data, isError]);
+  }, [data, isError, error]);
+
+  if (isError || error) {
+    return <Navigate to="/admin/dashboard" />;
+  }
 
   return (
     <div className="adminContainer">
