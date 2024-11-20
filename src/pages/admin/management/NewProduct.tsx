@@ -1,14 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
+import Loader from "../../../components/admin/Loader";
 import { useNewProductMutation } from "../../../redux/api/productAPI";
 import { RootState } from "../../../redux/store";
 import { responseToast } from "../../../utils/features";
-import toast from "react-hot-toast";
-import Loader from "../../../components/admin/Loader";
-
-const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 const ERROR_MESSAGES = {
   size: "Each file should be less than 10MB",
@@ -32,13 +30,17 @@ const NewProduct = () => {
   const [newProduct] = useNewProductMutation();
   const navigate = useNavigate();
 
-  const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeImageHandler = (
+    e: ChangeEvent<HTMLInputElement>,
+    limit: number = 7,
+    MAX_FILE_SIZE: number = 10 * 1024 * 1024
+  ) => {
     const files = e.target.files;
 
     if (!files || files.length === 0)
       return setPhotoError("Please select an image");
 
-    if (files.length > 7) {
+    if (files.length > limit) {
       toast.error("You can only upload 7 images");
       setPhotoError("You can only upload 7 images");
       return;
@@ -59,7 +61,7 @@ const NewProduct = () => {
         setPhotoPreviews([]);
         setPhotos([]);
       } else {
-        if (index < 7) {
+        if (index < limit) {
           validFiles.push(file);
           const reader = new FileReader();
           reader.readAsDataURL(file);
@@ -80,9 +82,8 @@ const NewProduct = () => {
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const createToast = toast.loading("Creating product...");
+    setLoading(true);
     try {
-      setLoading(true);
-
       if (!name || !category || !photos || stock < 0 || !price || price < 0) {
         toast.error("Please fill all the fields");
         return;
