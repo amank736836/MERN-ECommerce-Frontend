@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -13,6 +12,7 @@ import { usePieQuery } from "../../../redux/api/dashboardAPI";
 import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
 import { Pie } from "../../../types/types";
+import { useEffect } from "react";
 const PieCharts = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
@@ -21,13 +21,15 @@ const PieCharts = () => {
   let pie = (data?.charts as Pie) || Chart;
 
   useEffect(() => {
-    if (isError) {
+    if (isError || error) {
       const err = error as CustomError;
-      toast.error(err.data.message);
+      err.data?.message
+        ? toast.error(err.data.message)
+        : toast.error("Failed to fetch pie charts data");
     }
-  }, [isError]);
+  }, [isError, error]);
 
-  if (isError) {
+  if (isError || error) {
     return <Navigate to="/admin/dashboard" />;
   }
 
