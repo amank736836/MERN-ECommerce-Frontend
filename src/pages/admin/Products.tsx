@@ -32,10 +32,7 @@ const Product = () => {
       setProducts(
         data.products.map((product) => ({
           photo: (
-            <img
-              src={`${product.photos[0].url}`}
-              alt={`${product.category}`}
-            />
+            <img src={`${product.photos[0].url}`} alt={`${product.category}`} />
           ),
           name: product.name,
           price: product.price,
