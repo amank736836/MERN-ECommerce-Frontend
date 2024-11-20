@@ -5,6 +5,7 @@ import { SkeletonLoader } from "../components/loader";
 import ProductCard from "../components/ProductCard";
 import { useSearchProductsQuery } from "../redux/api/productAPI";
 import { CustomError } from "../types/api-types";
+import Loader from "../components/admin/Loader";
 
 const Search = () => {
   const [search, setSearch] = useState<string>("");
@@ -12,6 +13,7 @@ const Search = () => {
   const [currentPrice, setCurrentPrice] = useState<number>(100000);
   const [category, setCategory] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const {
     data: searchProductsResponse,
@@ -62,6 +64,8 @@ const Search = () => {
     setPage(1);
   };
 
+  if (loading) return <Loader />;
+
   return (
     <div className="productSearchPage">
       <aside>
@@ -99,7 +103,7 @@ const Search = () => {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">ALL</option>
-            {loadingSearchProducts === false &&
+            {!loadingSearchProducts &&
               categoriesResponse?.map((category) => (
                 <option key={category} value={category}>
                   {category.toUpperCase()}
@@ -108,7 +112,13 @@ const Search = () => {
           </select>
         </div>
         <div>
-          <button onClick={clearHandler}>
+          <button
+            onClick={() => {
+              setLoading(true);
+              clearHandler();
+              setLoading(false);
+            }}
+          >
             Clear
           </button>
         </div>
