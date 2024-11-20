@@ -65,14 +65,20 @@ const OrderManagement = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isError) {
+    if (isError || error) {
       const err = error as CustomError;
-      toast.error(err.data.message);
+      err.data?.message
+        ? toast.error(err.data.message)
+        : toast.error("Failed to fetch order details");
     }
     if (data) {
       setOrder(data.order);
     }
-  }, [data, isError]);
+  }, [data, isError, error]);
+
+  if (isError || error) {
+    return <Navigate to="/orders" />;
+  }
 
   const updateHandler = async () => {
     setLoading(true);
@@ -84,7 +90,7 @@ const OrderManagement = () => {
 
       responseToast(res, navigate, "/orders");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Failed to update order status");
     } finally {
       setLoading(false);
     }
@@ -100,7 +106,7 @@ const OrderManagement = () => {
 
       responseToast(res, navigate, "/orders");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Failed to delete order");
     } finally {
       setLoading(false);
     }
@@ -116,7 +122,7 @@ const OrderManagement = () => {
 
       responseToast(res, navigate, "/orders");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Failed to cancel order");
     } finally {
       setLoading(false);
     }
