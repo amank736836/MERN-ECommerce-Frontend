@@ -19,8 +19,8 @@ const Login = () => {
   const [Loading, setLoading] = useState<boolean>(false);
 
   const loginHandler = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
       const res = await login({
@@ -37,8 +37,7 @@ const Login = () => {
     } catch (error) {
       console.error(error);
       toast.error("Sign in failed");
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -46,7 +45,7 @@ const Login = () => {
   return Loading ? (
     <div>
       <center>
-      <h1>Sign in with Google in the popup window</h1>
+        <h1>Sign in with Google in the popup window</h1>
       </center>
       <Loader />
     </div>
