@@ -23,8 +23,6 @@ const defaultProduct = {
   category: "",
 };
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024;
-
 const ERROR_MESSAGES = {
   size: "Each file should be less than 10MB",
   type: "Only image files are allowed",
@@ -50,7 +48,7 @@ const ProductManagement = () => {
   const [stockUpdate, setStockUpdate] = useState<number>(stock);
   const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
 
-  const [photosFile] = useState<File[]>();
+  const [photosFile, setPhotosFile] = useState<File[]>();
   const [photoPreviews, setPhotoPreviews] = useState<String[]>([]);
   const [photoError, setPhotoError] = useState<string>("");
 
@@ -68,12 +66,16 @@ const ProductManagement = () => {
     }
   }, [data, isError]);
 
-  const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeImageHandler = (
+    e: ChangeEvent<HTMLInputElement>,
+    limit: number = 7,
+    MAX_FILE_SIZE: number = 10 * 1024 * 1024
+  ) => {
     const files = e.target.files;
 
     if (!files || files.length === 0) return;
 
-    if (files.length > 7) {
+    if (files.length > limit) {
       toast.error("You can only upload 7 image");
       return;
     }
@@ -89,13 +91,14 @@ const ProductManagement = () => {
         toast.error(`${file.name} - ${ERROR_MESSAGES.type}`);
         setPhotoError(ERROR_MESSAGES.type);
       } else {
-        if (index < 7) {
+        if (index < limit) {
           validFiles.push(file);
           const reader = new FileReader();
           reader.readAsDataURL(file);
           reader.onloadend = () => {
             if (typeof reader.result === "string") {
               previews.push(reader.result);
+              setPhotosFile([...validFiles]);
               setPhotoPreviews([...previews]);
             }
           };
@@ -110,24 +113,27 @@ const ProductManagement = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
-
       const formData = new FormData();
       if (nameUpdate !== name) {
-        formData.append("name", nameUpdate);
+        formData.set("name", nameUpdate);
       }
       if (priceUpdate !== price) {
-        formData.append("price", String(priceUpdate));
+        formData.set("price", String(priceUpdate));
       }
       if (stockUpdate !== stock) {
-        formData.append("stock", String(stockUpdate));
+        formData.set("stock", String(stockUpdate));
       }
       if (categoryUpdate !== category) {
-        formData.append("category", categoryUpdate);
+        formData.set("category", categoryUpdate);
       }
-      if (photosFile != data?.product.photos) {
-        photosFile?.forEach((photo) => {
+      if (
+        photosFile != data?.product.photos &&
+        photosFile &&
+        photosFile.length > 0
+      ) {
+        photosFile.forEach((photo) => {
           formData.append("photos", photo);
         });
       }
@@ -240,6 +246,8 @@ const ProductManagement = () => {
                   <input
                     type="file"
                     id="productPhoto"
+                    accept="image/*"
+                    multiple
                     onChange={changeImageHandler}
                   />
                 </div>
