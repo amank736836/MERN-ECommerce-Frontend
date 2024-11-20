@@ -15,6 +15,7 @@ import {
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
 import { responseToast } from "../../utils/features";
+import { Navigate } from "react-router-dom";
 
 const Customer = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -35,18 +36,19 @@ const Customer = () => {
       });
       responseToast(res, null, "");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Failed to delete user");
     } finally {
       setLoading(false);
     }
   };
 
-  if (isError) {
-    const err = error as CustomError;
-    toast.error(err.data.message);
-  }
-
   useEffect(() => {
+    if (isError || error) {
+      const err = error as CustomError;
+      err.data?.message
+        ? toast.error(err.data.message)
+        : toast.error("Failed to fetch customers");
+    }
     if (data) {
       setCustomers(
         data.users.map((user) => ({
@@ -71,7 +73,9 @@ const Customer = () => {
         }))
       );
     }
-  }, [data]);
+  }, [data, isError, error]);
+
+  if (isError || error) return <Navigate to="/admin/dashboard" />;
 
   return (
     <div className="adminContainer">
