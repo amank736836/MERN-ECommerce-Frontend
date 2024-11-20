@@ -151,7 +151,7 @@ const ProductManagement = () => {
       });
       responseToast(res, navigate, "/admin/products");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Failed to update product");
     } finally {
       setLoading(false);
     }
@@ -166,7 +166,7 @@ const ProductManagement = () => {
       });
       responseToast(res, navigate, "/admin/products");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Failed to delete product");
     } finally {
       setLoading(false);
     }
