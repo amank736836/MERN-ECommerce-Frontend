@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
+import toast from "react-hot-toast";
 
 const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 const allNumbers = "0123456789";
@@ -13,7 +14,7 @@ const Coupon = () => {
   const [includeSymbols, setIncludeSymbols] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [coupon, setCoupon] = useState<string>("");
-
+  const [generating, setGenerating] = useState<boolean>(false);
   const copyText = async (coupon: string) => {
     await navigator.clipboard.writeText(coupon);
     setIsCopied(true);
@@ -21,22 +22,26 @@ const Coupon = () => {
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!includeNumbers && !includeCharacters && !includeSymbols) {
-      alert("Please select at least one option");
-      return;
-    }
-    let entireString: string = "";
-    if (includeNumbers) entireString += allNumbers;
-    if (includeCharacters) entireString += allLetters;
-    if (includeSymbols) entireString += allSymbols;
+    setGenerating(true);
+    if (prefix.length >= size) {
+      toast.error("Prefix length should be less than coupon length");
+    } else if (!includeNumbers && !includeCharacters && !includeSymbols) {
+      toast.error("Select at least one option");
+    } else {
+      let entireString: string = "";
+      if (includeNumbers) entireString += allNumbers;
+      if (includeCharacters) entireString += allLetters;
+      if (includeSymbols) entireString += allSymbols;
 
-    let result: string = prefix;
-    const loopLength: number = size - prefix.length;
-    for (let i = 0; i < loopLength; i++) {
-      const randomNum: number = ~~(Math.random() * entireString.length);
-      result += entireString[randomNum];
+      let result: string = prefix;
+      const loopLength: number = size - prefix.length;
+      for (let i = 0; i < loopLength; i++) {
+        const randomNum: number = ~~(Math.random() * entireString.length);
+        result += entireString[randomNum];
+      }
+      setCoupon(result);
     }
-    setCoupon(result);
+    setGenerating(false);
   };
 
   useEffect(() => {
@@ -97,7 +102,9 @@ const Coupon = () => {
               <label htmlFor="symbols">Symbols</label>
             </fieldset>
 
-            <button type="submit">Generate</button>
+            <button disabled={generating} type="submit">
+              Generate
+            </button>
           </form>
 
           {coupon && (
