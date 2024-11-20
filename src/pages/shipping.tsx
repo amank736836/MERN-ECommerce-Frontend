@@ -13,6 +13,7 @@ import {
 import { saveShippingInfo } from "../redux/reducer/cartReducer";
 import { RootState } from "../redux/store";
 import { RazorpayResponse } from "../types/api-types";
+import Loader from "../components/admin/Loader";
 
 const Shipping = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -30,6 +31,7 @@ const Shipping = () => {
   const [verifyPayment] = useVerifyPaymentMutation();
   const [createPayment] = useCreatePaymentMutation();
   const [newOrder] = useNewOrderMutation();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -54,6 +56,7 @@ const Shipping = () => {
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(saveShippingInfo(shippingInfo));
+    setLoading(true);
     try {
       const { data: razorpay } = await createRazorpay(total);
 
@@ -130,6 +133,8 @@ const Shipping = () => {
       razor.open();
     } catch (error) {
       toast.error("Payment failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -151,12 +156,17 @@ const Shipping = () => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
   }, []);
 
+  if (loading) return <Loader />;
+
   return (
     <div className="shipping">
       <button
         className="backBtn"
+        disabled={loading}
         onClick={() => {
+          setLoading(true);
           navigate(-1);
+          setLoading(false);
         }}
       >
         <BiArrowBack />
