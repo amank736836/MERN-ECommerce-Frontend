@@ -75,8 +75,8 @@ const OrderManagement = () => {
   }, [data, isError]);
 
   const updateHandler = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const res = await updateOrder({
         orderId: order._id,
         id: user?._id!,
@@ -91,8 +91,8 @@ const OrderManagement = () => {
   };
 
   const deleteHandler = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const res = await deleteOrder({
         orderId: order._id,
         id: user?._id!,
@@ -107,8 +107,8 @@ const OrderManagement = () => {
   };
 
   const cancelHandler = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const res = await cancelOrder({
         orderId: order._id,
         id: user?._id!,
