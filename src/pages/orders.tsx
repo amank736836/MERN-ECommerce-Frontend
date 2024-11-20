@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import OrderTable, {
   OrderDataType,
 } from "../components/admin/Tables/OrderTable";
@@ -20,12 +20,13 @@ const Orders = () => {
       ? useAllOrdersQuery(user?._id!)
       : useMyOrdersQuery(user?._id!);
 
-  if (isError) {
-    const err = error as CustomError;
-    toast.error(err.data.message);
-  }
-
   useEffect(() => {
+    if (isError || error) {
+      const err = error as CustomError;
+      err.data?.message
+        ? toast.error(err.data.message)
+        : toast.error("Failed to fetch orders");
+    }
     if (data) {
       setOrders(
         data.orders.map((order) => ({
@@ -56,7 +57,11 @@ const Orders = () => {
         }))
       );
     }
-  }, [data]);
+  }, [data, isError, error]);
+
+  if (isError || error) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="container">
