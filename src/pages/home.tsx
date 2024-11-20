@@ -1,18 +1,22 @@
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { SkeletonLoader } from "../components/loader";
 import ProductCard from "../components/ProductCard";
 import { useLatestProductsQuery } from "../redux/api/productAPI";
-import { useEffect } from "react";
+import { CustomError } from "../types/api-types";
 
 const Home = () => {
-  const { data, isLoading, isError } = useLatestProductsQuery("");
+  const { data, isLoading, isError, error } = useLatestProductsQuery("");
 
   useEffect(() => {
-    if (isError) {
-      toast.error("Failed to fetch data");
+    if (isError || error) {
+      const err = error as CustomError;
+      err.data?.message
+        ? toast.error(err.data.message)
+        : toast.error("Failed to fetch products");
     }
-  }, [isError]);
+  }, [isError, error]);
 
   return (
     <div className="home">
@@ -32,7 +36,8 @@ const Home = () => {
             length={6}
           />
         ) : (
-          data && data.products.map((product) => (
+          data &&
+          data.products.map((product) => (
             <ProductCard
               key={product._id}
               productId={product._id}
