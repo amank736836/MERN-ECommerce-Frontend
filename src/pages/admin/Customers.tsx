@@ -27,8 +27,8 @@ const Customer = () => {
   const [deleteUser] = useDeleteUserMutation();
 
   const deleteHandler = (userId: string) => async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const res = await deleteUser({
         userId,
         id: user?._id!,
