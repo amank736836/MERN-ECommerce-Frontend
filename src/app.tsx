@@ -18,6 +18,7 @@ import { userExist, userNotExist } from "./redux/reducer/userReducer.ts";
 import { RootState } from "./redux/store.ts";
 
 const Home = lazy(() => import("./pages/home.tsx"));
+const ProductDetails = lazy(() => import("./pages/productDetails.tsx"));
 const Search = lazy(() => import("./pages/search.tsx"));
 const Cart = lazy(() => import("./pages/cart.tsx"));
 
@@ -82,6 +83,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
 
           {/* Not Logged In Route */}
           <Route
