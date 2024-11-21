@@ -19,27 +19,29 @@ const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
     if (stock < 1) {
       setIncrementDisabled(true);
       setDecrementDisabled(true);
-      return toast.error("Out of Stock");
+      toast.error("Out of Stock");
     } else if (quantity === stock) {
       setIncrementDisabled(true);
-      return toast.error("Maximum quantity reached");
+      toast.error("Maximum quantity reached");
+    } else {
+      toast.success("Added to Cart");
+      dispatch(
+        addToCart({
+          ...cartItem,
+          quantity: quantity + 1,
+        })
+      );
     }
-    toast.success("Added to Cart");
-    dispatch(
-      addToCart({
-        ...cartItem,
-        quantity: quantity + 1,
-      })
-    );
   };
 
   const decrementHandler = () => {
     setIncrementDisabled(false);
     if (quantity === 1) {
       setDecrementDisabled(true);
-      return toast.error("Minimum quantity reached");
+      toast.error("Minimum quantity reached");
+    } else {
+      dispatch(addToCart({ ...cartItem, quantity: quantity - 1 }));
     }
-    dispatch(addToCart({ ...cartItem, quantity: quantity - 1 }));
   };
 
   const removeHandler = () => {
