@@ -23,9 +23,14 @@ const Coupon = () => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setGenerating(true);
-    if (prefix.length >= size) {
+    if (prefix.length > size) {
       toast.error("Prefix length should be less than coupon length");
-    } else if (!includeNumbers && !includeCharacters && !includeSymbols) {
+    } else if (
+      !includeNumbers &&
+      !includeCharacters &&
+      !includeSymbols &&
+      prefix.length != size
+    ) {
       toast.error("Select at least one option");
     } else {
       let entireString: string = "";
