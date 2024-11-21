@@ -39,7 +39,7 @@ const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
       setDecrementDisabled(true);
       return toast.error("Minimum quantity reached");
     }
-    return dispatch(addToCart({ ...cartItem, quantity: quantity - 1 }));
+    dispatch(addToCart({ ...cartItem, quantity: quantity - 1 }));
   };
 
   const removeHandler = () => {
