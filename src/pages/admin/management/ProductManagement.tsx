@@ -94,7 +94,6 @@ const ProductManagement = () => {
     const previews: string[] = [];
 
     Array.from(files).forEach((file, index) => {
-      console.log(file);
       if (file.size > MAX_FILE_SIZE) {
         toast.error(`${file.name} - ${ERROR_MESSAGES.size}`);
         setPhotoError(ERROR_MESSAGES.size);
