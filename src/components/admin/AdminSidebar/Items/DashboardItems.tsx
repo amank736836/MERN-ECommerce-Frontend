@@ -22,8 +22,8 @@ export const DashboardItems = [
     url: "/admin/products",
   },
   {
-    name: "Coupon",
+    name: "Discounts",
     icon: MdDiscount,
-    url: "/admin/coupon",
+    url: "/admin/Discounts",
   },
 ];
