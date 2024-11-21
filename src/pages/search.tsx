@@ -59,7 +59,7 @@ const Search = () => {
   const clearHandler = () => {
     setSearch("");
     setSort("");
-    setCurrentPrice(1000000);
+    setCurrentPrice(maxAmount);
     setCategory("");
     setPage(1);
   };
