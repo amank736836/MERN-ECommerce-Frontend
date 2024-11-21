@@ -21,6 +21,7 @@ const defaultProduct = {
   stock: 0,
   photos: [],
   category: "",
+  description: "",
 };
 
 const ERROR_MESSAGES = {
@@ -38,7 +39,7 @@ const ProductManagement = () => {
     params.id!
   );
 
-  const { name, price, stock, photos, category } =
+  const { name, price, stock, photos, category, description } =
     data?.product || defaultProduct;
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -47,6 +48,8 @@ const ProductManagement = () => {
   const [priceUpdate, setPriceUpdate] = useState<number>(price);
   const [stockUpdate, setStockUpdate] = useState<number>(stock);
   const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
+  const [descriptionUpdate, setDescriptionUpdate] =
+    useState<string>(description);
 
   const [photosFile, setPhotosFile] = useState<File[]>();
   const [photoPreviews, setPhotoPreviews] = useState<String[]>([]);
@@ -64,6 +67,7 @@ const ProductManagement = () => {
       setPriceUpdate(data.product.price);
       setStockUpdate(data.product.stock);
       setCategoryUpdate(data.product.category);
+      setDescriptionUpdate(data.product.description);
       setPhotoPreviews(data.product.photos.map((photo) => photo.url));
     }
   }, [data, isError, error]);
@@ -90,6 +94,7 @@ const ProductManagement = () => {
     const previews: string[] = [];
 
     Array.from(files).forEach((file, index) => {
+      console.log(file);
       if (file.size > MAX_FILE_SIZE) {
         toast.error(`${file.name} - ${ERROR_MESSAGES.size}`);
         setPhotoError(ERROR_MESSAGES.size);
@@ -120,6 +125,7 @@ const ProductManagement = () => {
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    const toastId = toast.loading("Updating product...");
     try {
       const formData = new FormData();
       if (nameUpdate !== name) {
@@ -133,6 +139,9 @@ const ProductManagement = () => {
       }
       if (categoryUpdate !== category) {
         formData.set("category", categoryUpdate);
+      }
+      if (descriptionUpdate !== description) {
+        formData.set("description", descriptionUpdate);
       }
       if (
         photosFile != data?.product.photos &&
@@ -151,9 +160,11 @@ const ProductManagement = () => {
       });
       responseToast(res, navigate, "/admin/products");
     } catch (error) {
+      console.log(error);
       toast.error("Failed to update product");
     } finally {
       setLoading(false);
+      toast.dismiss(toastId);
     }
   };
 
@@ -217,6 +228,16 @@ const ProductManagement = () => {
                   />
                 </div>
                 <div>
+                  <label htmlFor="productDescription">Description</label>
+                  <textarea
+                    required
+                    placeholder="Product Description"
+                    id="productDescription"
+                    value={descriptionUpdate}
+                    onChange={(e) => setDescriptionUpdate(e.target.value)}
+                  />
+                </div>
+                <div>
                   <label htmlFor="productPrice">Price</label>
                   <input
                     type="number"
@@ -260,20 +281,30 @@ const ProductManagement = () => {
                 {photoError && (
                   <span style={{ color: "red" }}>{photoError}</span>
                 )}
-                {photoPreviews &&
-                  photoPreviews.map((photo, index) => (
-                    <img
-                      key={index}
-                      src={photo as string}
-                      alt={`${name} photo preview`}
-                      style={{
-                        width: 20 / photoPreviews.length + "rem",
-                        height: 8 / photoPreviews.length + "rem",
-                        objectFit: "scale-down",
-                        margin: "0.5rem",
-                      }}
-                    />
-                  ))}
+                {photoPreviews && (
+                  <div
+                    style={{
+                      display: "flex",
+                      // flexWrap: "wrap",
+                      gap: "1rem",
+                      overflowX: "auto",
+                      // marginTop: "1rem",
+                    }}
+                  >
+                    {photoPreviews.map((photo, index) => (
+                      <img
+                        key={index}
+                        src={photo as string}
+                        alt={`${name} photo preview`}
+                        style={{
+                          width: "20rem",
+                          height: "5rem",
+                          objectFit: "scale-down",
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
                 <button disabled={loading} type="submit">
                   Update
                 </button>
