@@ -22,8 +22,9 @@ export const responseToast = (
     navigate?.(url);
   } else {
     const error = res.error as FetchBaseQueryError;
+    console.log(error);
     const data = error.data as MessageResponse;
-    toast.error(data.message);
+    data ? toast.error(data.message) : toast.error("Failed to perform action");
   }
 };
 
