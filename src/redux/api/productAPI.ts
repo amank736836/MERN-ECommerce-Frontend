@@ -5,7 +5,7 @@ import {
   MessageResponse,
   NewProductRequest,
   ProductResponse,
-  searchProductsRequest,
+  SearchProductsRequest,
   searchProductsResponse,
   SingleProductResponse,
   UpdateProductRequest,
@@ -32,7 +32,7 @@ export const productAPI = createApi({
     }),
     searchProducts: builder.query<
       searchProductsResponse,
-      searchProductsRequest
+      SearchProductsRequest
     >({
       query: (params) => ({
         url: "search",
