@@ -71,7 +71,7 @@ const Shipping = () => {
             const { data: verification } = await verifyPayment(response);
 
             if (!verification?.success) {
-              throw new Error("Payment failed 1");
+              throw new Error("Payment Verification failed");
             }
 
             const { data: order } = await newOrder({
@@ -86,7 +86,7 @@ const Shipping = () => {
             });
 
             if (!order?.success) {
-              throw new Error("Payment failed 2");
+              throw new Error("Order Creation failed");
             }
 
             const { data: payment } = await createPayment({
@@ -99,7 +99,7 @@ const Shipping = () => {
             });
 
             if (!payment?.success) {
-              throw new Error("Payment failed 3");
+              throw new Error("Payment Creation failed");
             }
 
             toast.success("Payment successful");
