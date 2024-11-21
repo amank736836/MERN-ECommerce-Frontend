@@ -1,8 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import {
+  AllCouponsResponse,
+  CreateCouponRequest,
   CreatePaymentRequest,
   CreateRazorpayResponse,
+  DeleteCouponRequest,
   MessageResponse,
   RazorpayResponse,
   VerificationResponse,
@@ -15,6 +18,27 @@ export const paymentAPI = createApi({
   }),
   tagTypes: ["payment"],
   endpoints: (builder) => ({
+    allCoupons: builder.query<AllCouponsResponse, string>({
+      query: (id) => ({
+        url: "/coupon/all",
+        params: { id },
+      }),
+    }),
+    newCoupon: builder.mutation<MessageResponse, CreateCouponRequest>({
+      query: ({ code, amount, id }) => ({
+        url: "/coupon/new",
+        method: "POST",
+        body: { code, amount },
+        params: { id },
+      }),
+    }),
+    deleteCoupon: builder.mutation<MessageResponse, DeleteCouponRequest>({
+      query: ({ couponId, id }) => ({
+        url: `/coupon/${couponId}`,
+        method: "DELETE",
+        params: { id },
+      }),
+    }),
     createRazorpay: builder.mutation<CreateRazorpayResponse, number>({
       query: (amount) => ({
         url: "createRazorpay",
@@ -43,4 +67,7 @@ export const {
   useCreateRazorpayMutation,
   useVerifyPaymentMutation,
   useCreatePaymentMutation,
+  useAllCouponsQuery,
+  useNewCouponMutation,
+  useDeleteCouponMutation,
 } = paymentAPI;
