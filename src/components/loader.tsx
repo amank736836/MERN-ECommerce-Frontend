@@ -12,6 +12,7 @@ interface SkeletonProps {
     | "row-reverse"
     | "column-reverse"
     | undefined;
+    containerHeight?: string;
 }
 
 export const SkeletonLoader = ({
@@ -21,23 +22,24 @@ export const SkeletonLoader = ({
   margin = "unset",
   padding = "unset",
   maxWidth = "unset",
-
+  containerHeight = "unset",
   length = 3,
 }: SkeletonProps) => {
   const skeletons = Array.from({ length }, (_, index) => (
     <div
       key={index}
-      className="skeleton-shape"
+      className="skeletonShape"
       style={{ width, height, maxWidth }}
     ></div>
   ));
   return (
     <div
-      className="skeleton-loader"
+      className="skeletonLoader"
       style={{
         flexDirection: flexDir,
         margin: margin,
         padding: padding,
+        height: containerHeight,
       }}
     >
       {skeletons}
