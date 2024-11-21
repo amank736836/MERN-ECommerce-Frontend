@@ -51,7 +51,9 @@ const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
           -
         </button>
         <p>{quantity}</p>
-        <button onClick={() => incrementHandler()}>+</button>
+        <button 
+        disabled={quantity === stock}
+        onClick={() => incrementHandler()}>+</button>
       </div>
       <button onClick={() => removeHandler()}>
         <FaTrash />
