@@ -4,16 +4,24 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart, removeCartItem } from "../redux/reducer/cartReducer";
 import { CartItem as CartItemProps } from "../types/types";
+import { useState } from "react";
 
 const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
   const { productId, photos, name, price, quantity, stock } = cartItem;
 
+  const [incrementDisabled, setIncrementDisabled] = useState(false);
+  const [decrementDisabled, setDecrementDisabled] = useState(false);
+
   const dispatch = useDispatch();
 
   const incrementHandler = () => {
+    setDecrementDisabled(false);
     if (stock < 1) {
+      setIncrementDisabled(true);
+      setDecrementDisabled(true);
       return toast.error("Out of Stock");
     } else if (quantity === stock) {
+      setIncrementDisabled(true);
       return toast.error("Maximum quantity reached");
     }
     toast.success("Added to Cart");
@@ -26,7 +34,9 @@ const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
   };
 
   const decrementHandler = () => {
+    setIncrementDisabled(false);
     if (quantity === 1) {
+      setDecrementDisabled(true);
       return toast.error("Minimum quantity reached");
     }
     return dispatch(addToCart({ ...cartItem, quantity: quantity - 1 }));
@@ -45,15 +55,16 @@ const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
       </article>
       <div>
         <button
+          disabled={decrementDisabled}
           onClick={() => decrementHandler()}
           onDoubleClick={() => removeHandler()}
         >
           -
         </button>
         <p>{quantity}</p>
-        <button 
-        disabled={quantity === stock}
-        onClick={() => incrementHandler()}>+</button>
+        <button disabled={incrementDisabled} onClick={() => incrementHandler()}>
+          +
+        </button>
       </div>
       <button onClick={() => removeHandler()}>
         <FaTrash />
