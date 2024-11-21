@@ -1,6 +1,7 @@
 import {
   Bar,
   CartItem,
+  Coupon,
   Line,
   Order,
   Pie,
@@ -23,39 +24,52 @@ export type MessageResponse = {
   message: string;
 };
 
-export type AllUsersResponse = {
-  success: boolean;
-  message: string;
+export type AllUsersResponse = MessageResponse & {
   users: User[];
 };
 
-export type UserResponse = {
-  success: boolean;
-  message: string;
+export type UserResponse = MessageResponse & {
   user: User;
 };
 
-export type deleteUserRequest = {
-  userId: string;
-  id: string;
-};
-
-export type ProductResponse = {
-  success: boolean;
-  message: string;
-  products: Product[];
-};
-
-export type SingleProductResponse = {
-  success: boolean;
-  message: string;
+export type SingleProductResponse = MessageResponse & {
   product: Product;
 };
 
-export type CategoryResponse = {
-  success: boolean;
-  message: string;
+export type CategoryResponse = MessageResponse & {
   categories: string[];
+};
+
+export type AllOrdersResponse = MessageResponse & {
+  orders: Order[];
+};
+
+export type OrderDetailsResponse = MessageResponse & {
+  order: Order;
+};
+
+export type NewOrderResponse = MessageResponse & {
+  orderId: string;
+};
+
+export type StatsResponse = MessageResponse & {
+  stats: Stats;
+};
+
+export type BarResponse = MessageResponse & {
+  charts: Bar;
+};
+
+export type PieResponse = MessageResponse & {
+  charts: Pie;
+};
+
+export type LineResponse = MessageResponse & {
+  charts: Line;
+};
+
+export type ProductResponse = MessageResponse & {
+  products: Product[];
 };
 
 export type searchProductsResponse = ProductResponse & {
@@ -65,7 +79,33 @@ export type searchProductsResponse = ProductResponse & {
   maxAmount: number;
 };
 
-export type searchProductsRequest = {
+export type CreateRazorpayResponse = MessageResponse & {
+  id: string;
+  currency: string;
+  amount: number;
+};
+
+export type VerificationResponse = MessageResponse & {
+  signatureIsValid: boolean;
+};
+
+export type RazorpayResponse = {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+};
+
+export type AllCouponsResponse = MessageResponse & {
+  count: number;
+  coupons: Coupon[];
+};
+
+export type DeleteUserRequest = {
+  userId: string;
+  id: string;
+};
+
+export type SearchProductsRequest = {
   search?: string;
   price?: number;
   category?: string;
@@ -87,18 +127,6 @@ export type DeleteProductRequest = {
   productId: string;
 };
 
-export type AllOrdersResponse = {
-  success: boolean;
-  message: string;
-  orders: Order[];
-};
-
-export type OrderDetailsResponse = {
-  success: boolean;
-  message: string;
-  order: Order;
-};
-
 export type NewOrderRequest = {
   orderItems: CartItem[];
   subtotal: number;
@@ -115,55 +143,19 @@ export type UpdateOrderRequest = {
   orderId: string;
 };
 
-export type StatsResponse = {
-  success: boolean;
-  message: string;
-  stats: Stats;
-};
-
-export type BarResponse = {
-  success: boolean;
-  message: string;
-  charts: Bar;
-};
-
-export type PieResponse = {
-  success: boolean;
-  message: string;
-  charts: Pie;
-};
-
-export type LineResponse = {
-  success: boolean;
-  message: string;
-  charts: Line;
-};
-
-export type CreateRazorpayResponse = {
-  success: boolean;
-  id: string;
-  currency: string;
-  amount: number;
-};
-
-export type RazorpayResponse = {
-  razorpay_order_id: string;
-  razorpay_payment_id: string;
-  razorpay_signature: string;
-};
-
-export type VerificationResponse = {
-  success: boolean;
-  message: string;
-  signatureIsValid: boolean;
-};
-
 export type CreatePaymentRequest = RazorpayResponse & {
   order: String;
   user: String;
   paymentStatus: "Pending" | "Failed" | "Success";
 };
 
-export type NewOrderResponse = MessageResponse & {
-  orderId: string;
+export type CreateCouponRequest = {
+  amount: number;
+  code: string;
+  id: string;
+};
+
+export type DeleteCouponRequest = {
+  couponId: string;
+  id: string;
 };
