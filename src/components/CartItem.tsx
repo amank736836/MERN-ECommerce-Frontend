@@ -50,7 +50,7 @@ const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
     <div className="cartItem">
       <img src={`${photos[0].url}`} alt={name} />
       <article>
-        <Link to={`/product${productId}`}>{name}</Link>
+        <Link to={`/product/${productId}`}>{name}</Link>
         <span>₹{price}</span>
       </article>
       <div>
