@@ -55,7 +55,8 @@
     }
 
     > img {
-      @include square(100%);
+      @include square(90%);
+      align-self: center;
       object-fit: scale-down;
     }
     > strong {
@@ -97,11 +98,11 @@
         position: relative;
         > label {
           position: absolute;
-          top: -1.5rem;
-          left: 0;
+          top: -1.6rem;
+          left: 0.5rem;
         }
-        > input {
-          padding: 1rem;
+        > input,
+        textarea {
           @include inputStyle(
             100%,
             1rem,
