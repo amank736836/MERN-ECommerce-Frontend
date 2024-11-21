@@ -22,6 +22,7 @@ const NewProduct = () => {
   const [price, setPrice] = useState<number>(Number(""));
   const [stock, setStock] = useState<number>(Number(""));
   const [category, setCategory] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   const [photos, setPhotos] = useState<File[]>([]);
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
@@ -84,7 +85,16 @@ const NewProduct = () => {
     const createToast = toast.loading("Creating product...");
     setLoading(true);
     try {
-      if (!name || !category || !photos || stock < 0 || !price || price < 0) {
+      if (
+        !name ||
+        !category ||
+        !photos ||
+        !description ||
+        !stock ||
+        stock < 0 ||
+        !price ||
+        price < 0
+      ) {
         toast.error("Please fill all the fields");
         return;
       }
@@ -99,6 +109,7 @@ const NewProduct = () => {
       formData.set("price", String(price));
       formData.set("stock", String(stock));
       formData.set("category", category);
+      formData.set("description", description);
       photos.forEach((photo) => formData.append("photos", photo));
 
       const res = await newProduct({ formData, id: user?._id! });
@@ -130,6 +141,16 @@ const NewProduct = () => {
                 id="productName"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="productDescription">Description</label>
+              <textarea
+                required
+                placeholder="Product Description"
+                id="productDescription"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div>
@@ -180,20 +201,28 @@ const NewProduct = () => {
             </div>
             <div>
               {photoError && <span style={{ color: "red" }}>{photoError}</span>}
-              {photoPreviews &&
-                photoPreviews.map((photo, index) => (
-                  <img
-                    key={index}
-                    src={photo}
-                    alt={`${name} photo preview`}
-                    style={{
-                      width: 20 / photoPreviews.length + "rem",
-                      height: 10 / photoPreviews.length + "rem",
-                      objectFit: "scale-down",
-                      margin: "0.5rem",
-                    }}
-                  />
-                ))}
+              {photoPreviews && (
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "1rem",
+                    overflowX: "auto",
+                  }}
+                >
+                  {photoPreviews.map((photo, index) => (
+                    <img
+                      key={index}
+                      src={photo}
+                      alt={`${name} photo preview`}
+                      style={{
+                        width: "20rem",
+                        height: "5rem",
+                        objectFit: "scale-down",
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
             <button disabled={loading} type="submit">
               Create
