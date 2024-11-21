@@ -71,8 +71,8 @@ const productDetails = () => {
           </section>
           {data ? (
             <section>
-              <h1>{data.product.name}</h1>
               <code>{data.product.category}</code>
+              <h1>{data.product.name}</h1>
               <Ratings value={data.product.ratings} />
               <h3>₹{data.product.price}</h3>
               <CustomizedButtons product={data.product} />
@@ -143,16 +143,17 @@ const CustomizedButtons = ({ product }: { product: Product }) => {
           +
         </button>
       </div>
-
-      <button onClick={AddToCart}>Add to Cart</button>
-      <button
-        onClick={() => {
-          AddToCart();
-          navigate("/cart");
-        }}
-      >
-        Buy Now
-      </button>
+      <div>
+        <button onClick={AddToCart}>Add to Cart</button>
+        <button
+          onClick={() => {
+            AddToCart();
+            navigate("/cart");
+          }}
+        >
+          Buy Now
+        </button>
+      </div>
     </article>
   );
 };
