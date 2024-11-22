@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
-import Loader from "../../../components/admin/Loader";
+import Loader from "../../../components/Loaders/Loader";
 import { useNewProductMutation } from "../../../redux/api/productAPI";
 import { RootState } from "../../../redux/store";
 import { responseToast } from "../../../utils/features";
@@ -82,8 +82,8 @@ const NewProduct = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const createToast = toast.loading("Creating product...");
     setLoading(true);
+    const toastId = toast.loading("Creating product...");
     try {
       if (
         !name ||
@@ -120,7 +120,7 @@ const NewProduct = () => {
       setLoading(false);
       setPhotos([]);
       setPhotoPreviews([]);
-      toast.dismiss(createToast);
+      toast.dismiss(toastId);
     }
   };
 
