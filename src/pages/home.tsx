@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { SkeletonLoader } from "../components/loader";
+import { SkeletonLoader } from "../components/Loaders/SkeletonLoader";
 import ProductCard from "../components/ProductCard";
 import { useLatestProductsQuery } from "../redux/api/productAPI";
 import { CustomError } from "../types/api-types";
