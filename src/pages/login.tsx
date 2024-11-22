@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { useLoginMutation } from "../redux/api/userAPI";
 import { responseToast } from "../utils/features";
-import Loader from "../components/admin/Loader";
+import Loader from "../components/Loaders/Loader";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,10 +16,11 @@ const Login = () => {
 
   const [login] = useLoginMutation();
 
-  const [Loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const loginHandler = async () => {
     setLoading(true);
+    const toastId = toast.loading("Signing in...");
     try {
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
@@ -39,10 +40,11 @@ const Login = () => {
       toast.error("Sign in failed");
     } finally {
       setLoading(false);
+      toast.dismiss(toastId);
     }
   };
 
-  return Loading ? (
+  return loading ? (
     <div>
       <center>
         <h1>Sign in with Google in the popup window</h1>
