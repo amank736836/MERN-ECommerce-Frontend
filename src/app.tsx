@@ -9,7 +9,7 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
-import Loader from "./components/admin/Loader.tsx";
+import Loader from "./components/Loaders/Loader.tsx";
 import Header from "./components/Header.tsx";
 import ProtectedRoute from "./components/protected-route.tsx";
 import { auth } from "./firebase.ts";
