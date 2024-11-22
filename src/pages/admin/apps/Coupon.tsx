@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
-import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
 import toast from "react-hot-toast";
+import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
 
 const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 const allNumbers = "0123456789";
@@ -111,6 +111,8 @@ const Coupon = () => {
               Generate
             </button>
           </form>
+
+          {generating && <p>Generating Coupon...</p>}
 
           {coupon && (
             <code>
