@@ -16,13 +16,14 @@ export const paymentAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1/payment/`,
   }),
-  tagTypes: ["payment"],
+  tagTypes: ["payment", "coupon"],
   endpoints: (builder) => ({
     allCoupons: builder.query<AllCouponsResponse, string>({
       query: (id) => ({
         url: "/coupon/all",
         params: { id },
       }),
+      providesTags: ["coupon"],
     }),
     newCoupon: builder.mutation<MessageResponse, CreateCouponRequest>({
       query: ({ code, amount, id }) => ({
@@ -31,6 +32,7 @@ export const paymentAPI = createApi({
         body: { code, amount },
         params: { id },
       }),
+      invalidatesTags: ["coupon"],
     }),
     deleteCoupon: builder.mutation<MessageResponse, DeleteCouponRequest>({
       query: ({ couponId, id }) => ({
@@ -38,6 +40,7 @@ export const paymentAPI = createApi({
         method: "DELETE",
         params: { id },
       }),
+      invalidatesTags: ["coupon"],
     }),
     createRazorpay: builder.mutation<CreateRazorpayResponse, number>({
       query: (amount) => ({
