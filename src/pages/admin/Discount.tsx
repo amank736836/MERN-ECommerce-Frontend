@@ -22,7 +22,9 @@ const Discount = () => {
 
   const { data, isLoading, isError, error } = useAllCouponsQuery(user?._id!);
   const [loading, setLoading] = useState<boolean>(false);
+  
   const [coupons, setCoupons] = useState<CouponDataType[]>([]);
+  
   const [deleteCoupon] = useDeleteCouponMutation();
 
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ const Discount = () => {
         couponId,
         id: user?._id!,
       });
-      responseToast(res, navigate, "/admin/discount");
+      responseToast(res, navigate, "/admin/discounts");
     } catch (error) {
       toast.error("Failed to delete coupon");
     } finally {
