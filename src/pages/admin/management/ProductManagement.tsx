@@ -4,8 +4,8 @@ import { FaTrash } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
-import Loader from "../../../components/admin/Loader";
-import { SkeletonLoader } from "../../../components/loader";
+import Loader from "../../../components/Loaders/Loader";
+import { SkeletonLoader } from "../../../components/Loaders/SkeletonLoader";
 import {
   useDeleteProductMutation,
   useProductDetailsQuery,
@@ -168,8 +168,9 @@ const ProductManagement = () => {
   };
 
   const deleteHandler = async () => {
+    setLoading(true);
+    const toastId = toast.loading("Deleting product...");
     try {
-      setLoading(true);
       const res = await deleteProduct({
         id: user?._id!,
         productId: data?.product._id!,
@@ -179,10 +180,11 @@ const ProductManagement = () => {
       toast.error("Failed to delete product");
     } finally {
       setLoading(false);
+      toast.dismiss(toastId);
     }
   };
 
-  if (!isLoading && isError) {
+  if (isError || error) {
     return <Navigate to="/admin/products" />;
   }
 
