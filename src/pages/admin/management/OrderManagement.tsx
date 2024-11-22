@@ -3,8 +3,8 @@ import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import Loader from "../../../components/admin/Loader";
-import { SkeletonLoader } from "../../../components/loader";
+import Loader from "../../../components/Loaders/Loader";
+import { SkeletonLoader } from "../../../components/Loaders/SkeletonLoader";
 import {
   useCancelOrderMutation,
   useDeleteOrderMutation,
@@ -54,15 +54,16 @@ const OrderManagement = () => {
   const params = useParams();
 
   const { data, isLoading, isError, error } = useOrderDetailsQuery(params.id!);
-  const [loading, setLoading] = useState<boolean>(false);
 
-  const [order, setOrder] = useState<Order>(data?.order || defaultOrder);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [updateOrder] = useUpdateOrderMutation();
   const [deleteOrder] = useDeleteOrderMutation();
   const [cancelOrder] = useCancelOrderMutation();
 
   const navigate = useNavigate();
+
+  const [order, setOrder] = useState<Order>(data?.order || defaultOrder);
 
   useEffect(() => {
     if (isError || error) {
@@ -82,6 +83,7 @@ const OrderManagement = () => {
 
   const updateHandler = async () => {
     setLoading(true);
+    const toastId = toast.loading("Updating Order Status...");
     try {
       const res = await updateOrder({
         orderId: order._id,
@@ -93,11 +95,13 @@ const OrderManagement = () => {
       toast.error("Failed to update order status");
     } finally {
       setLoading(false);
+      toast.dismiss(toastId);
     }
   };
 
   const deleteHandler = async () => {
     setLoading(true);
+    const toastId = toast.loading("Deleting Order...");
     try {
       const res = await deleteOrder({
         orderId: order._id,
@@ -109,11 +113,13 @@ const OrderManagement = () => {
       toast.error("Failed to delete order");
     } finally {
       setLoading(false);
+      toast.dismiss(toastId);
     }
   };
 
   const cancelHandler = async () => {
     setLoading(true);
+    const toastId = toast.loading("Cancelling Order...");
     try {
       const res = await cancelOrder({
         orderId: order._id,
@@ -125,10 +131,11 @@ const OrderManagement = () => {
       toast.error("Failed to cancel order");
     } finally {
       setLoading(false);
+      toast.dismiss(toastId);
     }
   };
 
-  if (!isLoading && isError) {
+  if (isError || error) {
     return <Navigate to="/orders" />;
   }
 
