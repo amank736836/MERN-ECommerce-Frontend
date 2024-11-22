@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
+import Loader from "../../components/Loaders/Loader";
 import CustomerTable, {
   CustomerDataType,
 } from "../../components/admin/Tables/CustomerTable";
-import { SkeletonLoader } from "../../components/loader";
+import { SkeletonLoader } from "../../components/Loaders/SkeletonLoader";
 import {
   useAllUsersQuery,
   useDeleteUserMutation,
@@ -15,7 +17,6 @@ import {
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
 import { responseToast } from "../../utils/features";
-import { Navigate } from "react-router-dom";
 
 const Customer = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -27,18 +28,22 @@ const Customer = () => {
 
   const [deleteUser] = useDeleteUserMutation();
 
+  const navigate = useNavigate();
+
   const deleteHandler = (userId: string) => async () => {
     setLoading(true);
+    const toastId = toast.loading("Deleting User...");
     try {
       const res = await deleteUser({
         userId,
         id: user?._id!,
       });
-      responseToast(res, null, "");
+      responseToast(res, navigate, "/admin/customers");
     } catch (error) {
       toast.error("Failed to delete user");
     } finally {
       setLoading(false);
+      toast.dismiss(toastId);
     }
   };
 
@@ -76,6 +81,8 @@ const Customer = () => {
   }, [data, isError, error]);
 
   if (isError || error) return <Navigate to="/admin/dashboard" />;
+
+  if (loading) return <Loader />;
 
   return (
     <div className="adminContainer">
