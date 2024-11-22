@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Navigate } from "react-router-dom";
-import { SkeletonLoader } from "../components/loader";
+import { SkeletonLoader } from "../components/Loaders/SkeletonLoader";
 import ProductCard from "../components/ProductCard";
 import { useSearchProductsQuery } from "../redux/api/productAPI";
 import { CustomError } from "../types/api-types";
-import Loader from "../components/admin/Loader";
+import Loader from "../components/Loaders/Loader";
 
 const Search = () => {
   const [search, setSearch] = useState<string>("");
