@@ -1,10 +1,11 @@
+import { SkeletonLoader } from "./SkeletonLoader";
 
 const Loader = () => {
   return (
     <section className="loader">
       <div></div>
     </section>
-  )
-}
+  );
+};
 
-export default Loader
+export default Loader;
