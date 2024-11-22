@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
 import { BarChart } from "../../../components/admin/Charts/Charts";
-import { SkeletonLoader } from "../../../components/loader";
+import { SkeletonLoader } from "../../../components/Loaders/SkeletonLoader";
 import { useBarQuery } from "../../../redux/api/dashboardAPI";
 import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
