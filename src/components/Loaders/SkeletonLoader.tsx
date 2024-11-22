@@ -12,7 +12,7 @@ interface SkeletonProps {
     | "row-reverse"
     | "column-reverse"
     | undefined;
-    containerHeight?: string;
+  containerHeight?: string;
 }
 
 export const SkeletonLoader = ({
