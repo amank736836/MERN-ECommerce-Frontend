@@ -40,7 +40,7 @@ const OrderManagement = lazy(
 const Dashboard = lazy(() => import("./pages/admin/Dashboard.tsx"));
 const Product = lazy(() => import("./pages/admin/Products.tsx"));
 const Customer = lazy(() => import("./pages/admin/Customers.tsx"));
-const Discount = lazy(() => import("./pages/admin/Discount.tsx"));
+const Discount = lazy(() => import("./pages/admin/Discounts.tsx"));
 
 const BarCharts = lazy(() => import("./pages/admin/charts/BarCharts.tsx"));
 const PieCharts = lazy(() => import("./pages/admin/charts/PieCharts.tsx"));
