@@ -7,7 +7,7 @@ import {
   DoughnutChart,
   PieChart,
 } from "../../../components/admin/Charts/Charts";
-import { SkeletonLoader } from "../../../components/loader";
+import { SkeletonLoader } from "../../../components/Loaders/SkeletonLoader";
 import { usePieQuery } from "../../../redux/api/dashboardAPI";
 import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
