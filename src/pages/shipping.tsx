@@ -13,7 +13,7 @@ import {
 import { saveShippingInfo } from "../redux/reducer/cartReducer";
 import { RootState } from "../redux/store";
 import { RazorpayResponse } from "../types/api-types";
-import Loader from "../components/admin/Loader";
+import Loader from "../components/Loaders/Loader";
 
 const Shipping = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
