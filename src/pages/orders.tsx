@@ -5,7 +5,7 @@ import { Link, Navigate } from "react-router-dom";
 import OrderTable, {
   OrderDataType,
 } from "../components/admin/Tables/OrderTable";
-import { SkeletonLoader } from "../components/loader";
+import { SkeletonLoader } from "../components/Loaders/SkeletonLoader";
 import { useAllOrdersQuery, useMyOrdersQuery } from "../redux/api/orderAPI";
 import { RootState } from "../redux/store";
 import { CustomError } from "../types/api-types";
