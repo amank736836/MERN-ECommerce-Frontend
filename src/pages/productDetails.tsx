@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { SkeletonLoader } from "../components/loader";
+import ProductLoader from "../components/Loaders/ProductLoader";
 import Ratings from "../components/Ratings";
 import { useProductDetailsQuery } from "../redux/api/productAPI";
 import { addToCart } from "../redux/reducer/cartReducer";
@@ -155,51 +155,6 @@ const CustomizedButtons = ({ product }: { product: Product }) => {
         </button>
       </div>
     </article>
-  );
-};
-
-const ProductLoader = () => {
-  return (
-    <div
-      style={{
-        display: "flex",
-        gap: "2rem",
-        height: "80vh",
-        border: "1px solid #f1f1f1",
-      }}
-    >
-      <section
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <SkeletonLoader
-          width="100%"
-          height="100%"
-          containerHeight="100%"
-          length={1}
-          flexDir="column"
-        />
-      </section>
-      <section
-        style={{
-          width: "100%",
-          // border: "1px solid blue",
-          display: "flex",
-          flexDirection: "column",
-          gap: "4rem",
-          padding: "2rem",
-        }}
-      >
-        <SkeletonLoader width="100%" length={3} />
-        <SkeletonLoader width="100%" length={2} flexDir="column" />
-        <SkeletonLoader width="100%" length={3} />
-        <SkeletonLoader width="100%" length={3} flexDir="column" />
-        <SkeletonLoader width="100%" length={3} />
-        <SkeletonLoader width="100%" length={2} flexDir="column" />
-      </section>
-    </div>
   );
 };
 
