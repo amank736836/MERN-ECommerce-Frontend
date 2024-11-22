@@ -8,7 +8,7 @@ import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
 import ProductTable, {
   ProductDataType,
 } from "../../components/admin/Tables/ProductTable";
-import { SkeletonLoader } from "../../components/loader";
+import { SkeletonLoader } from "../../components/Loaders/SkeletonLoader";
 import { useAllProductsQuery } from "../../redux/api/productAPI";
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
