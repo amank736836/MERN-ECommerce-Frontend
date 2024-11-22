@@ -15,7 +15,7 @@ import { BiMaleFemale } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { SkeletonLoader } from "../../components/loader";
+import { SkeletonLoader } from "../../components/Loaders/SkeletonLoader";
 import { useStatsQuery } from "../../redux/api/dashboardAPI";
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
