@@ -15,7 +15,7 @@ import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
 import { responseToast } from "../../../utils/features";
 
-const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const allNumbers = "0123456789";
 const allSymbols = "!@#$%^&*()_+";
 
