@@ -9,8 +9,8 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
-import Loader from "./components/Loaders/Loader.tsx";
 import Header from "./components/Header.tsx";
+import Loader from "./components/Loaders/Loader.tsx";
 import ProtectedRoute from "./components/protected-route.tsx";
 import { auth } from "./firebase.ts";
 import { getUser } from "./redux/api/userAPI.ts";
@@ -36,18 +36,21 @@ const NewProduct = lazy(
 const OrderManagement = lazy(
   () => import("./pages/admin/management/OrderManagement.tsx")
 );
+const CouponManagement = lazy(
+  () => import("./pages/admin/management/CouponManagement.tsx")
+);
 
 const Dashboard = lazy(() => import("./pages/admin/Dashboard.tsx"));
 const Product = lazy(() => import("./pages/admin/Products.tsx"));
 const Customer = lazy(() => import("./pages/admin/Customers.tsx"));
-const Discount = lazy(() => import("./pages/admin/Discounts.tsx"));
+const Discount = lazy(() => import("./pages/admin/Coupons.tsx"));
 
 const BarCharts = lazy(() => import("./pages/admin/charts/BarCharts.tsx"));
 const PieCharts = lazy(() => import("./pages/admin/charts/PieCharts.tsx"));
 const LineCharts = lazy(() => import("./pages/admin/charts/LineCharts.tsx"));
 
 const Stopwatch = lazy(() => import("./pages/admin/apps/Stopwatch.tsx"));
-const Coupon = lazy(() => import("./pages/admin/apps/Coupon.tsx"));
+const Coupon = lazy(() => import("./pages/admin/management/NewCoupon.tsx"));
 const Toss = lazy(() => import("./pages/admin/apps/Toss.tsx"));
 
 const App = () => {
@@ -151,18 +154,22 @@ const App = () => {
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/products" element={<Product />} />
             <Route path="/admin/customers" element={<Customer />} />
-            <Route path="/admin/discounts" element={<Discount />} />
+            <Route path="/admin/coupons" element={<Discount />} />
 
             <Route path="/admin/chart/bar" element={<BarCharts />} />
             <Route path="/admin/chart/pie" element={<PieCharts />} />
             <Route path="/admin/chart/line" element={<LineCharts />} />
 
-            <Route path="/admin/app/stopwatch" element={<Stopwatch />} />
+            <Route path="/admin/app/product" element={<NewProduct />} />
             <Route path="/admin/app/coupon" element={<Coupon />} />
+            <Route path="/admin/app/stopwatch" element={<Stopwatch />} />
             <Route path="/admin/app/toss" element={<Toss />} />
 
-            <Route path="/admin/product/:id" element={<ProductManagement />} />
             <Route path="/admin/product/add" element={<NewProduct />} />
+            <Route path="/admin/product/:id" element={<ProductManagement />} />
+
+            <Route path="/admin/discount/add" element={<Coupon />} />
+            <Route path="/admin/discount/:id" element={<CouponManagement />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
