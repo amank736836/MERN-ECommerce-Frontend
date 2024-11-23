@@ -2,14 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import {
   AllCouponsResponse,
-  CreateCouponRequest,
   CreatePaymentRequest,
   CreateRazorpayResponse,
   DeleteCouponRequest,
+  GetCouponRequest,
+  GetCouponResponse,
   MessageResponse,
   RazorpayResponse,
+  UpdateCouponRequest,
   VerificationResponse,
 } from "../../types/api-types";
+import { Coupon } from "../../types/types";
 
 export const paymentAPI = createApi({
   reducerPath: "paymentApi",
@@ -25,11 +28,62 @@ export const paymentAPI = createApi({
       }),
       providesTags: ["coupon"],
     }),
-    newCoupon: builder.mutation<MessageResponse, CreateCouponRequest>({
-      query: ({ code, amount, id }) => ({
+    getCoupon: builder.query<GetCouponResponse, GetCouponRequest>({
+      query: ({ id, couponId }) => ({
+        url: `/coupon/${couponId}`,
+        params: { id },
+      }),
+      providesTags: ["coupon"],
+    }),
+    newCoupon: builder.mutation<MessageResponse, Coupon>({
+      query: ({
+        _id,
+        code,
+        amount,
+        prefix,
+        postfix,
+        includeNumbers,
+        includeCharacters,
+        includeSymbols,
+      }) => ({
         url: "/coupon/new",
         method: "POST",
-        body: { code, amount },
+        body: {
+          code,
+          amount,
+          prefix,
+          postfix,
+          includeNumbers,
+          includeCharacters,
+          includeSymbols,
+        },
+        params: { id: _id },
+      }),
+      invalidatesTags: ["coupon"],
+    }),
+    updateCoupon: builder.mutation<MessageResponse, UpdateCouponRequest>({
+      query: ({
+        id,
+        couponId,
+        code,
+        amount,
+        prefix,
+        postfix,
+        includeNumbers,
+        includeCharacters,
+        includeSymbols,
+      }) => ({
+        url: `/coupon/${couponId}`,
+        method: "PUT",
+        body: {
+          code,
+          amount,
+          prefix,
+          postfix,
+          includeNumbers,
+          includeCharacters,
+          includeSymbols,
+        },
         params: { id },
       }),
       invalidatesTags: ["coupon"],
@@ -67,10 +121,12 @@ export const paymentAPI = createApi({
 });
 
 export const {
+  useGetCouponQuery,
+  useAllCouponsQuery,
   useCreateRazorpayMutation,
   useVerifyPaymentMutation,
   useCreatePaymentMutation,
-  useAllCouponsQuery,
   useNewCouponMutation,
   useDeleteCouponMutation,
+  useUpdateCouponMutation,
 } = paymentAPI;
