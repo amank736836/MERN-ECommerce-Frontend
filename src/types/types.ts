@@ -143,5 +143,11 @@ export type Line = {
 export type Coupon = {
   _id: string;
   code: string;
+  size: number;
   amount: number;
+  prefix: string;
+  postfix: string;
+  includeNumbers: boolean;
+  includeCharacters: boolean;
+  includeSymbols: boolean;
 };
