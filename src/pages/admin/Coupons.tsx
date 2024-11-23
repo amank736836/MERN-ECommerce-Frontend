@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaCopy, FaPlus, FaTrash } from "react-icons/fa";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import { LuClipboardCopy } from "react-icons/lu";
 import { useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admin/AdminSidebar/AdminSidebar";
@@ -16,19 +17,6 @@ import {
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
 import { responseToast } from "../../utils/features";
-import { BiCopy } from "react-icons/bi";
-import { BsCopy } from "react-icons/bs";
-import { FiCopy } from "react-icons/fi";
-import { GoCopy } from "react-icons/go";
-import { GrCopy } from "react-icons/gr";
-import { ImCopy } from "react-icons/im";
-import { IoCopy } from "react-icons/io5";
-import { LuClipboardCopy, LuCopy } from "react-icons/lu";
-import { PiCopy } from "react-icons/pi";
-import { CgCopy } from "react-icons/cg";
-import { LiaCopy } from "react-icons/lia";
-import { RxCopy } from "react-icons/rx";
-import { TbCopy } from "react-icons/tb";
 
 const Discount = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -42,7 +30,7 @@ const Discount = () => {
 
   const navigate = useNavigate();
 
-  const deleteHandler = (couponId: string) => async () => {
+  const deleteHandler = async (couponId: string) => {
     setLoading(true);
     const toastId = toast.loading("Deleting Coupon...");
     try {
@@ -85,9 +73,12 @@ const Discount = () => {
               </span>
             </code>
           ),
-          action1: <Link to={`/admin/discount/${coupon._id}`}>Manage</Link>,
+          action1: <Link to={`/admin/coupon/${coupon._id}`}>Manage</Link>,
           action2: (
-            <button onClick={deleteHandler(coupon._id)} disabled={loading}>
+            <button
+              onClick={() => deleteHandler(coupon._id)}
+              disabled={loading}
+            >
               <FaTrash />
             </button>
           ),
@@ -121,7 +112,7 @@ const Discount = () => {
           <CouponTable data={coupons} />
         )}
       </main>
-      <Link to="/admin/discount/add" className="createProductBtn">
+      <Link to="/admin/coupon/add" className="createProductBtn">
         <FaPlus />
       </Link>
     </div>
