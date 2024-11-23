@@ -100,6 +100,10 @@ export type AllCouponsResponse = MessageResponse & {
   coupons: Coupon[];
 };
 
+export type GetCouponResponse = MessageResponse & {
+  coupon: Coupon;
+};
+
 export type DeleteUserRequest = {
   userId: string;
   id: string;
@@ -149,13 +153,24 @@ export type CreatePaymentRequest = RazorpayResponse & {
   paymentStatus: "Pending" | "Failed" | "Success";
 };
 
-export type CreateCouponRequest = {
-  amount: number;
-  code: string;
+export type UpdateCouponRequest = {
   id: string;
+  couponId: string;
+  code: string;
+  amount: number;
+  prefix: string;
+  postfix: string;
+  includeNumbers: boolean;
+  includeCharacters: boolean;
+  includeSymbols: boolean;
 };
 
 export type DeleteCouponRequest = {
   couponId: string;
   id: string;
+};
+
+export type GetCouponRequest = {
+  id: string;
+  couponId: string;
 };
