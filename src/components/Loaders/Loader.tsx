@@ -1,4 +1,3 @@
-import { SkeletonLoader } from "./SkeletonLoader";
 
 const Loader = () => {
   return (
