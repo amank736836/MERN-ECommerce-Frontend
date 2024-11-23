@@ -164,9 +164,7 @@ const Shipping = () => {
         className="backBtn"
         disabled={loading}
         onClick={() => {
-          setLoading(true);
           navigate(-1);
-          setLoading(false);
         }}
       >
         <BiArrowBack />
