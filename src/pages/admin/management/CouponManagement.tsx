@@ -1,11 +1,13 @@
 import { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaTrash } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../../components/admin/AdminSidebar/AdminSidebar";
 import Loader from "../../../components/Loaders/Loader";
 import { SkeletonLoader } from "../../../components/Loaders/SkeletonLoader";
 import {
+  useDeleteCouponMutation,
   useGetCouponQuery,
   useUpdateCouponMutation,
 } from "../../../redux/api/paymentAPI";
@@ -85,7 +87,7 @@ const CouponManagement = () => {
   }, [isError, error, data, couponUpdate]);
 
   const [isCopied, setIsCopied] = useState<boolean>(false);
-  const [generating, setGenerating] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const copyText = async (coupon: string) => {
     await navigator.clipboard.writeText(coupon);
@@ -107,7 +109,7 @@ const CouponManagement = () => {
     } else if (!sizeUpdate || sizeUpdate < 8 || sizeUpdate > 25) {
       toast.error("Coupon length should be >= 8 and <= 25");
     } else {
-      setGenerating(true);
+      setLoading(true);
       const toastId = toast.loading("Generating Coupon...");
       try {
         if (sizeUpdate < 8) setSizeUpdate(8);
@@ -149,9 +151,28 @@ const CouponManagement = () => {
         console.log(error);
         toast.error("Failed to update coupon");
       } finally {
-        setGenerating(false);
+        setLoading(false);
         toast.dismiss(toastId);
       }
+    }
+  };
+
+  const [deleteCoupon] = useDeleteCouponMutation();
+
+  const deleteHandler = async (couponId: string) => {
+    setLoading(true);
+    const toastId = toast.loading("Deleting Coupon...");
+    try {
+      const res = await deleteCoupon({
+        couponId,
+        id: user?._id!,
+      });
+      responseToast(res, navigate, "/admin/coupons");
+    } catch (error) {
+      toast.error("Failed to delete coupon");
+    } finally {
+      setLoading(false);
+      toast.dismiss(toastId);
     }
   };
 
@@ -159,7 +180,7 @@ const CouponManagement = () => {
     return <Navigate to="/admin/coupons" />;
   }
 
-  if (generating) return <Loader />;
+  if (loading) return <Loader />;
 
   return (
     <div className="adminContainer">
@@ -170,6 +191,13 @@ const CouponManagement = () => {
         ) : (
           <>
             <h1>Update Coupon</h1>
+            <button
+              className="productDeleteBtn"
+              disabled={loading}
+              onClick={() => deleteHandler(params.id!)}
+            >
+              <FaTrash />
+            </button>
             <section>
               <form
                 className="couponForm"
@@ -273,12 +301,12 @@ const CouponManagement = () => {
                   <label htmlFor="symbols">Symbols</label>
                 </fieldset>
 
-                <button disabled={generating} type="submit">
+                <button disabled={loading} type="submit">
                   Generate
                 </button>
               </form>
 
-              {generating && <p>Generating Coupon...</p>}
+              {loading && <p>Generating Coupon...</p>}
 
               {couponUpdate && (
                 <code className="couponCode">
