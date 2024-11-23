@@ -5,6 +5,7 @@ import { VscError } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItemCard from "../components/CartItem";
+import Loader from "../components/Loaders/Loader";
 import { calculatePrice, updateCoupon } from "../redux/reducer/cartReducer";
 import { RootState, server } from "../redux/store";
 
@@ -19,10 +20,13 @@ const Cart = () => {
   const [couponCode, setCouponCode] = useState<string>(coupon);
   const [isValidCouponCode, setIsValidCouponCode] = useState<boolean>(false);
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (cartItems.length <= 0 || user?.role !== "user" || couponCode === "") {
       return;
     }
+    setLoading(true);
     const { token: cancelToken, cancel } = axios.CancelToken.source();
     const id = setTimeout(() => {
       axios
@@ -51,17 +55,21 @@ const Cart = () => {
           }
         });
     }, 1000);
+    setLoading(false);
 
     return () => {
       clearTimeout(id);
       cancel();
       setIsValidCouponCode(false);
+      setLoading(false);
     };
   }, [couponCode]);
 
   useEffect(() => {
     dispatch(calculatePrice(discount));
   }, [cartItems]);
+
+  if (loading) <Loader />;
 
   return (
     <div className="cart">
