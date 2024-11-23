@@ -168,8 +168,8 @@ const App = () => {
             <Route path="/admin/product/add" element={<NewProduct />} />
             <Route path="/admin/product/:id" element={<ProductManagement />} />
 
-            <Route path="/admin/discount/add" element={<Coupon />} />
-            <Route path="/admin/discount/:id" element={<CouponManagement />} />
+            <Route path="/admin/coupon/add" element={<Coupon />} />
+            <Route path="/admin/coupon/:id" element={<CouponManagement />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
