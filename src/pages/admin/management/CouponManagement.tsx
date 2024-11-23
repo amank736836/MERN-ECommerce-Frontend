@@ -38,8 +38,6 @@ const CouponManagement = () => {
     couponId: params.id!,
   });
 
-  console.log(params.id);
-
   const {
     code,
     amount,
@@ -112,7 +110,7 @@ const CouponManagement = () => {
       setGenerating(true);
       const toastId = toast.loading("Generating Coupon...");
       try {
-        if (size < 8) setSizeUpdate(8);
+        if (sizeUpdate < 8) setSizeUpdate(8);
         let entireString: string = "";
         if (includeNumbersUpdate) entireString += allNumbers;
         if (includeCharactersUpdate) entireString += allLetters;
@@ -127,7 +125,7 @@ const CouponManagement = () => {
 
         let result: string = prefixUpdate;
         const loopLength: number =
-          size - prefixUpdate.length - postfixUpdate.length;
+          sizeUpdate - prefixUpdate.length - postfixUpdate.length;
         for (let i = 0; i < loopLength; i++) {
           const randomNum: number = ~~(Math.random() * entireString.length);
           result += entireString[randomNum];
@@ -138,6 +136,7 @@ const CouponManagement = () => {
           couponId: params.id!,
           code: result,
           amount: amountUpdate,
+          size: sizeUpdate,
           prefix: prefixUpdate,
           postfix: postfixUpdate,
           includeNumbers: includeNumbersUpdate,
@@ -148,7 +147,7 @@ const CouponManagement = () => {
         setCouponUpdate(result);
       } catch (error) {
         console.log(error);
-        toast.error("Failed to generate coupon");
+        toast.error("Failed to update coupon");
       } finally {
         setGenerating(false);
         toast.dismiss(toastId);
@@ -191,7 +190,7 @@ const CouponManagement = () => {
                         setPrefixUpdate(newPrefix);
                       }
                     }}
-                    maxLength={size - postfixUpdate.length}
+                    maxLength={sizeUpdate - postfixUpdate.length}
                   />
                 </div>
                 <div>
@@ -200,14 +199,17 @@ const CouponManagement = () => {
                     id="postfix"
                     type="text"
                     placeholder="Text for postfix"
-                    value={postfixUpdate ?? ""}
+                    value={postfixUpdate}
                     onChange={(e) => {
                       const newPostfix = e.target.value.toUpperCase();
-                      if (prefixUpdate.length + newPostfix.length <= size) {
+                      if (
+                        prefixUpdate.length + newPostfix.length <=
+                        sizeUpdate
+                      ) {
                         setPostfixUpdate(newPostfix);
                       }
                     }}
-                    maxLength={size - prefixUpdate.length}
+                    maxLength={sizeUpdate - prefixUpdate.length}
                   />
                 </div>
                 <div>
@@ -220,7 +222,7 @@ const CouponManagement = () => {
                     placeholder="Coupon Length"
                     value={sizeUpdate}
                     onChange={(e) => {
-                      if (Number(e.target.value) <= 25 || e.target.value === "")
+                      if (Number(e.target.value) <= 25)
                         setSizeUpdate(Number(e.target.value));
                     }}
                     max={25}
@@ -236,7 +238,6 @@ const CouponManagement = () => {
                     placeholder="Coupon Value"
                     value={amountUpdate}
                     onChange={(e) => setAmountUpdate(Number(e.target.value))}
-                    maxLength={size}
                   />
                 </div>
                 <fieldset>
