@@ -190,7 +190,9 @@ const CouponManagement = () => {
           <SkeletonLoader length={3} width="400px" height="80vh" />
         ) : (
           <>
-            <h1>Update Coupon</h1>
+            <center>
+              <h1>Update Coupon</h1>
+            </center>
             <button
               className="productDeleteBtn"
               disabled={loading}
