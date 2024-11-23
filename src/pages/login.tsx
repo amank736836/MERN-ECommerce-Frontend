@@ -3,10 +3,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loaders/Loader";
 import { auth } from "../firebase";
 import { useLoginMutation } from "../redux/api/userAPI";
 import { responseToast } from "../utils/features";
-import Loader from "../components/Loaders/Loader";
 
 const Login = () => {
   const navigate = useNavigate();
