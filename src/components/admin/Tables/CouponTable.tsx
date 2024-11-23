@@ -6,6 +6,7 @@ export interface CouponDataType {
   _id: string;
   code: string;
   amount: number;
+  copy: ReactElement;
   action1: ReactElement;
   action2: ReactElement;
 }
@@ -22,6 +23,10 @@ const columns: Column<CouponDataType>[] = [
   {
     Header: "Amount",
     accessor: "amount",
+  },
+  {
+    Header: "Copy",
+    accessor: "copy",
   },
   {
     Header: "Action 1",
