@@ -184,6 +184,10 @@ const ProductManagement = () => {
     }
   };
 
+  const ImageClickHandler = (id: string) => {
+    navigate(`/product/${id}`);
+  };
+
   if (isError || error) {
     return <Navigate to="/admin/products" />;
   }
@@ -197,7 +201,7 @@ const ProductManagement = () => {
           <SkeletonLoader length={2} width="500px" height="85vh" />
         ) : (
           <>
-            <section>
+            <section onClick={() => ImageClickHandler(data?.product._id!)}>
               <strong>ID - {data?.product._id}</strong>
               <img src={`${photos[0].url}`} alt="Product" />
               <p>{name}</p>
