@@ -187,7 +187,7 @@ const CouponManagement = () => {
       <AdminSidebar />
       <main className="dashboardAppContainer">
         {isLoading ? (
-          <SkeletonLoader length={1} width="400px" height="85vh" />
+          <SkeletonLoader length={3} width="400px" height="80vh" />
         ) : (
           <>
             <h1>Update Coupon</h1>
