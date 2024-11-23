@@ -66,6 +66,7 @@ export const paymentAPI = createApi({
         id,
         couponId,
         code,
+        size,
         amount,
         prefix,
         postfix,
@@ -78,6 +79,7 @@ export const paymentAPI = createApi({
         body: {
           code,
           amount,
+          size,
           prefix,
           postfix,
           includeNumbers,
