@@ -43,19 +43,11 @@ const Stopwatch = () => {
           <div className="stopwatch">
             <h2>{formatTime(time)}</h2>
             <button
-              onClick={() => {
-                setIsRunning((prevIsRunning) => !prevIsRunning);
-              }}
+              onClick={() => setIsRunning((prevIsRunning) => !prevIsRunning)}
             >
               {isRunning ? "Stop" : "Start"}
             </button>
-            <button
-              onClick={() => {
-                resetHandler();
-              }}
-            >
-              Reset
-            </button>
+            <button onClick={() => resetHandler()}>Reset</button>
           </div>
         </section>
       </main>
