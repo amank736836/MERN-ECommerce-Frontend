@@ -61,9 +61,10 @@ export const cartReducer = createSlice({
       if (action.payload > state.subtotal) {
         state.discount = state.subtotal;
       } else {
-        state.total =
-          state.subtotal + state.tax + state.shippingCharges - state.discount;
+        state.discount = action.payload;
       }
+      state.total =
+        state.subtotal + state.tax + state.shippingCharges - state.discount;
     },
     saveShippingInfo: (state, action: PayloadAction<ShippingInfo>) => {
       state.shippingInfo = action.payload;
