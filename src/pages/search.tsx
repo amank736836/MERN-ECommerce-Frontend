@@ -57,11 +57,13 @@ const Search = () => {
   }
 
   const clearHandler = () => {
+    setLoading(true);
     setSearch("");
     setSort("");
     setCurrentPrice(maxAmount);
     setCategory("");
     setPage(1);
+    setLoading(false);
   };
 
   if (loading) return <Loader />;
@@ -112,15 +114,7 @@ const Search = () => {
           </select>
         </div>
         <div>
-          <button
-            onClick={() => {
-              setLoading(true);
-              clearHandler();
-              setLoading(false);
-            }}
-          >
-            Clear
-          </button>
+          <button onClick={() => clearHandler()}>Clear</button>
         </div>
       </aside>
       <main>
@@ -158,9 +152,7 @@ const Search = () => {
           <article>
             <button
               disabled={!isPrevPage}
-              onClick={() => {
-                setPage((prev) => prev - 1);
-              }}
+              onClick={() => setPage((prev) => prev - 1)}
             >
               Prev
             </button>
@@ -169,9 +161,7 @@ const Search = () => {
             </span>
             <button
               disabled={!isNextPage}
-              onClick={() => {
-                setPage((prev) => prev + 1);
-              }}
+              onClick={() => setPage((prev) => prev + 1)}
             >
               Next
             </button>
