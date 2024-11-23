@@ -95,7 +95,9 @@ const Coupon = () => {
     <div className="adminContainer">
       <AdminSidebar />
       <main className="dashboardAppContainer">
-        <h1>Coupon</h1>
+        <center>
+        <h1>New Coupon</h1>
+        </center>
         <section>
           <form
             className="couponForm"
