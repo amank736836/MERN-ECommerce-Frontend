@@ -7,7 +7,8 @@ export interface ProductDataType {
   name: string;
   price: number;
   stock: number;
-  action: ReactElement;
+  action1: ReactElement;
+  action2: ReactElement;
 }
 
 const columns: Column<ProductDataType>[] = [
@@ -28,8 +29,12 @@ const columns: Column<ProductDataType>[] = [
     accessor: "stock",
   },
   {
-    Header: "Action",
-    accessor: "action",
+    Header: "Action 1",
+    accessor: "action1",
+  },
+  {
+    Header: "Action 2",
+    accessor: "action2",
   },
 ];
 
