@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addToCart, removeCartItem } from "../redux/reducer/cartReducer";
 import { CartItem as CartItemProps } from "../types/types";
 import { useState } from "react";
@@ -48,9 +48,15 @@ const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
     dispatch(removeCartItem(productId));
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="cartItem">
-      <img src={`${photos[0].url}`} alt={name} />
+      <img
+        onClick={() => navigate(`/product/${productId}`)}
+        src={`${photos[0].url}`}
+        alt={name}
+      />
       <article>
         <Link to={`/product/${productId}`}>{name}</Link>
         <span>₹{price}</span>
