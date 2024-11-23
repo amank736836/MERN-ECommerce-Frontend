@@ -172,6 +172,14 @@ const CouponManagement = () => {
       toast.error("Failed to delete coupon");
     } finally {
       setLoading(false);
+      setCouponUpdate("");
+      setAmountUpdate(0);
+      setPrefixUpdate("");
+      setPostfixUpdate("");
+      setSizeUpdate(8);
+      setIncludeNumbersUpdate(false);
+      setIncludeCharactersUpdate(false);
+      setIncludeSymbolsUpdate(false);
       toast.dismiss(toastId);
     }
   };
