@@ -69,11 +69,11 @@ export const orderAPI = createApi({
 });
 
 export const {
+  useMyOrdersQuery,
+  useAllOrdersQuery,
+  useOrderDetailsQuery,
   useNewOrderMutation,
   useUpdateOrderMutation,
   useDeleteOrderMutation,
   useCancelOrderMutation,
-  useMyOrdersQuery,
-  useAllOrdersQuery,
-  useOrderDetailsQuery,
 } = orderAPI;
