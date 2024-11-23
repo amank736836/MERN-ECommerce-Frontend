@@ -18,6 +18,9 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const [couponCode, setCouponCode] = useState<string>(coupon);
+
+  const [discountAmount, setDiscountAmount] = useState<number>(discount || 0);
+
   const [isValidCouponCode, setIsValidCouponCode] = useState<boolean>(false);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -34,13 +37,14 @@ const Cart = () => {
           cancelToken,
         })
         .then((res) => {
-          dispatch(calculatePrice(res.data.discount));
+          setDiscountAmount(res.data.discount);
+          dispatch(calculatePrice(discountAmount));
           dispatch(updateCoupon(couponCode));
           setIsValidCouponCode(res.data.success);
           toast.success(res.data.message);
         })
         .catch((err) => {
-          dispatch(calculatePrice(0));
+          dispatch(calculatePrice(discountAmount));
           setIsValidCouponCode(false);
           if (
             err.response &&
@@ -66,7 +70,7 @@ const Cart = () => {
   }, [couponCode]);
 
   useEffect(() => {
-    dispatch(calculatePrice(discount));
+    dispatch(calculatePrice(discountAmount));
   }, [cartItems]);
 
   if (loading) <Loader />;
