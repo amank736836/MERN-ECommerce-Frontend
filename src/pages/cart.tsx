@@ -91,7 +91,7 @@ const Cart = () => {
         <p>Shipping Charges: ₹{shippingCharges}</p>
         <p>Tax: ₹{tax}</p>
         <p>
-          Discount: <em className="red"> - ₹{discount}</em>
+          Discount: <em className="red"> - ₹{discountAmount}</em>
         </p>
         <p>
           <b>Total: ₹{total}</b>
@@ -108,7 +108,7 @@ const Cart = () => {
         {couponCode &&
           (isValidCouponCode ? (
             <span className="green">
-              ₹{discount} off using the <code>{couponCode}</code>
+              ₹{discountAmount} off using the <code>{couponCode}</code>
             </span>
           ) : (
             <span className="red">
