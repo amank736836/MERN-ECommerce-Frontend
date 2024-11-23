@@ -7,7 +7,7 @@ import { useNewCouponMutation } from "../../../redux/api/paymentAPI";
 import { RootState } from "../../../redux/store";
 import { responseToast } from "../../../utils/features";
 
-const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const allNumbers = "0123456789";
 const allSymbols = "!@#$%^&*()_+";
 
