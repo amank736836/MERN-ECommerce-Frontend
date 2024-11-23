@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
-import { Link, Navigate } from "react-router-dom";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -9,9 +9,13 @@ import ProductTable, {
   ProductDataType,
 } from "../../components/admin/Tables/ProductTable";
 import { SkeletonLoader } from "../../components/Loaders/SkeletonLoader";
-import { useAllProductsQuery } from "../../redux/api/productAPI";
+import {
+  useAllProductsQuery,
+  useDeleteProductMutation,
+} from "../../redux/api/productAPI";
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
+import { responseToast } from "../../utils/features";
 
 const Product = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -19,6 +23,28 @@ const Product = () => {
   const [products, setProducts] = useState<ProductDataType[]>([]);
 
   const { data, isLoading, isError, error } = useAllProductsQuery(user?._id!);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [deleteProduct] = useDeleteProductMutation();
+
+  const navigate = useNavigate();
+
+  const deleteHandler = async (productId: string) => {
+    setLoading(true);
+    const toastId = toast.loading("Deleting product...");
+    try {
+      const res = await deleteProduct({
+        id: user?._id!,
+        productId,
+      });
+      responseToast(res, navigate, "/admin/products");
+    } catch (error) {
+      toast.error("Failed to delete product");
+    } finally {
+      setLoading(false);
+      toast.dismiss(toastId);
+    }
+  };
 
   useEffect(() => {
     if (isError || error) {
@@ -36,7 +62,15 @@ const Product = () => {
           name: product.name,
           price: product.price,
           stock: product.stock,
-          action: <Link to={`/admin/product/${product._id}`}>Manage</Link>,
+          action1: <Link to={`/admin/product/${product._id}`}>Manage</Link>,
+          action2: (
+            <button
+              disabled={loading}
+              onClick={() => deleteHandler(product._id)}
+            >
+              <FaTrash />
+            </button>
+          ),
         }))
       );
     }
