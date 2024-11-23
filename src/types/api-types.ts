@@ -157,6 +157,7 @@ export type UpdateCouponRequest = {
   id: string;
   couponId: string;
   code: string;
+  size: number;
   amount: number;
   prefix: string;
   postfix: string;
