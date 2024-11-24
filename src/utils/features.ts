@@ -47,3 +47,8 @@ export const getLastMonths = () => {
 
   return { last6Months, last12Months };
 };
+
+export const transformImage = (url: string, width = 300) => {
+  const newUrl = url.replace("/upload/", `/upload/w_${width}/`);
+  return newUrl;
+};
