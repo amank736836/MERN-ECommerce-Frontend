@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { CartItem } from "../types/types";
 import { Link } from "react-router-dom";
+import { transformImage } from "../utils/features";
 
 type ProductCardProps = {
   productId: string;
@@ -36,7 +37,7 @@ const ProductCard = ({
   return (
     <div className="productCard">
       <img
-        src={photos[0].url}
+        src={transformImage(photos[0].url, 300)}
         alt={name}
         className="src"
         style={{
