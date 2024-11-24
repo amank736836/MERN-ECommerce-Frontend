@@ -15,7 +15,7 @@ import {
 } from "../../redux/api/productAPI";
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
-import { responseToast } from "../../utils/features";
+import { responseToast, transformImage } from "../../utils/features";
 
 const Product = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -58,7 +58,7 @@ const Product = () => {
         data.products.map((product) => ({
           photo: (
             <img
-              src={`${product.photos[0].url}`}
+              src={transformImage(product.photos[0].url,64)}
               alt={`${product.category}`}
               onClick={() => navigate(`/product/${product._id}`)}
             />
