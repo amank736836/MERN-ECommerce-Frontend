@@ -13,7 +13,7 @@ import {
 } from "../../../redux/api/productAPI";
 import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
-import { responseToast } from "../../../utils/features";
+import { responseToast, transformImage } from "../../../utils/features";
 
 const defaultProduct = {
   name: "",
@@ -199,7 +199,7 @@ const ProductManagement = () => {
           <>
             <section onClick={() => navigate(`/product/${data?.product._id}`)}>
               <strong>ID - {data?.product._id}</strong>
-              <img src={`${photos[0].url}`} alt="Product" />
+              <img src={transformImage(photos[0].url,300)} alt="Product" />
               <p>{name}</p>
               {stock > 0 ? (
                 <span className="green">{stock} Available</span>
