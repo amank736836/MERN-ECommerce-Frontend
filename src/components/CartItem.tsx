@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { addToCart, removeCartItem } from "../redux/reducer/cartReducer";
 import { CartItem as CartItemProps } from "../types/types";
 import { useState } from "react";
+import { transformImage } from "../utils/features";
 
 const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
   const { productId, photos, name, price, quantity, stock } = cartItem;
@@ -54,7 +55,7 @@ const CartItem = ({ cartItem }: { cartItem: CartItemProps }) => {
     <div className="cartItem">
       <img
         onClick={() => navigate(`/product/${productId}`)}
-        src={`${photos[0].url}`}
+        src={transformImage(photos[0].url, 160)}
         alt={name}
       />
       <article>
