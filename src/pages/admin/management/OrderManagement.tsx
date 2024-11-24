@@ -14,7 +14,7 @@ import {
 import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
 import { Order, orderItem } from "../../../types/types";
-import { responseToast } from "../../../utils/features";
+import { responseToast, transformImage } from "../../../utils/features";
 
 const orderItems: orderItem[] = [
   {
@@ -165,22 +165,31 @@ const OrderManagement = () => {
               }}
             >
               <h2>Order Items</h2>
-              {order.orderItems.map((item: orderItem) => (
-                <div className="orderProductCard" key={item.productId}>
-                  <img src={`${item.photos[0].url}`} alt={item.name} />
-                  {user?.role === "admin" ? (
-                    <Link to={`/admin/product/${item.productId}`}>
-                      {item.name}
-                    </Link>
-                  ) : (
-                    <h5>{item.name}</h5>
-                  )}
-                  <span>
-                    ₹{item.price} X {item.quantity} = ₹
-                    {item.price * item.quantity}
-                  </span>
-                </div>
-              ))}
+              {order &&
+                order.orderItems.length !== 0 &&
+                order.orderItems.map((item: orderItem) => (
+                  <div
+                    className="orderProductCard"
+                    key={item.productId}
+                    onClick={() => navigate(`/product/${item.productId}`)}
+                  >
+                    <img
+                      src={transformImage(item.photos[0]?.url || "", 64)}
+                      alt={item.name}
+                    />
+                    {user?.role === "admin" ? (
+                      <Link to={`/admin/product/${item.productId}`}>
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <h5>{item.name}</h5>
+                    )}
+                    <span>
+                      ₹{item.price} X {item.quantity} = ₹
+                      {item.price * item.quantity}
+                    </span>
+                  </div>
+                ))}
             </section>
             <article className="shippingInfoCard">
               <h1>Order Info</h1>
