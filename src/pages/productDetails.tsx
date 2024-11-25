@@ -73,7 +73,7 @@ const productDetails = () => {
             <section>
               <code>{data.product.category}</code>
               <h1>{data.product.name}</h1>
-              <Ratings value={data.product.ratings} />
+              <Ratings value={data.product.averageRating} />
               <h3>₹{data.product.price}</h3>
               <CustomizedButtons product={data.product} />
               <p>{data.product.description}</p>
