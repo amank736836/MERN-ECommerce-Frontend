@@ -1,5 +1,6 @@
 .login {
-  height: 90vh;
+  height: 100vh;
+  padding: 2rem;
   @include flex(column);
   > main {
     width: 100%;
