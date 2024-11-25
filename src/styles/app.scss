@@ -57,6 +57,7 @@ body {
 @import "mediaquery";
 
 .container {
+  padding-top: 4rem;
   max-width: 1367px;
   width: 100%;
   margin: auto;
@@ -75,8 +76,11 @@ body {
 }
 
 .header {
+  position: fixed;
   @include flex(row, flex-end, stretch, 1.2rem);
   padding: 1rem;
+  width: 100%;
+  background-color: $color1;
   a {
     color: $color2;
     letter-spacing: 2px;
@@ -110,4 +114,5 @@ body {
     }
     z-index: 100;
   }
+  z-index: 100;
 }
