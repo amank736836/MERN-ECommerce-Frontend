@@ -18,8 +18,10 @@ export type Product = {
   price: number;
   stock: number;
   category: string;
-  description: string;
   ratings: number;
+  averageRating: number;
+  numOfReviews: number;
+  description: string;
 };
 
 export type ShippingInfo = {
