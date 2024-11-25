@@ -1,7 +1,8 @@
 .productSearchPage {
   padding: 2rem;
+  padding-top: 4rem;
   @include flex(row, flex-start, stretch, 2rem);
-  min-height: calc(100vh - 6.5vh);
+  min-height: calc(100vh - 2rem);
   > aside {
     min-width: 20rem;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.247);
