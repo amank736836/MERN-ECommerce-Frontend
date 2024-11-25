@@ -4,6 +4,7 @@
 @import "dashboardApp";
 
 .adminContainer {
+  padding-top: 4rem;
   @include grid(1fr 4fr, 2rem);
   height: calc(100vh - 4rem);
   background-color: rgb(247, 247, 247);
