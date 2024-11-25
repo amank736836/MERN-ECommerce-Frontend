@@ -38,48 +38,58 @@ const productDetails = () => {
       {isLoading ? (
         <ProductLoader />
       ) : (
-        <main>
-          <section>
-            <Slider
-              objectFit="scale-down"
-              onClick={() => setCarouselOpen(true)}
-              images={data?.product.photos.map((photo) => photo.url) || []}
-              showThumbnails
-              // showNav={true}
-              showDots
-              NextIcon={
-                <button className="carouselBtn">
-                  <FaArrowRightLong />
-                </button>
-              }
-              PrevIcon={
-                <button className="carouselBtn">
-                  <FaArrowRightLong />
-                </button>
-              }
-            />
-            {carouselOpen && (
-              <MyntraCarousel
-                darkMode={true}
-                objectFit="cover"
-                NextButton={NextButton}
-                PrevButton={PrevButton}
-                setIsOpen={setCarouselOpen}
-                images={data?.product.photos.map((photo) => photo.url) || []}
-              />
-            )}
-          </section>
-          {data ? (
+        <>
+          <main>
             <section>
-              <code>{data.product.category}</code>
-              <h1>{data.product.name}</h1>
-              <Ratings value={data.product.averageRating} />
-              <h3>₹{data.product.price}</h3>
-              <CustomizedButtons product={data.product} />
-              <p>{data.product.description}</p>
+              <Slider
+                objectFit="scale-down"
+                onClick={() => setCarouselOpen(true)}
+                images={data?.product.photos.map((photo) => photo.url) || []}
+                showThumbnails
+                // showNav={true}
+                showDots
+                NextIcon={
+                  <button className="carouselBtn">
+                    <FaArrowRightLong />
+                  </button>
+                }
+                PrevIcon={
+                  <button className="carouselBtn">
+                    <FaArrowRightLong />
+                  </button>
+                }
+              />
+              {carouselOpen && (
+                <MyntraCarousel
+                  darkMode={true}
+                  objectFit="cover"
+                  NextButton={NextButton}
+                  PrevButton={PrevButton}
+                  setIsOpen={setCarouselOpen}
+                  images={data?.product.photos.map((photo) => photo.url) || []}
+                />
+              )}
             </section>
-          ) : null}
-        </main>
+            {data ? (
+              <section>
+                <code>{data.product.category}</code>
+                <h1>{data.product.name}</h1>
+                <em
+                  style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+                >
+                  <Ratings value={data.product.averageRating} />
+                  {data.product.numOfReviews} Reviews
+                </em>
+                <h3>₹{data.product.price}</h3>
+                <CustomizedButtons product={data.product} />
+                <p>{data.product.description}</p>
+              </section>
+            ) : null}
+          </main>
+          <section>
+            <h1>Reviews</h1>
+          </section>
+        </>
       )}
     </div>
   );
