@@ -119,6 +119,7 @@ const Cart = () => {
         {cartItems.length > 0 && user?.role === "user" && (
           <Link to="/shipping">Checkout</Link>
         )}
+        {!user && <Link to="/login">Login to Checkout</Link>}
       </aside>
     </div>
   );
