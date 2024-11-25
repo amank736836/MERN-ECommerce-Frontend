@@ -1,8 +1,10 @@
 .productDetails {
-  padding: 4rem;
+  padding-top: 4rem;
+  padding: 2rem;
   > main {
     display: flex;
     max-width: 1920px;
+    width: 100%;
     margin: auto;
     // gap: 1rem;
     > section {
@@ -44,7 +46,7 @@
             width: 12rem;
             border-radius: 5px;
             @include flex(row, space-between, center);
-            >span{
+            > span {
               // padding: 0.5rem;
               font-size: 2rem;
             }
@@ -93,6 +95,13 @@
         }
       }
     }
+  }
+
+  > section {
+    max-width: 1920px;
+    width: 100%;
+    margin: auto;
+    padding: 2rem;
   }
 }
 
