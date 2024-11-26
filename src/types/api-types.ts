@@ -6,6 +6,7 @@ import {
   Order,
   Pie,
   Product,
+  Review,
   ShippingInfo,
   Stats,
   User,
@@ -36,8 +37,23 @@ export type SingleProductResponse = MessageResponse & {
   product: Product;
 };
 
+export type ProductResponse = MessageResponse & {
+  products: Product[];
+};
+
 export type CategoryResponse = MessageResponse & {
   categories: string[];
+};
+
+export type searchProductsResponse = ProductResponse & {
+  totalPage: number;
+  categories: string[];
+  minAmount: number;
+  maxAmount: number;
+};
+
+export type AllReviewsResponse = MessageResponse & {
+  reviews: Review[];
 };
 
 export type AllOrdersResponse = MessageResponse & {
@@ -52,31 +68,13 @@ export type NewOrderResponse = MessageResponse & {
   orderId: string;
 };
 
-export type StatsResponse = MessageResponse & {
-  stats: Stats;
+export type AllCouponsResponse = MessageResponse & {
+  count: number;
+  coupons: Coupon[];
 };
 
-export type BarResponse = MessageResponse & {
-  charts: Bar;
-};
-
-export type PieResponse = MessageResponse & {
-  charts: Pie;
-};
-
-export type LineResponse = MessageResponse & {
-  charts: Line;
-};
-
-export type ProductResponse = MessageResponse & {
-  products: Product[];
-};
-
-export type searchProductsResponse = ProductResponse & {
-  totalPage: number;
-  categories: string[];
-  minAmount: number;
-  maxAmount: number;
+export type GetCouponResponse = MessageResponse & {
+  coupon: Coupon;
 };
 
 export type CreateRazorpayResponse = MessageResponse & {
@@ -95,13 +93,20 @@ export type RazorpayResponse = {
   razorpay_signature: string;
 };
 
-export type AllCouponsResponse = MessageResponse & {
-  count: number;
-  coupons: Coupon[];
+export type StatsResponse = MessageResponse & {
+  stats: Stats;
 };
 
-export type GetCouponResponse = MessageResponse & {
-  coupon: Coupon;
+export type BarResponse = MessageResponse & {
+  charts: Bar;
+};
+
+export type PieResponse = MessageResponse & {
+  charts: Pie;
+};
+
+export type LineResponse = MessageResponse & {
+  charts: Line;
 };
 
 export type DeleteUserRequest = {
@@ -153,6 +158,11 @@ export type CreatePaymentRequest = RazorpayResponse & {
   paymentStatus: "Pending" | "Failed" | "Success";
 };
 
+export type CouponRequest = {
+  id: string;
+  couponId: string;
+};
+
 export type UpdateCouponRequest = {
   id: string;
   couponId: string;
@@ -164,14 +174,4 @@ export type UpdateCouponRequest = {
   includeNumbers: boolean;
   includeCharacters: boolean;
   includeSymbols: boolean;
-};
-
-export type DeleteCouponRequest = {
-  couponId: string;
-  id: string;
-};
-
-export type GetCouponRequest = {
-  id: string;
-  couponId: string;
 };
