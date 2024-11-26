@@ -175,3 +175,15 @@ export type UpdateCouponRequest = {
   includeCharacters: boolean;
   includeSymbols: boolean;
 };
+
+export type NewReviewRequest = {
+  id: string;
+  productId: string;
+  rating: number;
+  comment: string;
+};
+
+export type DeleteReviewRequest = {
+  id: string;
+  productId: string;
+};
