@@ -45,7 +45,7 @@ const productDetails = () => {
         ? toast.error(err.data.message)
         : toast.error("Failed to fetch product details");
     }
-  }, [isProductError, productError, isReviewsError, reviewsError]);
+  }, [isProductError, productError, isReviewsError, reviewsError, reviewsData]);
 
   if (isProductError || productError || isReviewsError || reviewsError) {
     return <Navigate to="/" />;
@@ -84,7 +84,7 @@ const productDetails = () => {
               {carouselOpen && (
                 <MyntraCarousel
                   darkMode={true}
-                  objectFit="cover"
+                  objectFit="scale-down"
                   NextButton={NextButton}
                   PrevButton={PrevButton}
                   setIsOpen={setCarouselOpen}
@@ -96,15 +96,21 @@ const productDetails = () => {
             </section>
             {productData ? (
               <section>
-                <code>{productData.product.category}</code>
-                <h1>{productData.product.name}</h1>
-                <em
-                  style={{ display: "flex", alignItems: "center", gap: "1rem" }}
-                >
-                  <Ratings value={productData.product.averageRating} />
-                  {productData.product.numOfReviews} Reviews
-                </em>
-                <h3>₹{productData.product.price}</h3>
+                <div>
+                  <code>{productData.product.category}</code>
+                  <h1>{productData.product.name}</h1>
+                  <em
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                    }}
+                  >
+                    <Ratings value={productData.product.averageRating} />
+                    {productData.product.numOfReviews} Reviews
+                  </em>
+                  <h3>₹{productData.product.price}</h3>
+                </div>
                 <CustomizedButtons product={productData.product} />
                 <p>{productData.product.description}</p>
               </section>
