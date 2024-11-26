@@ -24,6 +24,30 @@ export type Product = {
   description: string;
 };
 
+export type Review = {
+  _id: string;
+  comment: string;
+  rating: number;
+  product: string;
+  user: {
+    _id: string;
+    name: string;
+    photo: string;
+  };
+};
+
+export type Coupon = {
+  _id: string;
+  code: string;
+  size: number;
+  amount: number;
+  prefix: string;
+  postfix: string;
+  includeNumbers: boolean;
+  includeCharacters: boolean;
+  includeSymbols: boolean;
+};
+
 export type ShippingInfo = {
   address: string;
   city: string;
@@ -140,16 +164,4 @@ export type Line = {
   products: number[];
   discount: number[];
   revenue: number[];
-};
-
-export type Coupon = {
-  _id: string;
-  code: string;
-  size: number;
-  amount: number;
-  prefix: string;
-  postfix: string;
-  includeNumbers: boolean;
-  includeCharacters: boolean;
-  includeSymbols: boolean;
 };
