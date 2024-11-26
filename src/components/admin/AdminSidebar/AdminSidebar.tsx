@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { HiMenuAlt4 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 
 import { AppItems } from "./Items/AppsItems";
 import { ChartItems } from "./Items/ChartsItems";
 import { DashboardItems } from "./Items/DashboardItems";
 
+import { RiMenuFold4Fill, RiMenuUnfold4Fill } from "react-icons/ri";
 import { AppSidebar } from "./Sidebar/AppSidebar";
 import { ChartSidebar } from "./Sidebar/ChartSidebar";
 import { DashboardSidebar } from "./Sidebar/DashboardSidebar";
@@ -38,7 +38,7 @@ const AdminSidebar = () => {
           className="hamburger"
           onClick={() => setShowModal(!showModal)}
         >
-          <HiMenuAlt4 />
+          {showModal ? <RiMenuUnfold4Fill /> : <RiMenuFold4Fill />}
         </button>
       )}
 
