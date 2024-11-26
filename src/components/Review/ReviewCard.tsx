@@ -5,7 +5,7 @@ import { RootState } from "../redux/store";
 import { AllReviewsResponse } from "../types/api-types";
 import { Review } from "../types/types";
 import { transformImage } from "../utils/features";
-import Ratings from "./Ratings";
+import Ratings from "./Review/Ratings";
 
 const ReviewCard = ({
   reviewsData,
