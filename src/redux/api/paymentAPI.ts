@@ -2,15 +2,14 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import {
   AllCouponsResponse,
+  CouponRequest,
   CreatePaymentRequest,
   CreateRazorpayResponse,
-  DeleteCouponRequest,
-  GetCouponRequest,
   GetCouponResponse,
   MessageResponse,
   RazorpayResponse,
   UpdateCouponRequest,
-  VerificationResponse,
+  VerificationResponse
 } from "../../types/api-types";
 import { Coupon } from "../../types/types";
 
@@ -28,7 +27,7 @@ export const paymentAPI = createApi({
       }),
       providesTags: ["coupon"],
     }),
-    getCoupon: builder.query<GetCouponResponse, GetCouponRequest>({
+    getCoupon: builder.query<GetCouponResponse, CouponRequest>({
       query: ({ id, couponId }) => ({
         url: `/coupon/${couponId}`,
         params: { id },
@@ -90,7 +89,7 @@ export const paymentAPI = createApi({
       }),
       invalidatesTags: ["coupon"],
     }),
-    deleteCoupon: builder.mutation<MessageResponse, DeleteCouponRequest>({
+    deleteCoupon: builder.mutation<MessageResponse, CouponRequest>({
       query: ({ couponId, id }) => ({
         url: `/coupon/${couponId}`,
         method: "DELETE",
