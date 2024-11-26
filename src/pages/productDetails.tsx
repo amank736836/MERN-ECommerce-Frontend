@@ -2,7 +2,6 @@ import { CarouselButtonType, MyntraCarousel, Slider } from "6pp";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
-import { MdRateReview } from "react-icons/md";
 import { Navigate, useParams } from "react-router-dom";
 import ProductLoader from "../components/Loaders/ProductLoader";
 import ReviewLoader from "../components/Loaders/ReviewLoader";
@@ -10,7 +9,7 @@ import Ratings from "../components/Review/Ratings";
 import ReviewCard from "../components/Review/ReviewCard";
 import { ReviewCustomizedButtons } from "../components/Review/ReviewCustomizedButtons";
 import {
-  useAllReviewsOfProductQuery,
+  useProductAllReviewQuery,
   useProductDetailsQuery,
 } from "../redux/api/productAPI";
 import { CustomError } from "../types/api-types";
@@ -29,7 +28,7 @@ const productDetails = () => {
     isLoading: isReviewsLoading,
     isError: isReviewsError,
     error: reviewsError,
-  } = useAllReviewsOfProductQuery(params.id!);
+  } = useProductAllReviewQuery(params.id!);
 
   useEffect(() => {
     if (isProductError || productError) {
@@ -50,9 +49,7 @@ const productDetails = () => {
     return <Navigate to="/" />;
   }
 
-  const [carouselOpen, setCarouselOpen] = useState(false);
-
-  const [reviewOpen, setReviewOpen] = useState(false);
+  const [carouselOpen, setCarouselOpen] = useState<boolean>(false);
 
   return (
     <div className="productDetails">
@@ -71,12 +68,12 @@ const productDetails = () => {
                 showThumbnails
                 // showNav={true}
                 showDots
-                NextIcon={
+                PrevIcon={
                   <button className="carouselBtn">
-                    <FaArrowRightLong />
+                    <FaArrowLeftLong />
                   </button>
                 }
-                PrevIcon={
+                NextIcon={
                   <button className="carouselBtn">
                     <FaArrowRightLong />
                   </button>
@@ -118,25 +115,18 @@ const productDetails = () => {
               </section>
             ) : null}
           </main>
-          <section>
-            <article>
-              <h1>Reviews</h1>
-              <button>
-                <MdRateReview
-                  style={{ fontSize: "1.5rem", marginRight: "0.5rem" }}
-                />
-              </button>
-            </article>
-            <div>
-              {isReviewsLoading ? (
-                <ReviewLoader />
-              ) : (
-                <ReviewCard reviewsData={reviewsData} />
-              )}
-            </div>
-          </section>
         </>
       )}
+
+      <section>
+        <div>
+          {isReviewsLoading ? (
+            <ReviewLoader />
+          ) : (
+            <ReviewCard reviewsData={reviewsData} />
+          )}
+        </div>
+      </section>
     </div>
   );
 };
