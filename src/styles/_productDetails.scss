@@ -1,6 +1,6 @@
 .productDetails {
+  padding: 1rem 2rem;
   padding-top: 4rem;
-  padding: 2rem;
   > main {
     display: flex;
     max-width: 1920px;
@@ -14,14 +14,11 @@
 
       &:first-child {
         width: 40%;
-        height: 78vh;
+        height: 59vh;
       }
       &:last-child {
         width: 60%;
-        min-height: 78vh;
-        padding: 2rem;
-        // border: 1px solid rgba(31, 31, 31, 0.351);
-        // max-height: 78vh;
+        min-height: 59vh;
         h1 {
           font-size: 2rem;
           margin: 1rem;
@@ -92,16 +89,66 @@
           font-weight: 300;
           letter-spacing: 2px;
           line-height: 150%;
+          overflow-y: auto;
+          height: 13rem;
         }
       }
     }
   }
 
   > section {
-    max-width: 1920px;
     width: 100%;
     margin: auto;
-    padding: 2rem;
+    padding: 1rem 1rem;
+    height: 30vh;
+    > div {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      padding: 2rem;
+      width: 96vw;
+      overflow-x: auto;
+
+      > article {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        min-width: 50%;
+        height: 12rem;
+        overflow-y: auto;
+        position: relative;
+        > img {
+          width: 100px;
+          height: 100px;
+          border-radius: 50px;
+          object-fit: cover;
+          position: sticky;
+          top: 1rem;
+        }
+        > div {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          > h3 {
+            font-size: 1.2rem;
+            color: $color3;
+          }
+          > p {
+            font-size: 1.2rem;
+            font-weight: 300;
+          }
+          >textarea{
+            width: 40vw;
+            height: 12rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 0.5rem;
+            font-size: 1rem;
+            resize: none;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -114,4 +161,20 @@
   cursor: pointer;
   display: grid;
   place-items: center;
+}
+
+.reviewDeleteBtn {
+  position: absolute;
+  right: 3rem;
+  width: 2rem;
+  height: 2rem;
+  font-size: 2rem;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: rgb(255, 44, 44);
+  &:hover {
+    opacity: 0.6;
+  }
 }
