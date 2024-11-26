@@ -2,19 +2,18 @@ import { CarouselButtonType, MyntraCarousel, Slider } from "6pp";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { MdRateReview } from "react-icons/md";
+import { Navigate, useParams } from "react-router-dom";
 import ProductLoader from "../components/Loaders/ProductLoader";
 import ReviewLoader from "../components/Loaders/ReviewLoader";
-import Ratings from "../components/Ratings";
-import ReviewCard from "../components/ReviewCard";
+import Ratings from "../components/Review/Ratings";
+import ReviewCard from "../components/Review/ReviewCard";
+import { ReviewCustomizedButtons } from "../components/Review/ReviewCustomizedButtons";
 import {
   useAllReviewsOfProductQuery,
   useProductDetailsQuery,
 } from "../redux/api/productAPI";
-import { addToCart } from "../redux/reducer/cartReducer";
 import { CustomError } from "../types/api-types";
-import { Product } from "../types/types";
 
 const productDetails = () => {
   const params = useParams();
@@ -52,6 +51,8 @@ const productDetails = () => {
   }
 
   const [carouselOpen, setCarouselOpen] = useState(false);
+
+  const [reviewOpen, setReviewOpen] = useState(false);
 
   return (
     <div className="productDetails">
@@ -98,7 +99,6 @@ const productDetails = () => {
               <section>
                 <div>
                   <code>{productData.product.category}</code>
-                  <h1>{productData.product.name}</h1>
                   <em
                     style={{
                       display: "flex",
@@ -111,13 +111,22 @@ const productDetails = () => {
                   </em>
                   <h3>₹{productData.product.price}</h3>
                 </div>
-                <CustomizedButtons product={productData.product} />
+                <h1>{productData.product.name}</h1>
+
+                <ReviewCustomizedButtons product={productData.product} />
                 <p>{productData.product.description}</p>
               </section>
             ) : null}
           </main>
           <section>
-            <h1>Reviews</h1>
+            <article>
+              <h1>Reviews</h1>
+              <button>
+                <MdRateReview
+                  style={{ fontSize: "1.5rem", marginRight: "0.5rem" }}
+                />
+              </button>
+            </article>
             <div>
               {isReviewsLoading ? (
                 <ReviewLoader />
@@ -129,79 +138,6 @@ const productDetails = () => {
         </>
       )}
     </div>
-  );
-};
-
-const CustomizedButtons = ({ product }: { product: Product }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [productQuantity, setProductQuantity] = useState<number>(1);
-
-  const [incrementDisabled, setIncrementDisabled] = useState<boolean>(false);
-  const [decrementDisabled, setDecrementDisabled] = useState<boolean>(false);
-
-  const incrementHandler = () => {
-    setDecrementDisabled(false);
-    if (product.stock < 1) {
-      setIncrementDisabled(true);
-      setDecrementDisabled(true);
-      toast.error("Out of Stock");
-    } else if (productQuantity === product.stock) {
-      setIncrementDisabled(true);
-      toast.error("Maximum quantity reached");
-    } else {
-      setProductQuantity((prev) => prev + 1);
-    }
-  };
-
-  const decrementHandler = () => {
-    setIncrementDisabled(false);
-    if (productQuantity === 1) {
-      setDecrementDisabled(true);
-      toast.error("Minimum quantity reached");
-    } else {
-      setProductQuantity((prev) => prev - 1);
-    }
-  };
-
-  const AddToCart = () => {
-    toast.success("Added to Cart");
-    dispatch(
-      addToCart({
-        productId: product._id,
-        name: product.name,
-        photos: product.photos,
-        price: product.price,
-        quantity: productQuantity,
-        stock: product.stock,
-      })
-    );
-  };
-
-  return (
-    <article>
-      <div>
-        <button onClick={decrementHandler} disabled={decrementDisabled}>
-          -
-        </button>
-        <span>{productQuantity}</span>
-        <button disabled={incrementDisabled} onClick={incrementHandler}>
-          +
-        </button>
-      </div>
-      <div>
-        <button onClick={AddToCart}>Add to Cart</button>
-        <button
-          onClick={() => {
-            AddToCart();
-            navigate("/cart");
-          }}
-        >
-          Buy Now
-        </button>
-      </div>
-    </article>
   );
 };
 
