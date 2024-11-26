@@ -19,15 +19,15 @@
       &:last-child {
         width: 60%;
         min-height: 59vh;
+        h1 {
+          font-size: 2rem;
+          margin: 1rem;
+        }
         > div {
           display: flex;
           flex-direction: row;
           align-items: center;
           justify-content: space-around;
-          h1 {
-            font-size: 2rem;
-            margin: 1rem;
-          }
           code {
             font-size: 1.2rem;
             background-color: rgb(5, 107, 224);
@@ -50,7 +50,7 @@
           letter-spacing: 2px;
           line-height: 150%;
           overflow-y: auto;
-          height: 22rem;
+          height: 20rem;
         }
 
         article {
@@ -107,6 +107,23 @@
     margin: auto;
     padding: 1rem 1rem;
     height: 30vh;
+    > article {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > h1 {
+        @include heading;
+      }
+      > button {
+        border: none;
+        color: $color3;
+        width: 3rem;
+        height: 3rem;
+        display: grid;
+        place-items: center;
+        font-size: 2rem;
+      }
+    }
     > div {
       > div {
         display: flex;
