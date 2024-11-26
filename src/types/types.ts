@@ -34,6 +34,8 @@ export type Review = {
     name: string;
     photo: string;
   };
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Coupon = {
