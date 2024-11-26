@@ -1,16 +1,8 @@
 import { IoIosPeople } from "react-icons/io";
 import { MdDiscount } from "react-icons/md";
-import {
-  RiDatabaseFill,
-  RiShoppingBag3Fill
-} from "react-icons/ri";
+import { RiShoppingBag3Fill } from "react-icons/ri";
 
 export const DashboardItems = [
-  {
-    name: "Dashboard",
-    icon: RiDatabaseFill,
-    url: "/admin/dashboard",
-  },
   {
     name: "Customers",
     icon: IoIosPeople,
