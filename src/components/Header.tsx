@@ -1,12 +1,7 @@
 import { signOut } from "firebase/auth";
 import toast from "react-hot-toast";
-import {
-  FaHome,
-  FaSearch,
-  FaShoppingBag,
-  FaSignInAlt,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaHome, FaSearch, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { RiDatabaseFill, RiShoppingCart2Fill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
@@ -29,23 +24,29 @@ const Header = () => {
 
   return (
     <nav className="header">
-      <Link to="/">
+      <Link to="/" title="Home">
         <FaHome />
       </Link>
-      <Link to="/search">
+      <Link to="/search" title="Search">
         <FaSearch />
       </Link>
-      <Link to="/cart">
-        <FaShoppingBag />
+      <Link to="/cart" title="Cart">
+        <RiShoppingCart2Fill />
       </Link>
-      <Link to="/orders">Orders</Link>
-      {user?.role === "admin" && <Link to="/admin/dashboard">Dashboard</Link>}
+      <Link to="/orders" title="Orders">
+        Orders
+      </Link>
+      {user?.role === "admin" && (
+        <Link to="/admin/dashboard" title="Admin Dashboard">
+          <RiDatabaseFill />
+        </Link>
+      )}
       {user ? (
         <button onClick={logoutHandler}>
           <FaSignOutAlt />
         </button>
       ) : (
-        <Link to="/login">
+        <Link to="/login" title="Login">
           <FaSignInAlt />
         </Link>
       )}
