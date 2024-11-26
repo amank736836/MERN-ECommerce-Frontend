@@ -36,7 +36,7 @@ const AdminSidebar = () => {
         <button
           type="button"
           className="hamburger"
-          onClick={() => setShowModal(true)}
+          onClick={() => setShowModal(!showModal)}
         >
           <HiMenuAlt4 />
         </button>
