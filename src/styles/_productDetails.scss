@@ -105,32 +105,37 @@
 
   > section {
     margin: auto;
-    padding: 1rem 1rem;
+    padding: 1rem 2rem;
     height: 30vh;
-    > article {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      > h1 {
-        @include heading;
-      }
-      > button {
-        border: none;
-        color: $color3;
-        width: 3rem;
-        height: 3rem;
-        display: grid;
-        place-items: center;
-        font-size: 2rem;
-      }
-    }
+
     > div {
+      > div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        > h1 {
+          margin-left: 4rem;
+          @include heading;
+        }
+        > button {
+          border: none;
+          color: $color3;
+          width: 3rem;
+          height: 3rem;
+          display: grid;
+          place-items: center;
+          font-size: 2rem;
+          cursor: pointer;
+        }
+      }
       > div {
         display: flex;
         flex-direction: row;
         gap: 1rem;
         padding: 1rem;
         overflow-x: auto;
+        position: relative;
 
         > article {
           display: flex;
@@ -195,6 +200,40 @@
             padding: 0.5rem;
             font-size: 1rem;
             resize: none;
+          }
+          > form {
+            margin: 0 1rem;
+            height: 100%;
+
+            @include flex(column, center, stretch);
+            > textarea {
+              padding: 1rem;
+              border: 1px solid rgb(29, 29, 29);
+              border-radius: 5px;
+              font-size: 1.2rem;
+              height: 100%;
+            }
+
+            > div {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              > h2 {
+                @include heading;
+              }
+              > button {
+                background-color: rgb(29, 29, 29);
+                color: white;
+                border: none;
+                cursor: pointer;
+                padding: 1rem;
+                border-radius: 5px;
+                font-size: 1.2rem;
+                &:hover {
+                  opacity: 0.8;
+                }
+              }
+            }
           }
         }
       }
