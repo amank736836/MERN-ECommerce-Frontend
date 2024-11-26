@@ -31,6 +31,7 @@
 
   .productDetails {
     padding: 2rem;
+    padding-top: 5rem;
     > main {
       > section {
         &:first-child {
@@ -70,6 +71,8 @@
   .cart {
     display: block;
     padding: 2rem;
+    padding-top: 5rem;
+
     > main {
       width: 100%;
     }
@@ -93,6 +96,7 @@
   .productSearchPage {
     display: block;
     padding: 0;
+    padding-top: 3rem;
     > aside {
       @include flex(row, space-between, center);
       flex-wrap: wrap;
@@ -105,6 +109,54 @@
     > main > input {
       width: 100%;
       border: 1px solid rgba(212, 212, 212, 0.379);
+    }
+  }
+
+  .productDetails {
+    padding-top: 5rem;
+    > main {
+      flex-direction: column;
+      > section {
+        &:last-child {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          > div {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            align-items: center;
+            justify-content: space-around;
+          }
+          p {
+            height: 22rem;
+          }
+          article {
+            align-items: center;
+            flex-direction: column;
+          }
+        }
+      }
+    }
+    > section {
+      height: unset;
+      > div {
+        > div {
+          > article {
+            height: unset;
+
+            min-width: 100%;
+            > div {
+              gap: 1rem;
+
+              > div {
+                display: grid;
+                grid-template-rows: 1fr;
+                gap: 0.1rem;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -135,6 +187,7 @@
       .couponForm {
         display: flex;
         flex-direction: column;
+        height: 65vh;
       }
       .stopwatch {
         align-items: center;
@@ -143,13 +196,20 @@
   }
 
   .productDetails {
+    padding-top: 5rem;
     > main {
       flex-direction: column;
       > section {
-        &:last-child{
+        &:last-child {
           display: flex;
           flex-direction: column;
           align-items: center;
+          padding: 0rem;
+
+          > div {
+            display: grid;
+            grid-template-columns: 1fr;
+          }
           article {
             align-items: center;
             flex-direction: column;
@@ -157,9 +217,30 @@
         }
       }
     }
+    > section {
+      height: unset;
+      > div {
+        > div {
+          > article {
+            height: unset;
+
+            min-width: 100%;
+            > div {
+              gap: 1rem;
+
+              > div {
+                display: grid;
+                grid-template-rows: 1fr;
+                gap: 0.1rem;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
-  .productDeleteBtn{
+  .productDeleteBtn {
     top: 5rem;
   }
 }
