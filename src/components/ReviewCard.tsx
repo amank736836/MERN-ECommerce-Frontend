@@ -29,22 +29,31 @@ const ReviewCard = ({
 
   return (
     <>
-      {userReview && (
-        <article key={userReview._id} className="review">
-          <img
-            src={transformImage(userReview.user.photo, 100)}
-            alt={userReview.user.name}
-          />
-          <div>
-            <h3>
-              {userReview.user.name}
-              {user?._id === userReview.user._id && (
-                <button className="reviewDeleteBtn" style={{}}>
-                  <FaTrash />
-                </button>
-              )}
-            </h3>
-            <Ratings value={userReview.rating} />
+      <div>
+        {userReview && (
+          <article key={userReview._id} className="review">
+            <div>
+              <img
+                src={transformImage(userReview.user.photo, 100)}
+                alt={userReview.user.name}
+              />
+              <div>
+                <h1>{userReview.user.name}</h1>
+                <Ratings value={userReview.rating} />
+                <h5>
+                  {new Date(userReview.updatedAt).toLocaleDateString("en-IN", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </h5>
+                {user?._id === userReview.user._id && (
+                  <button className="reviewDeleteBtn" style={{}}>
+                    <FaTrash />
+                  </button>
+                )}
+              </div>
+            </div>
             {input ? (
               <textarea
                 title="Review Comment"
@@ -58,24 +67,33 @@ const ReviewCard = ({
             ) : (
               <p onClick={() => setInput(true)}>{userReview.comment}</p>
             )}
-          </div>
-        </article>
-      )}
-      {reviewsData?.reviews
-        .filter((review) => review._id !== userReview?._id)
-        .map((review) => (
-          <article key={review._id} className="review">
-            <img
-              src={transformImage(review.user.photo, 100)}
-              alt={review.user.name}
-            />
-            <div>
-              <h3>{review.user.name}</h3>
-              <Ratings value={review.rating} />
-              <p>{review.comment}</p>
-            </div>
           </article>
-        ))}
+        )}
+        {reviewsData?.reviews
+          .filter((review) => review._id !== userReview?._id)
+          .map((review) => (
+            <article key={review._id} className="review">
+              <div>
+                <img
+                  src={transformImage(review.user.photo, 40)}
+                  alt={review.user.name}
+                />
+                <div>
+                  <h1>{review.user.name}</h1>
+                  <Ratings value={review.rating} />
+                  <h5>
+                    {new Date(review.updatedAt).toLocaleDateString("en-IN", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </h5>
+                </div>
+              </div>
+              <p onClick={() => setInput(true)}>{review.comment}</p>
+            </article>
+          ))}
+      </div>
     </>
   );
 };
