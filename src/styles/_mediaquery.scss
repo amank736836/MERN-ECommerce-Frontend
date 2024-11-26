@@ -122,10 +122,11 @@
           flex-direction: column;
           align-items: center;
           > div {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
+            display: flex;
+            flex-direction: row;
             align-items: center;
             justify-content: space-around;
+            gap: 4rem;
           }
           p {
             height: 22rem;
@@ -150,7 +151,7 @@
 
               > div {
                 display: grid;
-                grid-template-rows: 1fr;
+                grid-template-columns: 3fr 1fr;
                 gap: 0.1rem;
               }
             }
@@ -209,6 +210,7 @@
           > div {
             display: grid;
             grid-template-columns: 1fr;
+            gap: 0rem;
           }
           article {
             align-items: center;
