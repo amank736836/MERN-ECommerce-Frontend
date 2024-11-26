@@ -6,7 +6,7 @@
     max-width: 1920px;
     width: 100%;
     margin: auto;
-    // gap: 1rem;
+    gap: 2rem;
     > section {
       //   width: 100%;
       //   height: 80vh;
@@ -19,16 +19,38 @@
       &:last-child {
         width: 60%;
         min-height: 59vh;
-        h1 {
-          font-size: 2rem;
-          margin: 1rem;
+        > div {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-around;
+          h1 {
+            font-size: 2rem;
+            margin: 1rem;
+          }
+          code {
+            font-size: 1.2rem;
+            background-color: rgb(5, 107, 224);
+            color: white;
+            border-radius: 10px;
+            padding: 0.25rem 0.5rem;
+            width: 7rem;
+            height: 2.5rem;
+          }
+          h3 {
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+            color: black;
+          }
         }
-        code {
+        p {
           font-size: 1.2rem;
-          background-color: rgb(5, 107, 224);
-          color: white;
-          border-radius: 10px;
-          padding: 0.25rem 0.5rem;
+          margin: 1rem 0;
+          font-weight: 300;
+          letter-spacing: 2px;
+          line-height: 150%;
+          overflow-y: auto;
+          height: 22rem;
         }
 
         article {
@@ -77,69 +99,80 @@
             }
           }
         }
-
-        h3 {
-          font-size: 1.5rem;
-          margin: 0.5rem 0;
-          color: black;
-        }
-        p {
-          font-size: 1.2rem;
-          margin: 1rem 0;
-          font-weight: 300;
-          letter-spacing: 2px;
-          line-height: 150%;
-          overflow-y: auto;
-          height: 13rem;
-        }
       }
     }
   }
 
   > section {
-    width: 100%;
     margin: auto;
     padding: 1rem 1rem;
     height: 30vh;
     > div {
-      display: flex;
-      flex-direction: row;
-      gap: 2rem;
-      padding: 2rem;
-      width: 96vw;
-      overflow-x: auto;
-
-      > article {
+      > div {
         display: flex;
         flex-direction: row;
         gap: 1rem;
-        min-width: 50%;
-        height: 12rem;
-        overflow-y: auto;
-        position: relative;
-        > img {
-          width: 100px;
-          height: 100px;
-          border-radius: 50px;
-          object-fit: cover;
-          position: sticky;
-          top: 1rem;
-        }
-        > div {
+        padding: 1rem;
+        overflow-x: auto;
+
+        > article {
+          display: flex;
+          flex-direction: row;
+          min-width: 50%;
+          height: 12rem;
+          overflow-y: auto;
+          position: relative;
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
-          > h3 {
-            font-size: 1.2rem;
-            color: $color3;
+          width: 100%;
+
+          > div {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 3rem;
+            > img {
+              width: 40px;
+              height: 40px;
+              border-radius: 50px;
+              object-fit: cover;
+            }
+            > div {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: space-between;
+              gap: 3rem;
+              > h1 {
+                font-size: 1.2rem;
+                color: $color3;
+              }
+              > button {
+                right: 2rem;
+                width: 2rem;
+                height: 2rem;
+                font-size: 1.5rem;
+                border: none;
+                outline: none;
+                background-color: transparent;
+                cursor: pointer;
+                color: rgb(255, 44, 44);
+                &:hover {
+                  opacity: 0.6;
+                }
+              }
+            }
           }
           > p {
             font-size: 1.2rem;
             font-weight: 300;
-          }
-          >textarea{
-            width: 40vw;
             height: 12rem;
+            overflow-y: auto;
+          }
+          > textarea {
+            width: 100%;
+            height: 100%;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 5px;
             padding: 0.5rem;
@@ -161,20 +194,4 @@
   cursor: pointer;
   display: grid;
   place-items: center;
-}
-
-.reviewDeleteBtn {
-  position: absolute;
-  right: 3rem;
-  width: 2rem;
-  height: 2rem;
-  font-size: 2rem;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  cursor: pointer;
-  color: rgb(255, 44, 44);
-  &:hover {
-    opacity: 0.6;
-  }
 }
