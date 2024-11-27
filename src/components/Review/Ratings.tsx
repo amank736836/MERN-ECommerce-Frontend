@@ -9,8 +9,8 @@ const Ratings = ({ value = 0 }: { value: number }) => {
     styles: {
       fontSize: "1.75rem",
       color: "coral",
-      // gap: "0.5rem",
       justifyContent: "flex-start",
+      // gap: "5px",
     },
   });
   return <Ratings />;
