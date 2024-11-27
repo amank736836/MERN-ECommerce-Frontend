@@ -13,8 +13,12 @@ import {
   useProductDetailsQuery,
 } from "../redux/api/productAPI";
 import { CustomError } from "../types/api-types";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const productDetails = () => {
+  const { user } = useSelector((state: RootState) => state.userReducer);
+
   const params = useParams();
 
   const {
@@ -28,7 +32,10 @@ const productDetails = () => {
     isLoading: isReviewsLoading,
     isError: isReviewsError,
     error: reviewsError,
-  } = useProductAllReviewQuery(params.id!);
+  } = useProductAllReviewQuery({
+    productId: params.id!,
+    id: user?._id!,
+  });
 
   useEffect(() => {
     if (isProductError || productError) {
