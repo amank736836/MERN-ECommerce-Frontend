@@ -14,7 +14,7 @@ import {
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewLoader from "../Loaders/ReviewLoader";
-import { MdRateReview } from "react-icons/md";
+import { MdOutlineRateReview, MdRateReview } from "react-icons/md";
 
 const ReviewCard = ({
   reviewsData,
@@ -124,9 +124,7 @@ const ReviewCard = ({
 
         {!userReview && (
           <button onClick={() => setReviewDialogOpen(!reviewDialogOpen)}>
-            <MdRateReview
-              style={{ fontSize: "1.5rem", marginRight: "0.5rem" }}
-            />
+            {reviewDialogOpen ? <MdRateReview /> : <MdOutlineRateReview />}
           </button>
         )}
       </div>
