@@ -104,7 +104,7 @@ const ReviewCard = () => {
   };
 
   useEffect(() => {
-    if (reviewsData?.reviews && !userReview) {
+    if (reviewsData?.reviews) {
       const matchedReview = reviewsData.reviews.find(
         (review: Review) => review.user._id === user?._id
       );
@@ -113,15 +113,7 @@ const ReviewCard = () => {
         setReviewComment(matchedReview.comment);
         setRating(matchedReview.rating);
       }
-    } else {
-      setUserReview(undefined);
-      setReviewComment("");
-      setRating(0);
     }
-
-    return () => {
-      setUserReview(undefined);
-    };
   }, [reviewsData]);
 
   useEffect(() => {
