@@ -26,7 +26,7 @@ export const productAPI = createApi({
       providesTags: ["products"],
     }),
     productNewReview: builder.mutation<MessageResponse, NewReviewRequest>({
-      query: ({ productId, id, rating, comment }: NewReviewRequest) => ({
+      query: ({ productId, id, rating, comment }) => ({
         url: `review/${productId}`,
         method: "POST",
         body: { rating, comment },
@@ -36,7 +36,7 @@ export const productAPI = createApi({
     }),
     productDeleteReview: builder.mutation<MessageResponse, DeleteReviewRequest>(
       {
-        query: ({ productId, id }: DeleteReviewRequest) => ({
+        query: ({ productId, id }) => ({
           url: `review/${productId}`,
           method: "DELETE",
           params: { id },
