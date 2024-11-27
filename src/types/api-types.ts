@@ -54,6 +54,7 @@ export type searchProductsResponse = ProductResponse & {
 
 export type AllReviewsResponse = MessageResponse & {
   reviews: Review[];
+  reviewButton: boolean;
 };
 
 export type AllOrdersResponse = MessageResponse & {
@@ -183,7 +184,7 @@ export type NewReviewRequest = {
   comment: string;
 };
 
-export type DeleteReviewRequest = {
+export type ReviewRequest = {
   id: string;
   productId: string;
 };
