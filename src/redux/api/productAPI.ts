@@ -3,11 +3,11 @@ import {
   AllReviewsResponse,
   CategoryResponse,
   DeleteProductRequest,
-  DeleteReviewRequest,
   MessageResponse,
   NewProductRequest,
   NewReviewRequest,
   ProductResponse,
+  ReviewRequest,
   SearchProductsRequest,
   searchProductsResponse,
   SingleProductResponse,
@@ -21,8 +21,11 @@ export const productAPI = createApi({
   }),
   tagTypes: ["products"],
   endpoints: (builder) => ({
-    productAllReview: builder.query<AllReviewsResponse, string>({
-      query: (productId) => `review/${productId}`,
+    productAllReview: builder.query<AllReviewsResponse, ReviewRequest>({
+      query: ({ productId, id }) => ({
+        url: `review/${productId}`,
+        params: { id },
+      }),
       providesTags: ["products"],
     }),
     productNewReview: builder.mutation<MessageResponse, NewReviewRequest>({
@@ -34,16 +37,14 @@ export const productAPI = createApi({
       }),
       invalidatesTags: ["products"],
     }),
-    productDeleteReview: builder.mutation<MessageResponse, DeleteReviewRequest>(
-      {
-        query: ({ productId, id }) => ({
-          url: `review/${productId}`,
-          method: "DELETE",
-          params: { id },
-        }),
-        invalidatesTags: ["products"],
-      }
-    ),
+    productDeleteReview: builder.mutation<MessageResponse, ReviewRequest>({
+      query: ({ productId, id }) => ({
+        url: `review/${productId}`,
+        method: "DELETE",
+        params: { id },
+      }),
+      invalidatesTags: ["products"],
+    }),
     latestProducts: builder.query<ProductResponse, string>({
       query: () => "latest",
       providesTags: ["products"],
