@@ -4,21 +4,13 @@ import toast from "react-hot-toast";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { Navigate, useParams } from "react-router-dom";
 import ProductLoader from "../components/Loaders/ProductLoader";
-import ReviewLoader from "../components/Loaders/ReviewLoader";
 import Ratings from "../components/Review/Ratings";
 import ReviewCard from "../components/Review/ReviewCard";
 import { ReviewCustomizedButtons } from "../components/Review/ReviewCustomizedButtons";
-import {
-  useProductAllReviewQuery,
-  useProductDetailsQuery,
-} from "../redux/api/productAPI";
+import { useProductDetailsQuery } from "../redux/api/productAPI";
 import { CustomError } from "../types/api-types";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
 
 const productDetails = () => {
-  const { user } = useSelector((state: RootState) => state.userReducer);
-
   const params = useParams();
 
   const {
@@ -27,15 +19,6 @@ const productDetails = () => {
     isError: isProductError,
     error: productError,
   } = useProductDetailsQuery(params.id!);
-  const {
-    data: reviewsData,
-    isLoading: isReviewsLoading,
-    isError: isReviewsError,
-    error: reviewsError,
-  } = useProductAllReviewQuery({
-    productId: params.id!,
-    id: user?._id!,
-  });
 
   useEffect(() => {
     if (isProductError || productError) {
@@ -44,15 +27,9 @@ const productDetails = () => {
         ? toast.error(err.data.message)
         : toast.error("Failed to fetch product details");
     }
-    if (isReviewsError || reviewsError) {
-      const err = reviewsError as CustomError;
-      err.data?.message
-        ? toast.error(err.data.message)
-        : toast.error("Failed to fetch product details");
-    }
-  }, [isProductError, productError, isReviewsError, reviewsError, reviewsData]);
+  }, [isProductError, productError]);
 
-  if (isProductError || productError || isReviewsError || reviewsError) {
+  if (isProductError || productError) {
     return <Navigate to="/" />;
   }
 
@@ -124,16 +101,7 @@ const productDetails = () => {
           </main>
         </>
       )}
-
-      <section>
-        <div>
-          {isReviewsLoading ? (
-            <ReviewLoader />
-          ) : (
-            <ReviewCard reviewsData={reviewsData} />
-          )}
-        </div>
-      </section>
+      <ReviewCard />
     </div>
   );
 };
