@@ -64,6 +64,27 @@
         }
       }
     }
+    > section {
+      height: unset;
+      > div {
+        > div {
+          > article {
+            height: unset;
+
+            min-width: 100%;
+            > div {
+              gap: 1rem;
+
+              > div {
+                // display: grid;
+                // grid-template-columns: 3fr 2fr;
+                gap: 4rem;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -151,7 +172,7 @@
 
               > div {
                 display: grid;
-                grid-template-columns: 3fr 1fr;
+                grid-template-columns: 3fr 2fr;
                 gap: 0.1rem;
               }
             }
