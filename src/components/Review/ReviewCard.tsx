@@ -109,11 +109,12 @@ const ReviewCard = () => {
         (review: Review) => review.user._id === user?._id
       );
       setUserReview(matchedReview);
-    }
-    if (userReview) {
-      setReviewComment(userReview.comment);
-      setRating(userReview.rating);
+      if (matchedReview) {
+        setReviewComment(matchedReview.comment);
+        setRating(matchedReview.rating);
+      }
     } else {
+      setUserReview(undefined);
       setReviewComment("");
       setRating(0);
     }
@@ -138,8 +139,6 @@ const ReviewCard = () => {
 
   if (loading) <Loader />;
 
-  console.log(reviewsData);
-
   return (
     <section>
       <div>
@@ -161,7 +160,7 @@ const ReviewCard = () => {
               )}
             </div>
             <div>
-              {!userReview && reviewDialogOpen && (
+              {reviewDialogOpen && (
                 <article>
                   <form onSubmit={submitReview}>
                     <div>
@@ -212,7 +211,7 @@ const ReviewCard = () => {
                         </button>
                       )}
 
-                      {userReview && !reviewsData?.reviewButton && (
+                      {reviewsData?.reviewButton && (
                         <button
                           onClick={() => setReviewDialogOpen(!reviewDialogOpen)}
                         >
