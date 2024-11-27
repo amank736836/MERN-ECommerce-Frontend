@@ -1,20 +1,20 @@
 import { useRating } from "6pp";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaRegStar, FaStar, FaTrash } from "react-icons/fa";
+import { MdOutlineRateReview, MdRateReview } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { AllReviewsResponse, CustomError } from "../../types/api-types";
-import { Review } from "../../types/types";
-import { responseToast, transformImage } from "../../utils/features";
-import Ratings from "./Ratings";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useProductDeleteReviewMutation,
   useProductNewReviewMutation,
 } from "../../redux/api/productAPI";
-import toast from "react-hot-toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { RootState } from "../../redux/store";
+import { AllReviewsResponse, CustomError } from "../../types/api-types";
+import { Review } from "../../types/types";
+import { responseToast, transformImage } from "../../utils/features";
 import ReviewLoader from "../Loaders/ReviewLoader";
-import { MdOutlineRateReview, MdRateReview } from "react-icons/md";
+import Ratings from "./Ratings";
 
 const ReviewCard = ({
   reviewsData,
@@ -122,7 +122,7 @@ const ReviewCard = ({
       <div>
         <h1>Reviews</h1>
 
-        {!userReview && (
+        {!userReview && reviewsData?.reviewButton && (
           <button onClick={() => setReviewDialogOpen(!reviewDialogOpen)}>
             {reviewDialogOpen ? <MdRateReview /> : <MdOutlineRateReview />}
           </button>
