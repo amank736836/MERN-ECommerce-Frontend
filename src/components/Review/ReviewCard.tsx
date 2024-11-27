@@ -4,23 +4,21 @@ import toast from "react-hot-toast";
 import { FaRegStar, FaStar, FaTrash } from "react-icons/fa";
 import { MdOutlineRateReview, MdRateReview } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import {
+  useProductAllReviewQuery,
   useProductDeleteReviewMutation,
   useProductNewReviewMutation,
 } from "../../redux/api/productAPI";
 import { RootState } from "../../redux/store";
-import { AllReviewsResponse, CustomError } from "../../types/api-types";
+import { CustomError } from "../../types/api-types";
 import { Review } from "../../types/types";
 import { responseToast, transformImage } from "../../utils/features";
+import Loader from "../Loaders/Loader";
 import ReviewLoader from "../Loaders/ReviewLoader";
 import Ratings from "./Ratings";
 
-const ReviewCard = ({
-  reviewsData,
-}: {
-  reviewsData: AllReviewsResponse | undefined;
-}) => {
+const ReviewCard = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.userReducer);
   const params = useParams();
@@ -29,25 +27,15 @@ const ReviewCard = ({
 
   const [userReview, setUserReview] = useState<Review>();
   const [reviewComment, setReviewComment] = useState<string>("");
-  useEffect(() => {
-    if (reviewsData?.reviews) {
-      const matchedReview = reviewsData.reviews.find(
-        (review) => review.user._id === user?._id
-      );
-      setUserReview(matchedReview);
-    }
-    if (userReview) {
-      setReviewComment(userReview.comment);
-      setRating(userReview.rating);
-    } else {
-      setReviewComment("");
-      setRating(0);
-    }
-
-    return () => {
-      setUserReview(undefined);
-    };
-  }, [reviewsData, userReview]);
+  const {
+    data: reviewsData,
+    isLoading: isReviewsLoading,
+    isError: isReviewsError,
+    error: reviewsError,
+  } = useProductAllReviewQuery({
+    productId: params.id!,
+    id: user?._id!,
+  });
 
   const {
     Ratings: EditableRatings,
@@ -115,96 +103,163 @@ const ReviewCard = ({
     }
   };
 
-  if (loading) <ReviewLoader />;
+  useEffect(() => {
+    if (reviewsData?.reviews && !userReview) {
+      const matchedReview = reviewsData.reviews.find(
+        (review: Review) => review.user._id === user?._id
+      );
+      setUserReview(matchedReview);
+    }
+    if (userReview) {
+      setReviewComment(userReview.comment);
+      setRating(userReview.rating);
+    } else {
+      setReviewComment("");
+      setRating(0);
+    }
+
+    return () => {
+      setUserReview(undefined);
+    };
+  }, [reviewsData]);
+
+  useEffect(() => {
+    if (isReviewsError || reviewsError) {
+      const err = reviewsError as CustomError;
+      err.data?.message
+        ? toast.error(err.data.message)
+        : toast.error("Failed to fetch product details");
+    }
+  }, [isReviewsError, reviewsError]);
+
+  if (isReviewsError || reviewsError) {
+    return <Navigate to="/" />;
+  }
+
+  if (loading) <Loader />;
+
+  console.log(reviewsData);
 
   return (
-    <>
+    <section>
       <div>
-        <h1>Reviews</h1>
-
-        {!userReview && reviewsData?.reviewButton && (
-          <button onClick={() => setReviewDialogOpen(!reviewDialogOpen)}>
-            {reviewDialogOpen ? <MdRateReview /> : <MdOutlineRateReview />}
-          </button>
-        )}
-      </div>
-      <div>
-        {!userReview && reviewDialogOpen && (
-          <article className="reviewDialog">
-            <form onSubmit={submitReview}>
-              <div>
-                <h2>Write a review</h2>
-                <EditableRatings />
-                <button type="submit">Submit</button>
-              </div>
-              <textarea
-                placeholder="Enter your review"
-                title="Review Comment"
-                required
-                value={reviewComment}
-                onChange={(e) => setReviewComment(e.target.value)}
-              ></textarea>
-            </form>
-          </article>
-        )}
-        {!reviewDialogOpen && userReview && (
-          <article key={userReview._id} className="review">
+        {isReviewsLoading ? (
+          <ReviewLoader />
+        ) : (
+          <>
             <div>
-              <img
-                src={transformImage(userReview.user.photo, 100)}
-                alt={userReview.user.name}
-              />
-              <div>
-                <h1>{userReview.user.name}</h1>
-                <Ratings value={userReview.rating} />
-                <h5>
-                  {new Date(userReview.updatedAt).toLocaleDateString("en-IN", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </h5>
-                {user?._id === userReview.user._id && (
-                  <button
-                    className="reviewDeleteBtn"
-                    onClick={() =>
-                      deleteHandler(userReview.product, userReview.user._id)
-                    }
-                  >
-                    <FaTrash />
-                  </button>
-                )}
-              </div>
+              <h1>Reviews</h1>
+
+              {!userReview && reviewsData?.reviewButton && (
+                <button onClick={() => setReviewDialogOpen(!reviewDialogOpen)}>
+                  {reviewDialogOpen ? (
+                    <MdRateReview />
+                  ) : (
+                    <MdOutlineRateReview />
+                  )}
+                </button>
+              )}
             </div>
-            <p>{userReview.comment}</p>
-          </article>
+            <div>
+              {!userReview && reviewDialogOpen && (
+                <article>
+                  <form onSubmit={submitReview}>
+                    <div>
+                      <h2>Write a review</h2>
+                      <EditableRatings />
+                      <button type="submit">Submit</button>
+                    </div>
+                    <textarea
+                      placeholder="Enter your review"
+                      title="Review Comment"
+                      required
+                      value={reviewComment}
+                      onChange={(e) => setReviewComment(e.target.value)}
+                    ></textarea>
+                  </form>
+                </article>
+              )}
+              {!reviewDialogOpen && userReview && (
+                <article key={userReview._id} className="review">
+                  <div>
+                    <img
+                      src={transformImage(userReview.user.photo, 100)}
+                      alt={userReview.user.name}
+                    />
+                    <div>
+                      <h1>{userReview.user.name}</h1>
+                      <Ratings value={userReview.rating} />
+                      <h5>
+                        {new Date(userReview.updatedAt).toLocaleDateString(
+                          "en-IN",
+                          {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          }
+                        )}
+                      </h5>
+                      {user?._id === userReview.user._id && (
+                        <button
+                          onClick={() =>
+                            deleteHandler(
+                              userReview.product,
+                              userReview.user._id
+                            )
+                          }
+                        >
+                          <FaTrash />
+                        </button>
+                      )}
+
+                      {userReview && !reviewsData?.reviewButton && (
+                        <button
+                          onClick={() => setReviewDialogOpen(!reviewDialogOpen)}
+                        >
+                          {reviewDialogOpen ? (
+                            <MdRateReview />
+                          ) : (
+                            <MdOutlineRateReview />
+                          )}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <p>{userReview.comment}</p>
+                </article>
+              )}
+              {reviewsData?.reviews
+                .filter((review) => review._id !== userReview?._id)
+                .map((review) => (
+                  <article key={review._id} className="review">
+                    <div>
+                      <img
+                        src={transformImage(review.user.photo, 40)}
+                        alt={review.user.name}
+                      />
+                      <div>
+                        <h1>{review.user.name}</h1>
+                        <Ratings value={review.rating} />
+                        <h5>
+                          {new Date(review.updatedAt).toLocaleDateString(
+                            "en-IN",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            }
+                          )}
+                        </h5>
+                      </div>
+                    </div>
+                    <p>{review.comment}</p>
+                  </article>
+                ))}
+            </div>
+          </>
         )}
-        {reviewsData?.reviews
-          .filter((review) => review._id !== userReview?._id)
-          .map((review) => (
-            <article key={review._id} className="review">
-              <div>
-                <img
-                  src={transformImage(review.user.photo, 40)}
-                  alt={review.user.name}
-                />
-                <div>
-                  <h1>{review.user.name}</h1>
-                  <Ratings value={review.rating} />
-                  <h5>
-                    {new Date(review.updatedAt).toLocaleDateString("en-IN", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </h5>
-                </div>
-              </div>
-              <p>{review.comment}</p>
-            </article>
-          ))}
       </div>
-    </>
+    </section>
   );
 };
 
