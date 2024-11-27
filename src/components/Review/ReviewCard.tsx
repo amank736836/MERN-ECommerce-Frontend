@@ -129,7 +129,7 @@ const ReviewCard = () => {
     return <Navigate to="/" />;
   }
 
-  if (loading) <Loader />;
+  if (loading) return <Loader />;
 
   return (
     <section>
