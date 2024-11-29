@@ -111,6 +111,7 @@ const Shipping = () => {
         modal: {
           ondismiss: function (response: any) {
             console.log(response);
+            toast.error("Payment failed");
           },
         },
         image: user?.photo,
