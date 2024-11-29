@@ -141,7 +141,7 @@ const ReviewCard = () => {
             <div>
               <h1>Reviews</h1>
 
-              {reviewsData?.reviewButton && (
+              {user && reviewsData?.reviewButton && (
                 <button onClick={() => setReviewDialogOpen(!reviewDialogOpen)}>
                   {reviewDialogOpen ? (
                     <MdRateReview />
