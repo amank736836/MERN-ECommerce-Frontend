@@ -28,23 +28,6 @@ export const productAPI = createApi({
       }),
       providesTags: ["products"],
     }),
-    productNewReview: builder.mutation<MessageResponse, NewReviewRequest>({
-      query: ({ productId, id, rating, comment }) => ({
-        url: `review/${productId}`,
-        method: "POST",
-        body: { rating, comment },
-        params: { id },
-      }),
-      invalidatesTags: ["products"],
-    }),
-    productDeleteReview: builder.mutation<MessageResponse, ReviewRequest>({
-      query: ({ productId, id }) => ({
-        url: `review/${productId}`,
-        method: "DELETE",
-        params: { id },
-      }),
-      invalidatesTags: ["products"],
-    }),
     latestProducts: builder.query<ProductResponse, string>({
       query: () => "latest",
       providesTags: ["products"],
@@ -92,6 +75,23 @@ export const productAPI = createApi({
     deleteProduct: builder.mutation<MessageResponse, DeleteProductRequest>({
       query: ({ id, productId }) => ({
         url: `${productId}`,
+        method: "DELETE",
+        params: { id },
+      }),
+      invalidatesTags: ["products"],
+    }),
+    productNewReview: builder.mutation<MessageResponse, NewReviewRequest>({
+      query: ({ productId, id, rating, comment }) => ({
+        url: `review/${productId}`,
+        method: "POST",
+        body: { rating, comment },
+        params: { id },
+      }),
+      invalidatesTags: ["products"],
+    }),
+    productDeleteReview: builder.mutation<MessageResponse, ReviewRequest>({
+      query: ({ productId, id }) => ({
+        url: `review/${productId}`,
         method: "DELETE",
         params: { id },
       }),
