@@ -77,7 +77,10 @@ const Search = () => {
           <select
             title="sort"
             value={sort}
-            onChange={(e) => setSort(e.target.value)}
+            onChange={(e) => {
+              setSort(e.target.value);
+              setCurrentPrice(100000);
+            }}
           >
             <option value="">None</option>
             <option value="asc">Price (Low to High)</option>
@@ -93,7 +96,9 @@ const Search = () => {
             min={0}
             max={100000}
             value={currentPrice}
-            onChange={(e) => setCurrentPrice(Number(e.target.value))}
+            onChange={(e) => {
+              setCurrentPrice(Number(e.target.value));
+            }}
           />
         </div>
 
@@ -102,7 +107,10 @@ const Search = () => {
           <select
             title="category"
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              setCurrentPrice(100000);
+            }}
           >
             <option value="">ALL</option>
             {!loadingSearchProducts &&
@@ -114,7 +122,7 @@ const Search = () => {
           </select>
         </div>
         <div>
-          <button onClick={() => clearHandler()}>Clear</button>
+          <button onClick={clearHandler}>Clear</button>
         </div>
       </aside>
       <main>
