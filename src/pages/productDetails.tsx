@@ -50,7 +50,6 @@ const productDetails = () => {
                   productData?.product.photos.map((photo) => photo.url) || []
                 }
                 showThumbnails
-                // showNav={true}
                 showDots
                 PrevIcon={
                   <button className="carouselBtn">
