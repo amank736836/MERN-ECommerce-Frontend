@@ -60,7 +60,7 @@ const Search = () => {
     setLoading(true);
     setSearch("");
     setSort("");
-    setCurrentPrice(maxAmount);
+    setCurrentPrice(100000);
     setCategory("");
     setPage(1);
     setLoading(false);
