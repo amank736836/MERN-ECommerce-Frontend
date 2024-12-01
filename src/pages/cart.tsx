@@ -44,7 +44,7 @@ const Cart = () => {
           toast.success(res.data.message);
         })
         .catch((err) => {
-          dispatch(calculatePrice(discountAmount));
+          dispatch(calculatePrice(0));
           setIsValidCouponCode(false);
           if (
             err.response &&
