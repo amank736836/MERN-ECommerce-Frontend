@@ -4,6 +4,7 @@ import {
   AllUsersResponse,
   DeleteUserRequest,
   MessageResponse,
+  UpdateUserRequest,
   UserResponse,
 } from "../../types/api-types";
 import { User } from "../../types/types";
@@ -30,6 +31,15 @@ export const userAPI = createApi({
       }),
       invalidatesTags: ["users"],
     }),
+    updateUser: builder.mutation<MessageResponse, UpdateUserRequest>({
+      query: ({ userId, id, role }) => ({
+        url: `${userId}`,
+        method: "PATCH",
+        params: { id },
+        body: { role },
+      }),
+      invalidatesTags: ["users"],
+    }),
     deleteUser: builder.mutation<MessageResponse, DeleteUserRequest>({
       query: ({ userId, id }) => ({
         url: `${userId}`,
@@ -53,5 +63,9 @@ export const getUser = async (id: string) => {
   }
 };
 
-export const { useAllUsersQuery, useLoginMutation, useDeleteUserMutation } =
-  userAPI;
+export const {
+  useAllUsersQuery,
+  useLoginMutation,
+  useDeleteUserMutation,
+  useUpdateUserMutation,
+} = userAPI;
