@@ -88,6 +88,13 @@ export type VerificationResponse = MessageResponse & {
   signatureIsValid: boolean;
 };
 
+export type RazorpayRequest = {
+  cartItems: CartItem[];
+  shippingInfo: ShippingInfo;
+  coupon: string;
+  userId: string;
+};
+
 export type RazorpayResponse = {
   razorpay_order_id: string;
   razorpay_payment_id: string;
@@ -108,6 +115,12 @@ export type PieResponse = MessageResponse & {
 
 export type LineResponse = MessageResponse & {
   charts: Line;
+};
+
+export type UpdateUserRequest = {
+  userId: string;
+  id: string;
+  role: string;
 };
 
 export type DeleteUserRequest = {
