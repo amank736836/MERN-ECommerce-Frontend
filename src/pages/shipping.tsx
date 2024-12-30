@@ -17,8 +17,9 @@ import { RazorpayResponse } from "../types/api-types";
 
 const Shipping = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
-  const { cartItems, total, subtotal, shippingCharges, tax, discount, coupon } =
-    useSelector((state: RootState) => state.cartReducer);
+  const { cartItems, coupon } = useSelector(
+    (state: RootState) => state.cartReducer
+  );
 
   const [createRazorpay] = useCreateRazorpayMutation();
   const [verifyPayment] = useVerifyPaymentMutation();
@@ -76,12 +77,8 @@ const Shipping = () => {
 
             const { data: order } = await newOrder({
               orderItems: cartItems,
-              subtotal,
-              shippingCharges,
-              tax,
-              discount,
-              total,
               shippingInfo,
+              coupon,
               user: user?._id!,
             });
 
