@@ -32,6 +32,13 @@ const Login = () => {
         role: "user",
         dob: date,
         _id: user.uid,
+        shippingInfo: {
+          address: "",
+          city: "",
+          state: "",
+          country: "",
+          pinCode: "",
+        },
       });
 
       responseToast(res, navigate, "/");
