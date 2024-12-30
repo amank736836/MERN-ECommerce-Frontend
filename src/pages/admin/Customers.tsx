@@ -13,6 +13,7 @@ import { SkeletonLoader } from "../../components/Loaders/SkeletonLoader";
 import {
   useAllUsersQuery,
   useDeleteUserMutation,
+  useUpdateUserMutation,
 } from "../../redux/api/userAPI";
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
@@ -28,6 +29,8 @@ const Customer = () => {
 
   const [deleteUser] = useDeleteUserMutation();
 
+  const [updateUser] = useUpdateUserMutation();
+
   const navigate = useNavigate();
 
   const deleteHandler = (userId: string) => async () => {
@@ -41,6 +44,25 @@ const Customer = () => {
       responseToast(res, navigate, "/admin/customers");
     } catch (error) {
       toast.error("Failed to delete user");
+    } finally {
+      setLoading(false);
+      toast.dismiss(toastId);
+    }
+  };
+
+  const changeRoleHandler = async (role: string, userId: string) => {
+    setLoading(true);
+    const toastId = toast.loading("Changing Role...");
+    try {
+      const res = await updateUser({
+        userId,
+        id: user?._id!,
+        role,
+      });
+
+      responseToast(res, navigate, "/admin/customers");
+    } catch (error) {
+      toast.error("Failed to change role");
     } finally {
       setLoading(false);
       toast.dismiss(toastId);
@@ -69,7 +91,29 @@ const Customer = () => {
           name: user.name,
           email: user.email,
           gender: user.gender,
-          role: user.role,
+          role: (
+            <select
+              id={user._id}
+              aria-label="User Role"
+              onChange={(e) => {
+                changeRoleHandler(e.target.value, user._id);
+              }}
+            >
+              <option
+                value="user"
+                selected={user.role === "user" ? true : false}
+              >
+                User
+              </option>
+
+              <option
+                value="admin"
+                selected={user.role === "admin" ? true : false}
+              >
+                Admin
+              </option>
+            </select>
+          ),
           action: (
             <button onClick={deleteHandler(user._id)} disabled={loading}>
               <FaTrash />
