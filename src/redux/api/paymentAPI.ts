@@ -7,9 +7,10 @@ import {
   CreateRazorpayResponse,
   GetCouponResponse,
   MessageResponse,
+  RazorpayRequest,
   RazorpayResponse,
   UpdateCouponRequest,
-  VerificationResponse
+  VerificationResponse,
 } from "../../types/api-types";
 import { Coupon } from "../../types/types";
 
@@ -97,11 +98,16 @@ export const paymentAPI = createApi({
       }),
       invalidatesTags: ["coupon"],
     }),
-    createRazorpay: builder.mutation<CreateRazorpayResponse, number>({
-      query: (amount) => ({
+    createRazorpay: builder.mutation<CreateRazorpayResponse, RazorpayRequest>({
+      query: ({ cartItems, shippingInfo, coupon, userId }) => ({
         url: "createRazorpay",
         method: "POST",
-        body: { amount },
+        body: {
+          cartItems,
+          shippingInfo,
+          coupon,
+          userId,
+        },
       }),
     }),
     verifyPayment: builder.mutation<VerificationResponse, RazorpayResponse>({
