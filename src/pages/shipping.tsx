@@ -4,28 +4,21 @@ import toast from "react-hot-toast";
 import { BiArrowBack } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loaders/Loader";
 import { useNewOrderMutation } from "../redux/api/orderAPI";
 import {
   useCreatePaymentMutation,
   useCreateRazorpayMutation,
   useVerifyPaymentMutation,
 } from "../redux/api/paymentAPI";
-import { saveShippingInfo } from "../redux/reducer/cartReducer";
+import { updateShippingInfo } from "../redux/reducer/userReducer";
 import { RootState } from "../redux/store";
 import { RazorpayResponse } from "../types/api-types";
-import Loader from "../components/Loaders/Loader";
 
 const Shipping = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
-  const {
-    cartItems,
-    total,
-    shippingInfo: { address, city, state, country, pinCode },
-    subtotal,
-    shippingCharges,
-    tax,
-    discount,
-  } = useSelector((state: RootState) => state.cartReducer);
+  const { cartItems, total, subtotal, shippingCharges, tax, discount, coupon } =
+    useSelector((state: RootState) => state.cartReducer);
 
   const [createRazorpay] = useCreateRazorpayMutation();
   const [verifyPayment] = useVerifyPaymentMutation();
@@ -36,12 +29,14 @@ const Shipping = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  console.log(user);
+
   const [shippingInfo, setShippingInfo] = useState({
-    address: address || "",
-    city: city || "",
-    state: state || "",
-    country: country || "",
-    pinCode: pinCode || "",
+    address: user?.shippingInfo.address || "",
+    city: user?.shippingInfo.city || "",
+    state: user?.shippingInfo.state || "",
+    country: user?.shippingInfo.country || "",
+    pinCode: user?.shippingInfo.pinCode || "",
   });
 
   const changeHandler = (
@@ -55,10 +50,15 @@ const Shipping = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(saveShippingInfo(shippingInfo));
+    dispatch(updateShippingInfo(shippingInfo));
     setLoading(true);
     try {
-      const { data: razorpay } = await createRazorpay(total);
+      const { data: razorpay } = await createRazorpay({
+        cartItems,
+        shippingInfo,
+        coupon,
+        userId: user?._id!,
+      });
 
       const options = {
         key: import.meta.env.VITE_RAZORPAY_ID,
