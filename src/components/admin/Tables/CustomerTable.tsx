@@ -7,7 +7,7 @@ export interface CustomerDataType {
   name: string;
   email: string;
   gender: string;
-  role: string;
+  role: ReactElement;
   action: ReactElement;
 }
 
