@@ -38,7 +38,7 @@ const Cart = () => {
         })
         .then((res) => {
           setDiscountAmount(res.data.discount);
-          dispatch(calculatePrice(discountAmount));
+          dispatch(calculatePrice(res.data.discount));
           dispatch(updateCoupon(couponCode));
           setIsValidCouponCode(res.data.success);
           toast.success(res.data.message);
