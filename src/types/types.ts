@@ -6,6 +6,7 @@ export type User = {
   role: string;
   gender: string;
   dob: string;
+  shippingInfo: ShippingInfo;
 };
 
 export type Product = {
