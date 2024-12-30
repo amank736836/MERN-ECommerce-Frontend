@@ -1,4 +1,4 @@
-import { CartItem, ShippingInfo, User } from "./types";
+import { CartItem, User } from "./types";
 
 export interface UserReducerInitialState {
   user: User | null;
@@ -13,6 +13,5 @@ export interface CartReducerInitialState {
   tax: number;
   discount: number;
   total: number;
-  shippingInfo: ShippingInfo;
   coupon: string;
 }
