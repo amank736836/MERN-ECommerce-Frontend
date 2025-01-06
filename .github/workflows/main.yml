@@ -15,8 +15,8 @@ jobs:
 
       - name: Create Docker Image
         run: |
-          docker build -t amank736836/mern-ecommerce-frontend-2024:${{ github.sha }} .
-          docker tag amank736836/mern-ecommerce-frontend-2024:${{ github.sha }} amank736836/mern-ecommerce-frontend-2024:latest
+          docker build -t mern-ecommerce-frontend-2024 .
+          docker tag mern-ecommerce-frontend-2024 amank736836/mern-ecommerce-frontend-2024:latest
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
