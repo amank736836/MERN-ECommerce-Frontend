@@ -62,7 +62,7 @@ const Shipping = () => {
       });
 
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_ID,
+        key: "rzp_test_YZadGyYlg5k3L3",
         amount: razorpay?.amount,
         currency: razorpay?.currency,
         name: "Ecommerce Platform",
