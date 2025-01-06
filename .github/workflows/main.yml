@@ -34,9 +34,10 @@ jobs:
         run: |
           sudo apt-get update -y
           ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-54-104-85.compute-1.amazonaws.com
+          cd .. &&
           sudo ls &&
           sudo docker pull amank736836/mern-ecommerce-frontend-2024:latest &&
           cd /app &&
           sudo docker-compose down &&
           sudo docker-compose up -d &&
-          exit'
+          exit
