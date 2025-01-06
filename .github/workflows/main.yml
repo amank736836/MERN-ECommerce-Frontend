@@ -27,8 +27,8 @@ jobs:
       - name: Push Docker Image to Docker Hub
         run: |
           for i in {1..3}; do
-            docker push amank736836/mern-ecommerce-frontend-2024:${{ github.sha }} && break || sleep 10
-            done
+            docker push amank736836/mern-ecommerce-frontend-2024 && break || sleep 10
+          done
           docker logout
 
       - name: Set up SSH
@@ -40,7 +40,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-54-104-85.compute-1.amazonaws.com << 'EOF'
             sudo apt-get update -y
-            sudo docker pull amank736836/mern-ecommerce-frontend-2024:${{ github.sha }}
+            sudo docker pull amank736836/mern-ecommerce-frontend-2024:latest
             cd app
             sudo docker compose down
             sudo docker compose up -d
