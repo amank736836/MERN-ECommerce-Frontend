@@ -40,6 +40,7 @@ jobs:
             sudo apt-get update -y
             sudo docker pull amank736836/mern-ecommerce-frontend-2024:${{ github.sha }}
             cd app
+            ls
             sudo docker-compose down
             sudo docker-compose up -d
           EOF
