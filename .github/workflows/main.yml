@@ -24,20 +24,20 @@ jobs:
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           docker push amank736836/mern-ecommerce-frontend-2024:latest
           docker logout
-        
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: SSH login and Deploy
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-        run : |
+        run: |
           sudo apt-get update -y
-          sudo apt-get install sshpass -y
-          sudo sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST '
+          ssh -o StrictHostKeyChecking=no ubuntu@52.54.104.85 << 'EOF'
+          echo "Connected to the server!"
           sudo docker pull amank736836/mern-ecommerce-frontend-2024:latest &&
           cd /app &&
           sudo docker-compose down &&
           sudo docker-compose up -d &&
           exit
           '
-
