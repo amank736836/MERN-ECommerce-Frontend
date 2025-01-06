@@ -7,8 +7,6 @@ import { userReducer } from "./reducer/userReducer";
 import { dashboardAPI } from "./api/dashboardAPI";
 import { paymentAPI } from "./api/paymentAPI";
 
-export const server = import.meta.env.VITE_SERVER_URL;
-
 export const store = configureStore({
   reducer: {
     [userAPI.reducerPath]: userAPI.reducer,
