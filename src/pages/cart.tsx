@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import CartItemCard from "../components/CartItem";
 import Loader from "../components/Loaders/Loader";
 import { calculatePrice, updateCoupon } from "../redux/reducer/cartReducer";
-import { RootState, server } from "../redux/store";
+import { RootState } from "../redux/store";
 
 const Cart = () => {
   const { cartItems, subtotal, tax, shippingCharges, discount, total, coupon } =
@@ -33,9 +33,12 @@ const Cart = () => {
     const { token: cancelToken, cancel } = axios.CancelToken.source();
     const id = setTimeout(() => {
       axios
-        .post(`${server}/api/v1/payment/discount?coupon=${couponCode}`, {
-          cancelToken,
-        })
+        .post(
+          `  https://backend-vs.mooo.com/api/v1/payment/discount?coupon=${couponCode}`,
+          {
+            cancelToken,
+          }
+        )
         .then((res) => {
           dispatch(updateCoupon(couponCode));
           dispatch(calculatePrice(res.data.discount));
