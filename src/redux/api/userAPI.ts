@@ -12,7 +12,7 @@ import { User } from "../../types/types";
 export const userAPI = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1/user/`,
+    baseUrl: `https://backend-vs.mooo.com/api/v1/user/`,
   }),
   tagTypes: ["users"],
   endpoints: (builder) => ({
@@ -54,7 +54,7 @@ export const userAPI = createApi({
 export const getUser = async (id: string) => {
   try {
     const { data }: { data: UserResponse } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/user/${id}`
+      `https://backend-vs.mooo.com/api/v1/user/${id}`
     );
 
     return data;
