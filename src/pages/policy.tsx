@@ -85,7 +85,7 @@ const Policy: React.FC = () => {
       case "privacy":
         return (
           <div>
-            <div class="container">
+            <div>
               <h1>Virtuo Store</h1>
 
               <h2>Privacy Policy</h2>
