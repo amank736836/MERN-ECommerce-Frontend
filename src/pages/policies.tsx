@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Policy: React.FC = () => {
+const Policies: React.FC = () => {
   const [activeTab, setActiveTab] = useState("terms");
 
   const renderContent = () => {
@@ -425,4 +425,4 @@ const Policy: React.FC = () => {
   );
 };
 
-export default Policy;
+export default Policies;
