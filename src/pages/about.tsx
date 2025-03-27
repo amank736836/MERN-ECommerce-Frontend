@@ -11,7 +11,7 @@ const About: React.FC = () => {
             <h2>Terms and Conditions</h2>
             <h3>1. Introduction</h3>
             <p>
-              Welcome to [Your Store Name] ("we," "our," "us"). By accessing or
+              Welcome to Virtuo Store ("we," "our," "us"). By accessing or
               using our website, you agree to be bound by these Terms and
               Conditions.
             </p>
