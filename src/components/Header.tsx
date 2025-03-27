@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { RootState } from "../redux/store";
 import { FcAbout } from "react-icons/fc";
-
+import { MdPolicy } from "react-icons/md";
 const Header = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
@@ -33,6 +33,9 @@ const Header = () => {
       </Link>
       <Link to="/about" title="About">
         <FcAbout /> About
+      </Link>
+      <Link to="/policies" title="Policies">
+        <MdPolicy /> Policies
       </Link>
       <Link to="/cart" title="Cart">
         <RiShoppingCart2Fill /> Cart
