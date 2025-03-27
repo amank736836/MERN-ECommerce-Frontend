@@ -20,6 +20,7 @@ import { RootState } from "./redux/store.ts";
 const Home = lazy(() => import("./pages/home.tsx"));
 const ProductDetails = lazy(() => import("./pages/productDetails.tsx"));
 const Search = lazy(() => import("./pages/search.tsx"));
+const About = lazy(() => import("./pages/about.tsx"));
 const Policies = lazy(() => import("./pages/policies.tsx"));
 const Cart = lazy(() => import("./pages/cart.tsx"));
 
@@ -89,6 +90,7 @@ const App = () => {
           <Route path="/search" element={<Search />} />
           <Route path="/policies" element={<Policies />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<About />} />
           <Route path="/product/:id" element={<ProductDetails />} />
 
           {/* Not Logged In Route */}
