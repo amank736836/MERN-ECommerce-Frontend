@@ -1,78 +1,99 @@
-
-const AboutUs = () => {
+const AboutVirtuoStore = () => {
   return (
-    <div className="max-w-4xl mx-auto p-6 text-gray-800">
-      <h1 className="text-4xl font-bold text-center text-gray-900">
-        Virtuo Store
-      </h1>
-      <h2 className="text-2xl font-semibold text-center mt-4">About Us</h2>
-      <p className="mt-4 text-lg text-gray-700">
-        Welcome to <strong>Virtuo Store</strong>, your ultimate destination for
-        stylish and high-quality fashion essentials. We specialize in bringing
-        you the latest trends in T-shirts, pants, and shoes, ensuring that you
-        always step out in confidence.
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-4">About VirtuoStore</h1>
+      <p className="mb-4">
+        Welcome to VirtuoStore, your ultimate destination for stylish and
+        high-quality fashion essentials. We specialize in bringing you the
+        latest trends in T-shirts, pants, and shoes, ensuring that you always
+        step out in confidence. At VirtuoStore, we believe that fashion is more
+        than just clothing—it’s an expression of individuality, style, and
+        personality.
       </p>
 
-      <h3 className="text-xl font-semibold mt-6">Who We Are</h3>
-      <p className="mt-2">
-        Virtuo Store is more than just an e-commerce platform; we are a brand
+      <h2 className="text-2xl font-semibold mt-6 mb-2">Who We Are</h2>
+      <p className="mb-4">
+        VirtuoStore is more than just an e-commerce platform; we are a brand
         dedicated to redefining fashion by making high-quality apparel and
-        footwear accessible to everyone.
+        footwear accessible to everyone. Whether you're looking for trendy
+        T-shirts, comfortable yet stylish pants, or the perfect pair of shoes,
+        we have something to match every personality and occasion.
       </p>
 
-      <h3 className="text-xl font-semibold mt-6">Our Mission & Vision</h3>
-      <p className="mt-2">
-        <strong>Mission:</strong> Our mission is to redefine the fashion
-        shopping experience by offering high-quality, trendy, and affordable
-        apparel and footwear.
-      </p>
-      <p className="mt-2">
-        <strong>Vision:</strong> We envision Virtuo Store as a leading online
-        fashion hub, providing a seamless shopping experience with top-notch
-        customer service.
+      <h2 className="text-2xl font-semibold mt-6 mb-2">Our Mission & Vision</h2>
+      <h3 className="text-xl font-medium mt-4">Mission</h3>
+      <p className="mb-4">
+        Our mission is to redefine the fashion shopping experience by offering
+        high-quality, trendy, and affordable apparel and footwear. We aim to
+        bring style, comfort, and affordability together under one roof,
+        allowing our customers to express themselves effortlessly through
+        fashion.
       </p>
 
-      <h3 className="text-xl font-semibold mt-6">What Sets Us Apart?</h3>
-      <ul className="list-disc pl-6 mt-2">
-        <li>Curated selection of trendy T-shirts, pants, and shoes.</li>
-        <li>High-quality materials for durability and comfort.</li>
-        <li>Affordable pricing for all fashion lovers.</li>
-        <li>User-friendly website for a smooth shopping experience.</li>
-        <li>Fast and reliable shipping services.</li>
-        <li>Hassle-free returns and exchanges.</li>
+      <h3 className="text-xl font-medium mt-4">Vision</h3>
+      <p className="mb-4">
+        We envision VirtuoStore as a leading online fashion hub, providing
+        customers with a seamless shopping experience, a vast selection of
+        trendy products, and the best-in-class customer service.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6 mb-2">What Sets Us Apart?</h2>
+      <ul className="list-disc list-inside mb-4">
+        <li>Curated Fashion Selection: T-Shirts, Pants, and Shoes.</li>
+        <li>Quality Assurance: Premium materials and craftsmanship.</li>
+        <li>
+          Affordable Pricing: Budget-friendly without compromising quality.
+        </li>
+        <li>
+          Seamless Shopping Experience: Easy-to-use website with secure
+          checkout.
+        </li>
+        <li>Fast & Reliable Shipping: Ensuring timely delivery.</li>
+        <li>Hassle-Free Returns & Exchanges: Quick and easy process.</li>
+        <li>Customer-Centric Approach: Dedicated support team.</li>
+        <li>Eco-Friendly Fashion: Sustainable and ethical sourcing.</li>
       </ul>
 
-      <h3 className="text-xl font-semibold mt-6">Why Choose Virtuo Store?</h3>
-      <ul className="list-disc pl-6 mt-2">
-        <li>Trendy, high-quality fashion at affordable prices.</li>
-        <li>Premium craftsmanship ensuring long-lasting wear.</li>
-        <li>Fast and secure shipping.</li>
-        <li>Excellent customer service and hassle-free returns.</li>
+      <h2 className="text-2xl font-semibold mt-6 mb-2">
+        Our Growth & Future Plans
+      </h2>
+      <ul className="list-disc list-inside mb-4">
+        <li>Expanding our collection with new fashion categories.</li>
+        <li>Exclusive designer collaborations for unique styles.</li>
+        <li>AI-powered fashion recommendations.</li>
+        <li>More eco-friendly products and sustainable packaging.</li>
+        <li>Expanding globally to reach more customers worldwide.</li>
       </ul>
 
-      <h3 className="text-xl font-semibold mt-6">Our Future Plans</h3>
-      <ul className="list-disc pl-6 mt-2">
-        <li>Expanding fashion categories.</li>
-        <li>Launching designer collaborations.</li>
-        <li>Introducing AI-powered fashion recommendations.</li>
-      </ul>
-
-      <h3 className="text-xl font-semibold mt-6">Contact Us</h3>
-      <p className="mt-2">
-        <strong>Email:</strong> support@virtuostore.in
-      </p>
-      <p className="mt-2">
-        <strong>Phone:</strong> +91 1234567890
-      </p>
-      <p className="mt-2">
-        <strong>Address:</strong> Chandigarh, India
+      <h2 className="text-2xl font-semibold mt-6 mb-2">
+        Join the VirtuoStore Family!
+      </h2>
+      <p className="mb-4">
+        At VirtuoStore, we believe that fashion is for everyone. Whether you’re
+        dressing up for a special occasion or looking for everyday essentials,
+        we’ve got you covered.
       </p>
 
-      <div className="text-center mt-8 text-gray-500">
-        <p>Virtuo Store &copy; 2025 | All rights reserved.</p>
-      </div>
+      <h2 className="text-2xl font-semibold mt-6 mb-2">Contact Us</h2>
+      <p>
+        Email:{" "}
+        <a href="mailto:amankkarguwal@gmail.com" className="text-blue-600">
+          amankkarguwal@gmail.com
+        </a>
+      </p>
+      <p>
+        Website:{" "}
+        <a
+          href="https://virtuostore.vercel.app"
+          className="text-blue-600"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          virtuostore.vercel.app
+        </a>
+      </p>
     </div>
   );
 };
 
-export default AboutUs;
+export default AboutVirtuoStore;
