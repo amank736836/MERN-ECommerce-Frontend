@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { RootState } from "../redux/store";
+import { FcAbout } from "react-icons/fc";
 
 const Header = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
@@ -25,32 +26,32 @@ const Header = () => {
   return (
     <nav className="header">
       <Link to="/" title="Home">
-        <FaHome />
+        <FaHome /> Home
       </Link>
       <Link to="/search" title="Search">
-        <FaSearch />
+        <FaSearch /> Search
       </Link>
       <Link to="/about" title="About">
-        About
+        <FcAbout /> About
       </Link>
       <Link to="/cart" title="Cart">
-        <RiShoppingCart2Fill />
+        <RiShoppingCart2Fill /> Cart
       </Link>
       <Link to="/orders" title="Orders">
         Orders
       </Link>
       {user?.role === "admin" && (
         <Link to="/admin/dashboard" title="Admin Dashboard">
-          <RiDatabaseFill />
+          <RiDatabaseFill /> Admin
         </Link>
       )}
       {user ? (
         <button onClick={logoutHandler}>
-          <FaSignOutAlt />
+          <FaSignOutAlt /> Logout
         </button>
       ) : (
         <Link to="/login" title="Login">
-          <FaSignInAlt />
+          <FaSignInAlt /> Login
         </Link>
       )}
     </nav>
