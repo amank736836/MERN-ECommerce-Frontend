@@ -1,6 +1,6 @@
 const AboutVirtuoStore = () => {
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg text-gray-800 mt-12">
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg text-gray-800 mt-12 pt-12">
       <h1 className="text-4xl font-bold mb-6 text-center text-blue-600">
         About VirtuoStore
       </h1>
