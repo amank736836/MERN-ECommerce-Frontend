@@ -463,6 +463,9 @@ const Policy: React.FC = () => {
       >
         {renderContent()}
       </div>
+      <div className="footer" style={{ textAlign: "center", marginTop: "20px" }}>
+        <p>Virtuo Store &copy; 2025 | All rights reserved.</p>
+      </div>
     </div>
   );
 };
