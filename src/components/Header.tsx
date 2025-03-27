@@ -30,6 +30,9 @@ const Header = () => {
       <Link to="/search" title="Search">
         <FaSearch />
       </Link>
+      <Link to="/about" title="About">
+        About
+      </Link>
       <Link to="/cart" title="Cart">
         <RiShoppingCart2Fill />
       </Link>
