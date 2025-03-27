@@ -181,125 +181,77 @@ const Policy: React.FC = () => {
           <div>
             <h1>Virtuo Store</h1>
 
-            <h2>Privacy Policy</h2>
-            <p>
-              At Virtuo Store, we value your privacy and are committed to
-              protecting your personal data. This policy outlines how we
-              collect, use, and protect your information.
-            </p>
-
-            <h3>Information We Collect:</h3>
-            <p>
-              - Personal details (name, email, contact number) when you place an
-              order or contact us.
-            </p>
-            <p>
-              - Payment details (processed securely via third-party payment
-              gateways).
-            </p>
-            <p>
-              - Website usage data (collected via cookies for analytics
-              purposes).
-            </p>
-
-            <h3>How We Use Your Information:</h3>
-            <p>- To process your orders and payments.</p>
-            <p>- To communicate with you regarding your purchases.</p>
-            <p>- To improve our website and marketing efforts.</p>
-
-            <h3>Data Security:</h3>
-            <p>
-              - We implement industry-standard security measures to protect your
-              data.
-            </p>
-            <p>
-              - We do not sell or share your personal information with third
-              parties, except when required by law.
-            </p>
-
-            <h3>Cookies & Tracking:</h3>
-            <p>
-              - We use cookies to enhance user experience and track website
-              performance.
-            </p>
-            <p>- You can disable cookies in your browser settings.</p>
+            <h2>Refund Policy</h2>
 
             <p>
-              For any privacy-related concerns, contact us at
-              support@virtuostore.in.
+              At <strong>Virtuo Store</strong>, we strive to provide the best
+              shopping experience for our customers. If you wish to request a
+              refund, please review our policy below.
             </p>
 
-            <h2>Terms & Conditions</h2>
+            <h3>Cancellation & Refund Eligibility:</h3>
             <p>
-              By using Virtuo Store, you agree to the following terms and
-              conditions:
+              - Orders can be canceled within <strong>12 hours</strong> of
+              purchase for a full refund.
+            </p>
+            <p>
+              - Once an order has been shipped, it is not eligible for
+              cancellation.
+            </p>
+            <p>
+              - Refunds are only applicable for defective, damaged, or incorrect
+              products received.
             </p>
 
-            <h3>Service Agreement:</h3>
+            <h3>Process for Refund:</h3>
             <p>
-              - Virtuo Store provides e-commerce services as per the listed
-              product details.
+              - To request a refund, email us at{" "}
+              <strong>support@virtuostore.in</strong> with your order details
+              and reason for the refund.
             </p>
             <p>
-              - Prices and product availability may change without prior notice.
-            </p>
-
-            <h3>Payments:</h3>
-            <p>
-              - All payments must be made in advance via our secure payment
-              system.
+              - Refunds will be processed within{" "}
+              <strong>7-10 business days</strong> via the original payment
+              method.
             </p>
             <p>
-              - Failure to complete payment may result in order cancellation.
+              - In case of a damaged or incorrect product, customers may be
+              required to share images or return the item.
             </p>
 
-            <h3>Shipping & Delivery:</h3>
+            <h3>Exceptions:</h3>
             <p>
-              - Orders are processed within 2-5 business days and delivered
-              within 5-10 days across India.
+              - No refunds will be issued for used, washed, or altered products.
             </p>
             <p>
-              - We are not responsible for delays caused by shipping carriers.
-            </p>
-
-            <h3>Returns & Refunds:</h3>
-            <p>
-              - Refunds are applicable only for defective or incorrect products.
+              - Digital products, gift cards, and final sale items are
+              non-refundable.
             </p>
             <p>
-              - Customers must initiate refund requests within 7 days of
-              delivery.
+              - Shipping fees are non-refundable unless the refund is due to an
+              error on our part.
             </p>
 
-            <h3>Intellectual Property:</h3>
+            <h3>Exchange Policy:</h3>
             <p>
-              - All website content, including images and text, is the property
-              of Virtuo Store.
+              - If you receive a defective or incorrect item, we offer free
+              replacements.
             </p>
             <p>
-              - Unauthorized use or reproduction of any content is strictly
-              prohibited.
-            </p>
-
-            <h3>Limitation of Liability:</h3>
-            <p>
-              - We are not responsible for third-party service failures (e.g.,
-              payment gateways, shipping providers).
-            </p>
-            <p>
-              - We do not guarantee specific product results or performance
-              outcomes.
+              - Exchanges must be requested within <strong>7 days</strong> of
+              receiving the order.
             </p>
 
-            <h3>Termination:</h3>
+            <h3>Contact Us:</h3>
             <p>
-              - We reserve the right to cancel orders or restrict access if a
-              customer violates our policies.
+              If you have any questions regarding our refund policy, please
+              contact us at:
             </p>
-
             <p>
-              By using our services, you agree to these terms. For any
-              questions, contact us at support@virtuostore.in.
+              <strong>Email:</strong> support@virtuostore.in
+            </p>
+            <p>
+              <strong>Website:</strong> www.virtuostore.in
             </p>
           </div>
         );
@@ -463,7 +415,10 @@ const Policy: React.FC = () => {
       >
         {renderContent()}
       </div>
-      <div className="footer" style={{ textAlign: "center", marginTop: "20px" }}>
+      <div
+        className="footer"
+        style={{ textAlign: "center", marginTop: "20px" }}
+      >
         <p>Virtuo Store &copy; 2025 | All rights reserved.</p>
       </div>
     </div>
