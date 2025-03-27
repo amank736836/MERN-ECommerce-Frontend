@@ -7,7 +7,7 @@ const Policy: React.FC = () => {
     switch (activeTab) {
       case "terms":
         return (
-          <div class="container">
+          <div>
             <h1>Virtuo Store</h1>
             <h2>Terms & Conditions</h2>
 
@@ -82,10 +82,103 @@ const Policy: React.FC = () => {
             </p>
           </div>
         );
+      case "privacy":
+        return (
+          <div>
+            <div class="container">
+              <h1>Virtuo Store</h1>
+
+              <h2>Privacy Policy</h2>
+
+              <p>
+                At <strong>Virtuo Store</strong>, we value your privacy and are
+                committed to protecting your personal data. This policy outlines
+                how we collect, use, and protect your information.
+              </p>
+
+              <h3>Information We Collect:</h3>
+              <p>
+                - Personal details (name, email, contact number) when you place
+                an order or contact us.
+              </p>
+              <p>
+                - Payment details (processed securely via third-party payment
+                gateways).
+              </p>
+              <p>
+                - Website usage data (collected via cookies for analytics
+                purposes).
+              </p>
+
+              <h3>How We Use Your Information:</h3>
+              <p>- To process your orders and payments.</p>
+              <p>
+                - To communicate with you regarding your purchases and customer
+                support.
+              </p>
+              <p>- To improve our website, services, and marketing efforts.</p>
+
+              <h3>Data Security:</h3>
+              <p>
+                - We implement industry-standard security measures to protect
+                your data.
+              </p>
+              <p>
+                - We do not sell or share your personal information with third
+                parties, except when required by law.
+              </p>
+
+              <h3>Cookies & Tracking:</h3>
+              <p>
+                - We use cookies to enhance user experience and track website
+                performance.
+              </p>
+              <p>- You can disable cookies in your browser settings.</p>
+
+              <h3>Third-Party Services:</h3>
+              <p>
+                - We may use third-party tools such as payment gateways and
+                analytics services, which have their own privacy policies.
+              </p>
+              <p>
+                - We are not responsible for third-party data handling
+                practices.
+              </p>
+
+              <h3>Children’s Privacy:</h3>
+              <p>
+                - Our services are not intended for children under the age of
+                13.
+              </p>
+              <p>
+                - We do not knowingly collect personal information from
+                children.
+              </p>
+
+              <h3>Changes to Privacy Policy:</h3>
+              <p>- We reserve the right to update this policy at any time.</p>
+              <p>
+                - Changes will be posted on this page, and continued use of our
+                services implies acceptance.
+              </p>
+
+              <h3>Contact Us</h3>
+              <p>
+                If you have any privacy-related concerns, please contact us at:
+              </p>
+              <p>
+                <strong>Email:</strong> support@virtuostore.in
+              </p>
+              <p>
+                <strong>Website:</strong> www.virtuostore.in
+              </p>
+            </div>
+          </div>
+        );
 
       case "refund":
         return (
-          <div class="container">
+          <div>
             <h1>Virtuo Store</h1>
 
             <h2>Privacy Policy</h2>
@@ -212,7 +305,7 @@ const Policy: React.FC = () => {
         );
       case "shipping":
         return (
-          <div class="container">
+          <div>
             <h1>Virtuo Store</h1>
 
             <h2>Shipping Policy</h2>
