@@ -9,7 +9,7 @@ import {
 export const dashboardAPI = createApi({
   reducerPath: "dashboardApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://backend-vs.mooo.com/api/v1/dashboard/`,
+    baseUrl: `https://ecommerce-proxy.onrender.com/api/v1/dashboard/`,
   }),
   tagTypes: ["dashboard"],
   endpoints: (builder) => ({
