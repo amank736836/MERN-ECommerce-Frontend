@@ -17,7 +17,7 @@ import { Coupon } from "../../types/types";
 export const paymentAPI = createApi({
   reducerPath: "paymentApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://backend-vs.mooo.com/api/v1/payment/`,
+    baseUrl: `https://ecommerce-proxy.onrender.com/api/v1/payment/`,
   }),
   tagTypes: ["payment", "coupon"],
   endpoints: (builder) => ({
