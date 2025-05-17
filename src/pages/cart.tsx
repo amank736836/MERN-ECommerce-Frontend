@@ -34,7 +34,7 @@ const Cart = () => {
     const id = setTimeout(() => {
       axios
         .post(
-          `  https://backend-vs.mooo.com/api/v1/payment/discount?coupon=${couponCode}`,
+          `  https://ecommerce-proxy.onrender.com/api/v1/payment/discount?coupon=${couponCode}`,
           {
             cancelToken,
           }
