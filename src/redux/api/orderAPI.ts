@@ -11,7 +11,7 @@ import {
 export const orderAPI = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://backend-vs.mooo.com/api/v1/order/`,
+    baseUrl: `https://ecommerce-proxy.onrender.com/api/v1/order/`,
   }),
   tagTypes: ["orders"],
   endpoints: (builder) => ({
